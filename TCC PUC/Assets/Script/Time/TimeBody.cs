@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeBody : MonoBehaviour
 {
     public bool isRewinding = false;
+    public bool isBullet = false;
 
     List<PointInTime> pointsInTime = new List<PointInTime>();
 
@@ -62,6 +63,11 @@ public class TimeBody : MonoBehaviour
         else
         {
             StoptRewind();
+
+            if (isBullet)
+            {
+                Destroy(gameObject);
+            }
         }
 
     }

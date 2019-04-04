@@ -118,3 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04922517724bf054494f9d1cfea0223d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRewinding: 0
+  isBullet: 1
