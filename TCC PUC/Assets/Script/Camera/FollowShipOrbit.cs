@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class FollowShipOrbit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform targetShip;
+    public float offset = 10f;
 
-    // Update is called once per frame
+    public float speed = 10f;
+
+
+    
     void Update()
     {
-        
+        Follow();
+
+        transform.LookAt(targetShip);
     }
+
+    void Follow()
+    {
+        transform.position = Vector3.Lerp(transform.position, targetShip.position + (targetShip.up * offset), speed * Time.deltaTime);
+    } 
 }

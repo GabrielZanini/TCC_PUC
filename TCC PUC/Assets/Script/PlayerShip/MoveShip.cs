@@ -8,7 +8,7 @@ public class MoveShip : MonoBehaviour
     public float angularSpeed = 1f;
     public bool canGoBackwards = false;
 
-    public Transform target;
+    public Transform orbitPlanet;
 
     public float v;
     public float h;
@@ -31,10 +31,14 @@ public class MoveShip : MonoBehaviour
 
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
-                
+         
         Move();
         Rotate();
+
+        Orbit();
     }
+
+
 
     private void Move()
     {
@@ -54,5 +58,18 @@ public class MoveShip : MonoBehaviour
         } 
 
         transform.Rotate(Vector3.up * h * angularSpeed * Time.deltaTime);
+    }
+
+    private void Orbit()
+    {
+        if (orbitPlanet == null)
+            return;
+
+        // Rotate Ship
+        Vector3 gravityUp = (transform.position - orbitPlanet.position).normalized;
+        Vector3 shipUp = Vector3.up;
+
+        
+
     }
 }
