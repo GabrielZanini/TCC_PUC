@@ -4,50 +4,28 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
-    public bool isRewinding = false;
     public bool isBullet = false;
 
     List<PointInTime> pointsInTime = new List<PointInTime>();
 
+    void Awake()
+    {
+        
+    }
+
     void Start()
     {
-
+        TimeController.Instance.OnRewind.AddListener(Rewind);
+        TimeController.Instance.OnRecord.AddListener(Record);
     }
 
-    void FixedUpdate()
+    void Destroy()
     {
-        if (isRewinding)
-        {
-            Rewind();
-        }
-        else
-        {
-            Record();
-        }
+        TimeController.Instance.OnRewind.RemoveListener(Rewind);
+        TimeController.Instance.OnRecord.RemoveListener(Record);
     }
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            StartRewind();
-        }
 
-        if (Input.GetButtonUp("Fire1"))
-        {
-            StoptRewind();
-        }
-    }
-
-    public void StartRewind()
-    {
-        isRewinding = true;
-    }
-    
-    public void StoptRewind()
-    {
-        isRewinding = false;
-    }
 
     void Rewind()
     {
@@ -60,21 +38,11 @@ public class TimeBody : MonoBehaviour
 
             pointsInTime.RemoveAt(0);
         }
-        else
-        {
-            StoptRewind();
-
-            if (isBullet)
-            {
-                Destroy(gameObject);
-            }
-        }
-
     }
 
     void Record()
     {
-        if (pointsInTime.Count > Mathf.Round(3f / Time.fixedDeltaTime))
+        if (pointsInTime.Count > Mathf.Round(TimeController.Instance.maxTimeRewind / Time.fixedDeltaTime))
         {
             pointsInTime.RemoveAt(pointsInTime.Count - 1);
         }

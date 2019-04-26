@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if (timeBody.isRewinding)
+        if (TimeController.Instance.isRewinding)
         {
             return;
         }

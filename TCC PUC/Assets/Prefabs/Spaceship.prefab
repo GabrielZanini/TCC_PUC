@@ -197,6 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1254244384906122169}
   - component: {fileID: 5944963692496991497}
+  - component: {fileID: 3090274017238769261}
   - component: {fileID: 6925002696348766379}
   - component: {fileID: 547857050}
   - component: {fileID: 5023579175131762022}
@@ -236,6 +237,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0.25}
+--- !u!114 &3090274017238769261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234200816637188330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ccaab11f0912345b2503b6e59fd369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6925002696348766379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,9 +264,8 @@ MonoBehaviour:
   speed: 10
   angularSpeed: 180
   canGoBackwards: 1
-  target: {fileID: 0}
-  v: 0
-  h: 0
+  orbitPlanet: {fileID: 0}
+  canRotate: 0
 --- !u!114 &547857050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRewinding: 0
+  isBullet: 0
 --- !u!1 &8302676428191152381
 GameObject:
   m_ObjectHideFlags: 0

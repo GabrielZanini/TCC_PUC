@@ -10,8 +10,10 @@ public class MoveShip : MonoBehaviour
 
     public Transform orbitPlanet;
 
-    public float v;
-    public float h;
+    public bool canRotate;
+
+    float v;
+    float h;
 
     TimeBody timeBody;
 
@@ -24,23 +26,23 @@ public class MoveShip : MonoBehaviour
 
     void Update()
     {
-        if (timeBody.isRewinding)
+        if (TimeController.Instance.isRewinding)
         {
             return;
         }
 
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
-         
-        Move();
-        Rotate();
+
+        MoveHorizontal();
+        MoveVertical();
 
         Orbit();
     }
 
 
 
-    private void Move()
+    private void MoveHorizontal()
     {
         if (!canGoBackwards && v < 0)
         {
@@ -48,6 +50,18 @@ public class MoveShip : MonoBehaviour
         }
 
         transform.Translate(Vector3.forward * v * speed * Time.deltaTime);
+    }
+
+    private void MoveVertical()
+    {
+        if (canRotate)
+        {
+            Rotate();
+        }
+        else
+        {
+            transform.Translate(Vector3.right * h * speed * Time.deltaTime);
+        }        
     }
 
     private void Rotate()

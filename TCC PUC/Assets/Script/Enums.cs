@@ -10,5 +10,13 @@ public static class Enums
         Projectile,
         Ship
     }
+
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
     
 }
