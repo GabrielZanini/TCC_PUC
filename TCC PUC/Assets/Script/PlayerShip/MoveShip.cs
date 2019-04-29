@@ -16,10 +16,17 @@ public class MoveShip : MonoBehaviour
     float h;
 
     TimeBody timeBody;
+    ShipInput input;
 
     void Start()
     {
         timeBody = GetComponent<TimeBody>();
+        input = GetComponent<ShipInput>();
+
+        if (input == null)
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -31,8 +38,8 @@ public class MoveShip : MonoBehaviour
             return;
         }
 
-        v = Input.GetAxis("Vertical");
-        h = Input.GetAxis("Horizontal");
+        v = input.vertical;
+        h = input.horizontal;
 
         MoveHorizontal();
         MoveVertical();
@@ -49,7 +56,7 @@ public class MoveShip : MonoBehaviour
             return;
         }
 
-        transform.Translate(Vector3.forward * v * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * h * speed * Time.deltaTime);
     }
 
     private void MoveVertical()
@@ -60,7 +67,7 @@ public class MoveShip : MonoBehaviour
         }
         else
         {
-            transform.Translate(Vector3.right * h * speed * Time.deltaTime);
+            transform.Translate(Vector3.up * v * speed * Time.deltaTime);
         }        
     }
 
