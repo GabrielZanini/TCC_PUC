@@ -18,10 +18,13 @@ public class MoveShip : MonoBehaviour
     TimeBody timeBody;
     ShipInput input;
 
+    Animator animator;
+
     void Start()
     {
         timeBody = GetComponent<TimeBody>();
         input = GetComponent<ShipInput>();
+        animator = GetComponent<Animator>();
 
         if (input == null)
         {
@@ -68,7 +71,9 @@ public class MoveShip : MonoBehaviour
         else
         {
             transform.Translate(Vector3.up * v * speed * Time.deltaTime);
-        }        
+        }
+
+        animator.SetFloat("Vertical", v);
     }
 
     private void Rotate()
