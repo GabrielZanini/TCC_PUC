@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MoveShip : MonoBehaviour
 {
-    public float speed = 1f;
-    public float angularSpeed = 1f;
     public bool canGoBackwards = false;
 
     public Transform orbitPlanet;
@@ -15,14 +13,13 @@ public class MoveShip : MonoBehaviour
     float v;
     float h;
 
-    TimeBody timeBody;
+    StatusShip status;
     ShipInput input;
-
     Animator animator;
 
     void Start()
     {
-        timeBody = GetComponent<TimeBody>();
+        status = GetComponent<StatusShip>();
         input = GetComponent<ShipInput>();
         animator = GetComponent<Animator>();
 
@@ -36,11 +33,6 @@ public class MoveShip : MonoBehaviour
 
     void Update()
     {
-        if (TimeController.Instance.isRewinding)
-        {
-            return;
-        }
-
         v = input.vertical;
         h = input.horizontal;
 
@@ -59,7 +51,7 @@ public class MoveShip : MonoBehaviour
             return;
         }
 
-        transform.Translate(Vector3.forward * h * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * h * status.currentSpeed * Time.deltaTime);
     }
 
     private void MoveVertical()
@@ -70,7 +62,7 @@ public class MoveShip : MonoBehaviour
         }
         else
         {
-            transform.Translate(Vector3.up * v * speed * Time.deltaTime);
+            transform.Translate(Vector3.up * v * status.currentSpeed * Time.deltaTime);
         }
 
         animator.SetFloat("Vertical", v);
@@ -83,7 +75,7 @@ public class MoveShip : MonoBehaviour
             h *= -1;
         } 
 
-        transform.Rotate(Vector3.up * h * angularSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up * h * status.angularSpeed * Time.deltaTime);
     }
 
     private void Orbit()

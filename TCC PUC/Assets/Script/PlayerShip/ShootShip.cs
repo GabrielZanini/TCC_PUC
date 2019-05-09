@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class ShootShip : MonoBehaviour
 {
-    public GameObject projectile;
     public Transform gunHole;
-    public float rate = 0.5f;
 
     private float timer = 0f;
 
-    TimeBody timeBody;
+    StatusShip status;
 
     void Start()
     {
-        timeBody = GetComponent<TimeBody>();
+        status = GetComponent<StatusShip>();
     }
 
     void Update()
@@ -28,7 +26,7 @@ public class ShootShip : MonoBehaviour
         {
             if (Input.GetButton("Jump"))
             {
-                timer = rate;
+                timer = status.shootingRate;
 
                 Shoot();
             }
@@ -46,6 +44,7 @@ public class ShootShip : MonoBehaviour
 
     void Shoot()
     {
-        var bullet = Instantiate(projectile, gunHole.position, gunHole.rotation);
+        //var bullet = Instantiate(projectile, gunHole.position, gunHole.rotation);
+        var bullet = BulletPool.Instance.SpawnBullet(gunHole.position, gunHole.rotation);
     }
 }

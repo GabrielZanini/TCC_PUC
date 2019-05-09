@@ -5,26 +5,41 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
+    public float lifeTime = 2f;
+    public int damage;
 
-    TimeBody timeBody;
+    float despawnCounter = 0f;
 
-    void Start()
+
+    private void OnEnable()
     {
-        timeBody = GetComponent<TimeBody>();
+        despawnCounter = lifeTime;
     }
 
     void Update()
     {
-        if (TimeController.Instance.isRewinding)
-        {
-            return;
-        }
-
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        if (despawnCounter <= 0f)
+        {
+            BulletPool.Instance.DespawnBullet(gameObject);
+        }
+        
     }
 
-    private void OnBecameInvisible()
+    private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject, 10f);
+        Debug.Log("OnTriggerEnter - " + gameObject.name + " - Collision: " + other.name);
+
+        var otherStatus = other.gameObject.GetComponent<StatusBase>();
+
+
+        if (otherStatus != null)
+        {
+            Debug.Log("Has Status - Collision: " + other.name);
+            otherStatus.AddHp(-damage);
+        }
+
+        BulletPool.Instance.DespawnBullet(gameObject);
     }
 }

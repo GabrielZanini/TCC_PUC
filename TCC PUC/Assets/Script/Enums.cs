@@ -7,6 +7,7 @@ public static class Enums
 
     public enum TimeBodyType
     {
+        Background,
         Projectile,
         Ship
     }
