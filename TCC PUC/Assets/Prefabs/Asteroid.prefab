@@ -61,12 +61,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04922517724bf054494f9d1cfea0223d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyType: 1
+  bodyType: 2
   isActive: 0
-  needToDisable:
+  scriptsToDisable:
   - {fileID: 7152724393694647325}
-  - {fileID: 7152724393694647313}
-  mesh: {fileID: 7152724392930169230}
+  objectsToDisable:
+  - {fileID: 7152724392930169230}
 --- !u!114 &7152724393694647313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,8 +81,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 10
   currentHp: 0
-  maxSpeed: 20
-  currentSpeed: 10
+  maxSpeed: 10
+  currentSpeed: 5
   OnGainHp:
     m_PersistentCalls:
       m_Calls: []

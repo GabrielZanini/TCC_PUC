@@ -6,6 +6,8 @@ public class ShootShip : MonoBehaviour
 {
     public Transform gunHole;
 
+    public uint BulletsPerShoot = 1;
+
     private float timer = 0f;
 
     StatusShip status;

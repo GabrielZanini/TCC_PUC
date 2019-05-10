@@ -10,14 +10,14 @@ public class TimeBody : MonoBehaviour
 
     public List<MonoBehaviour> scriptsToDisable = new List<MonoBehaviour>();
     public List<GameObject> objectsToDisable = new List<GameObject>();
-
-    public GameObject mesh;
-
+    
     Collider collider;
     StatusBase status;
+
     int hp = 0;
 
     List<PointInTime> pointsInTime = new List<PointInTime>();
+
 
     void Awake()
     {
@@ -27,63 +27,103 @@ public class TimeBody : MonoBehaviour
 
     void Start()
     {
-        TimeController.Instance.OnRewind.AddListener(Rewind);
-        TimeController.Instance.OnRecord.AddListener(Record);
+        if (bodyType != Enums.TimeBodyType.System)
+        {
+            TimeController.Instance.OnRewind.AddListener(Rewind);
+            TimeController.Instance.OnRecord.AddListener(Record);
+            TimeController.Instance.OnOverload.AddListener(ClearList);
+        }        
 
         TimeController.Instance.OnStartRewind.AddListener(DisableScripts);
+        TimeController.Instance.OnStartRewind.AddListener(DisableCollider);
         TimeController.Instance.OnStopRewind.AddListener(EnableScripts);
+        TimeController.Instance.OnStopRewind.AddListener(EnableCollider);
 
-        TimeController.Instance.OnOverload.AddListener(ClearList);
+        SetActive(isActive);
     }
 
-    void Destroy()
+    void OnDestroy()
     {
-        TimeController.Instance.OnRewind.RemoveListener(Rewind);
-        TimeController.Instance.OnRecord.RemoveListener(Record);
+        if (bodyType != Enums.TimeBodyType.System)
+        {
+            TimeController.Instance.OnRewind.RemoveListener(Rewind);
+            TimeController.Instance.OnRecord.RemoveListener(Record);
+            TimeController.Instance.OnOverload.RemoveListener(ClearList);
+        }        
 
         TimeController.Instance.OnStartRewind.RemoveListener(DisableScripts);
+        TimeController.Instance.OnStartRewind.RemoveListener(DisableCollider);
         TimeController.Instance.OnStopRewind.RemoveListener(EnableScripts);
-
-        TimeController.Instance.OnOverload.RemoveListener(ClearList);
+        TimeController.Instance.OnStopRewind.RemoveListener(EnableCollider);
     }
 
 
-    void DisableScripts()
-    {
-        for (int i=0; i < scriptsToDisable.Count; i++)
-        {
-            scriptsToDisable[i].enabled = false;
-        }
 
-        for (int i = 0; i < objectsToDisable.Count; i++)
-        {
-            objectsToDisable[i].SetActive(false);
-        }
 
-        if (collider != null)
-        {
-            collider.enabled = false;
-        }
-    }
+    // Other Scripts
 
     void EnableScripts()
     {
+        SetScriptsEnable(true);
+    }
+
+    void DisableScripts()
+    {
+        SetScriptsEnable(false);
+    }
+
+    void SetScriptsEnable(bool enable)
+    {
         for (int i = 0; i < scriptsToDisable.Count; i++)
         {
-            scriptsToDisable[i].enabled = true;
-        }
-
-        for (int i = 0; i < objectsToDisable.Count; i++)
-        {
-            objectsToDisable[i].SetActive(true);
-        }
-
-        if (collider != null)
-        {
-            collider.enabled = true;
+            scriptsToDisable[i].enabled = enable;
         }
     }
 
+
+    // Objects
+
+    void EnableObjects()
+    {
+        SetObjectsEnable(true);
+    }
+
+    void DisableObjects()
+    {
+        SetObjectsEnable(false);
+    }
+
+    void SetObjectsEnable(bool enable)
+    {
+        for (int i = 0; i < objectsToDisable.Count; i++)
+        {
+            objectsToDisable[i].SetActive(enable);
+        }
+    }
+
+
+    // Colliders
+
+    void EnableCollider()
+    {
+        SetColliderEnable(true);
+    }
+
+    void DisableCollider()
+    {
+        SetColliderEnable(false);
+    }
+
+    void SetColliderEnable(bool enable)
+    {
+        if (collider != null)
+        {
+            collider.enabled = enable;
+        }
+    }
+
+
+    // Time Methods
 
     void Rewind()
     {
@@ -93,15 +133,15 @@ public class TimeBody : MonoBehaviour
 
             transform.position = pointInTime.position;
             transform.rotation = pointInTime.rotation;
-
-            if (mesh != null)
-            {
-                mesh.SetActive(pointInTime.isActive);
-            }
-
+            
             if (status != null)
             {
                 status.currentHp = pointInTime.hp;
+            }
+
+            if (pointInTime.isActive)
+            {
+
             }
 
             pointsInTime.RemoveAt(0);
@@ -131,19 +171,9 @@ public class TimeBody : MonoBehaviour
 
     public void SetActive(bool active)
     {
-        if (active)
-        {
-            EnableScripts();
-        }
-        else
-        {
-            DisableScripts();
-        }
-
-        if (mesh != null)
-        {
-            mesh.SetActive(active);
-        }
+        SetScriptsEnable(active);
+        SetObjectsEnable(active);
+        SetColliderEnable(active);
         
         isActive = active;
     }
