@@ -9,6 +9,7 @@ public class StatusShip : StatusBase
     public float slowdownModifier = 1.5f;
 
     public float shootingRate = 0.5f;
+    public float shootingSpeed = 10f;
 
-    
+
 }

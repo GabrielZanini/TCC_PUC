@@ -5,12 +5,20 @@ using UnityEngine;
 public class ShootShip : MonoBehaviour
 {
     public Transform gunHole;
+    public LayerMask targetLayers;
 
-    public uint BulletsPerShoot = 1;
 
+    [Range(1, 10)] public uint bulletsPerShoot = 1;
+    [Range(1, 15)] public float bulletAngle = 5;
+    public bool autoShoot = false;
+    
     private float timer = 0f;
 
     StatusShip status;
+    RaycastHit[] hit = new RaycastHit[10];
+    bool canShoot;
+    float totalArc;
+    float startAngle;
 
     void Start()
     {
@@ -19,11 +27,37 @@ public class ShootShip : MonoBehaviour
 
     void Update()
     {
-        if (TimeController.Instance.isRewinding)
+        if (autoShoot)
         {
-            return;
+            AutoShoot();
         }
+        else
+        {
+            ManualShoot();
+        }
+    }
 
+
+    void AutoShoot()
+    {
+        CastRay();
+
+        if (canShoot)
+        {
+            if (timer <= 0f)
+            {
+                timer = status.shootingRate;
+                Shoot();
+            }
+            else
+            {
+                timer -= Time.deltaTime;
+            }
+        }
+    }
+
+    void ManualShoot()
+    {
         if (timer <= 0f)
         {
             if (Input.GetButton("Jump"))
@@ -46,7 +80,37 @@ public class ShootShip : MonoBehaviour
 
     void Shoot()
     {
-        //var bullet = Instantiate(projectile, gunHole.position, gunHole.rotation);
-        var bullet = BulletPool.Instance.SpawnBullet(gunHole.position, gunHole.rotation);
+        for (int i = 0; i < bulletsPerShoot; i++)
+        {
+            var bulletObject = BulletPool.Instance.Spawn(gunHole.position, gunHole.rotation * Quaternion.Euler((startAngle - i * bulletAngle), 0,0));
+
+            if (bulletObject != null)
+            {
+                bulletObject.GetComponent<Bullet>().speed = status.shootingSpeed;
+            }
+        }
+    }
+
+    void CastRay()
+    {
+        totalArc = (bulletsPerShoot - 1) * bulletAngle;
+        startAngle = totalArc / 2f;
+
+        // DEBUG
+        for (int i = 0; i < bulletsPerShoot; i++)
+        {
+            //Debug.Log("I: " + i + " - Angle: " + (startAngle + i * bulletAngle));
+            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward * 1000, Color.yellow);
+        }
+
+        Debug.DrawRay(gunHole.position, (Quaternion.Euler(0, 0, (startAngle + bulletAngle)) * gunHole.forward) * 1000, Color.green);
+        Debug.DrawRay(gunHole.position, (Quaternion.Euler(0, 0, (startAngle - bulletsPerShoot * bulletAngle)) * gunHole.forward) * 1000, Color.green);
+
+        // Cast
+        for (int i = -1; i < bulletsPerShoot + 1; i++)
+        {
+            canShoot = Physics.Raycast(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward, out hit[0], Mathf.Infinity, targetLayers);
+            if (canShoot) break;
+        }
     }
 }

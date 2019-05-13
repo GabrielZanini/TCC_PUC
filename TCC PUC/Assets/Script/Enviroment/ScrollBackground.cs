@@ -6,9 +6,10 @@ public class ScrollBackground : MonoBehaviour
 {
     public float scrollSpeed;
     public float tileSizeZ;
+    public float counter = 0f;
 
     private Vector3 startPosition;
-    private float counter = 0f;
+
 
     void Start()
     {

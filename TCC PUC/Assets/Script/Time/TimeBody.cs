@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimeBody : MonoBehaviour
 {
@@ -10,7 +11,11 @@ public class TimeBody : MonoBehaviour
 
     public List<MonoBehaviour> scriptsToDisable = new List<MonoBehaviour>();
     public List<GameObject> objectsToDisable = new List<GameObject>();
-    
+    public ObjectPool pool;
+
+    [HideInInspector] public UnityEvent OnActivate;
+    [HideInInspector] public UnityEvent OnDisactivate;
+
     Collider collider;
     StatusBase status;
 
@@ -32,7 +37,7 @@ public class TimeBody : MonoBehaviour
             TimeController.Instance.OnRewind.AddListener(Rewind);
             TimeController.Instance.OnRecord.AddListener(Record);
             TimeController.Instance.OnOverload.AddListener(ClearList);
-        }        
+        }
 
         TimeController.Instance.OnStartRewind.AddListener(DisableScripts);
         TimeController.Instance.OnStartRewind.AddListener(DisableCollider);
@@ -49,7 +54,7 @@ public class TimeBody : MonoBehaviour
             TimeController.Instance.OnRewind.RemoveListener(Rewind);
             TimeController.Instance.OnRecord.RemoveListener(Record);
             TimeController.Instance.OnOverload.RemoveListener(ClearList);
-        }        
+        }
 
         TimeController.Instance.OnStartRewind.RemoveListener(DisableScripts);
         TimeController.Instance.OnStartRewind.RemoveListener(DisableCollider);
@@ -58,6 +63,13 @@ public class TimeBody : MonoBehaviour
     }
 
 
+    public void Despawn()
+    {
+        if (pool != null && isActive)
+        {
+            pool.Despawn(gameObject);
+        }
+    }
 
 
     // Other Scripts
@@ -141,7 +153,11 @@ public class TimeBody : MonoBehaviour
 
             if (pointInTime.isActive)
             {
-
+                EnableObjects();
+            }
+            else
+            {
+                DisableObjects();
             }
 
             pointsInTime.RemoveAt(0);
@@ -174,7 +190,17 @@ public class TimeBody : MonoBehaviour
         SetScriptsEnable(active);
         SetObjectsEnable(active);
         SetColliderEnable(active);
+
+        if (active)
+        {
+            OnActivate.Invoke();
+        }
+        else
+        {
+            OnDisactivate.Invoke();
+        }
         
         isActive = active;
     }
+    
 }

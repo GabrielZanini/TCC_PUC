@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour
 
         if (despawnCounter <= 0f)
         {
-            BulletPool.Instance.DespawnBullet(gameObject);
+            BulletPool.Instance.Despawn(gameObject);
         }
     }
 
@@ -71,7 +71,7 @@ public class Asteroid : MonoBehaviour
         if (otherStatus != null)
         {
             otherStatus.AddHp(-status.currentHp);
-            AsteroidPool.Instance.DespawnAsteroid(gameObject);
+            AsteroidPool.Instance.Despawn(gameObject);
         }
     }
 
@@ -79,7 +79,7 @@ public class Asteroid : MonoBehaviour
     {
         //Boom
 
-        AsteroidPool.Instance.DespawnAsteroid(gameObject);
+        AsteroidPool.Instance.Despawn(gameObject);
     }
 }
 

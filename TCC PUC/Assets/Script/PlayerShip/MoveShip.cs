@@ -6,8 +6,6 @@ public class MoveShip : MonoBehaviour
 {
     public bool canGoBackwards = false;
 
-    public Transform orbitPlanet;
-
     public bool canRotate;
 
     float v;
@@ -38,8 +36,6 @@ public class MoveShip : MonoBehaviour
 
         MoveHorizontal();
         MoveVertical();
-
-        Orbit();
     }
 
 
@@ -77,17 +73,5 @@ public class MoveShip : MonoBehaviour
 
         transform.Rotate(Vector3.up * h * status.angularSpeed * Time.deltaTime);
     }
-
-    private void Orbit()
-    {
-        if (orbitPlanet == null)
-            return;
-
-        // Rotate Ship
-        Vector3 gravityUp = (transform.position - orbitPlanet.position).normalized;
-        Vector3 shipUp = Vector3.up;
-
-        
-
-    }
+    
 }

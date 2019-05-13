@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1380411986902633554}
   - component: {fileID: 1787198813054797460}
   - component: {fileID: 6033173156273224755}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -76,12 +76,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04922517724bf054494f9d1cfea0223d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyType: 1
+  bodyType: 2
   isActive: 0
   scriptsToDisable:
   - {fileID: 6033173156273224755}
   objectsToDisable:
   - {fileID: 5954416243182872246}
+  pool: {fileID: 0}
+  OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDisactivate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &6033173156273224755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +121,7 @@ GameObject:
   - component: {fileID: 6185715540803631824}
   - component: {fileID: 4291622941670621631}
   - component: {fileID: 8658300898020478199}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -31,7 +31,7 @@ public class TimeController : MonoBehaviour
     [HideInInspector]public UnityEvent OnOverload;
     [HideInInspector]public UnityEvent OnSlowdown;
     [HideInInspector]public UnityEvent OnStartSlowdown;
-    [HideInInspector] public UnityEvent OnStopSlowdown;
+    [HideInInspector]public UnityEvent OnStopSlowdown;
 
 
     void Awake()

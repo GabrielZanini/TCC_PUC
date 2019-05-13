@@ -10,36 +10,52 @@ public class Bullet : MonoBehaviour
 
     float despawnCounter = 0f;
 
-
-    private void OnEnable()
+    TimeBody timeBody;
+    
+    void Awake()
     {
-        despawnCounter = lifeTime;
+        timeBody = GetComponent<TimeBody>();
+        timeBody.OnActivate.AddListener(ResetCounter);
+    }
+
+    void Start()
+    {
+        ResetCounter();
+    }
+
+    void OnDestroy()
+    {
+        timeBody.OnActivate.RemoveListener(ResetCounter);
     }
 
     void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-        if (despawnCounter <= 0f)
-        {
-            BulletPool.Instance.DespawnBullet(gameObject);
-        }
+        //if (despawnCounter <= 0f)
+        //{
+        //    BulletPool.Instance.Despawn(gameObject);
+        //}
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter - " + gameObject.name + " - Collision: " + other.name);
+        //Debug.Log("OnTriggerEnter - " + gameObject.name + " - Collision: " + other.name);
 
         var otherStatus = other.gameObject.GetComponent<StatusBase>();
-
-
+        
         if (otherStatus != null)
         {
-            Debug.Log("Has Status - Collision: " + other.name);
+            //Debug.Log("Has Status - Collision: " + other.name);
             otherStatus.AddHp(-damage);
         }
 
-        BulletPool.Instance.DespawnBullet(gameObject);
+        timeBody.Despawn();
+    }
+
+    void ResetCounter()
+    {
+        despawnCounter = lifeTime;
     }
 }

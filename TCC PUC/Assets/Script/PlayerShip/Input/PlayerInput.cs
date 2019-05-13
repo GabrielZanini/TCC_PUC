@@ -6,7 +6,12 @@ public class PlayerInput : ShipInput
 {
     void Update()
     {
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        
     }
 }
+
+
+
+

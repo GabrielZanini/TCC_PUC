@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsteroidSpawnner : MonoBehaviour
+public class AsteroidSpawner : MonoBehaviour
 {
+    [SerializeField] ObjectPool pool;
+
     public Vector2 spawningRate;
     public Vector2 yAxisRange;
 
     float nextSpawn = 0f;
     float nextY = 0f;
 
-    AsteroidPool pool;
+    
     Vector3 position;
 
 
     void Awake()
     {
-        pool = GetComponent<AsteroidPool>();
+        if (pool == null)
+        {
+            pool = GetComponent<AsteroidPool>();
+        }
+        
         position = transform.position;
     }
 
@@ -30,7 +36,7 @@ public class AsteroidSpawnner : MonoBehaviour
     {
         if (nextSpawn <= 0f)
         {
-            pool.SpawnAsteroid(position, Quaternion.identity);
+            pool.Spawn(position);
             RecalculateSpawn();
         }
         else
