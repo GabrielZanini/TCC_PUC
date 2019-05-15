@@ -15,6 +15,13 @@ public class MoveShip : MonoBehaviour
     ShipInput input;
     Animator animator;
 
+    public bool hasTouchInput = false;
+    Touch touch;
+    Vector3 touchPosition;
+    Vector3 touchOriginalPosition;
+    Vector3 shipOriginalPosition;
+    Vector3 shipOffsetPosition;
+
     void Start()
     {
         status = GetComponent<StatusShip>();
@@ -36,6 +43,8 @@ public class MoveShip : MonoBehaviour
 
         MoveHorizontal();
         MoveVertical();
+
+        MoveTouch();
     }
 
 
@@ -62,6 +71,33 @@ public class MoveShip : MonoBehaviour
         }
 
         animator.SetFloat("Vertical", v);
+    }
+
+    private void MoveTouch()
+    {
+        if (Input.touchCount > 0)
+        {
+            touch = Input.GetTouch(0);
+            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+
+            if (!hasTouchInput)
+            {
+                hasTouchInput = true;
+
+                touchOriginalPosition = touchPosition;
+                shipOriginalPosition = transform.position;
+            }
+
+            shipOffsetPosition = touchPosition - touchOriginalPosition;
+
+            //touchPosition.z = 0;
+
+            transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
+        }
+        else
+        {
+            hasTouchInput = false;
+        }
     }
 
     private void Rotate()

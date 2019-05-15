@@ -15,7 +15,7 @@ public class ShootShip : MonoBehaviour
     private float timer = 0f;
 
     StatusShip status;
-    RaycastHit[] hit = new RaycastHit[10];
+    RaycastHit hit;
     bool canShoot;
     float totalArc;
     float startAngle;
@@ -109,8 +109,43 @@ public class ShootShip : MonoBehaviour
         // Cast
         for (int i = -1; i < bulletsPerShoot + 1; i++)
         {
-            canShoot = Physics.Raycast(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward, out hit[0], Mathf.Infinity, targetLayers);
+            canShoot = Physics.Raycast(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward, out hit, Mathf.Infinity, targetLayers);
             if (canShoot) break;
         }
+    }
+
+
+    
+     
+    public void MoreBullets()
+    {
+        if (bulletsPerShoot < 10)
+        {
+            bulletsPerShoot++;
+        }
+    }
+
+    public void LessBullets()
+    {
+        if (bulletsPerShoot > 1)
+        {
+            bulletsPerShoot--;
+        }
+    }
+
+    public void MoreAngle()
+    {
+        if (bulletAngle < 15)
+        {
+            bulletAngle++;
+        }
+    }
+
+    public void LessAngle()
+    {
+        if (bulletAngle > 1)
+        {
+            bulletAngle--;
+        } 
     }
 }

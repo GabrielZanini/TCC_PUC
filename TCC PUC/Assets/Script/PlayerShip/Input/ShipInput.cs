@@ -9,7 +9,7 @@ public class ShipInput : MonoBehaviour
     public float horizontal = 0;
 
     public bool shoot = false;
-
+    public Touch touch;
 }
 
 

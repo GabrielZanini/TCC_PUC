@@ -25,7 +25,7 @@ public class StatusBase : MonoBehaviour
 
     public void AddHp(int moreHp)
     {
-        Debug.Log("AddHp - " + moreHp + " - " + gameObject.name);
+        //Debug.Log("AddHp - " + moreHp + " - " + gameObject.name);
 
         if (moreHp == 0) return;
 
