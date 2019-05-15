@@ -8,6 +8,7 @@ public class DebugCanvas : MonoBehaviour
     public Text fps;
     public Text speed;
     public Text rate;
+    public Text distance;
     public Text angle;
     public Text bullets;
 
@@ -22,6 +23,7 @@ public class DebugCanvas : MonoBehaviour
 
         PrintSpeed();
         PrintRate();
+        PrintDistance();
         PrintAngle();
         PrintBullets();
     }
@@ -45,6 +47,11 @@ public class DebugCanvas : MonoBehaviour
     private void PrintRate()
     {
         rate.text = statusPlayer.shootingRate.ToString("0.00");
+    }
+
+    private void PrintDistance()
+    {
+        distance.text = shootPlayer.bulletDistance.ToString("0");
     }
 
     private void PrintAngle()

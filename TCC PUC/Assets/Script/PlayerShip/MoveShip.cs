@@ -17,6 +17,8 @@ public class MoveShip : MonoBehaviour
 
     public bool hasTouchInput = false;
     Touch touch;
+    Touch[] touches;
+    int fingerId;
     Vector3 touchPosition;
     Vector3 touchOriginalPosition;
     Vector3 shipOriginalPosition;
@@ -75,30 +77,43 @@ public class MoveShip : MonoBehaviour
 
     private void MoveTouch()
     {
-        //if (Input.touchCount > 0)
-        //{
-        //    touch = Input.GetTouch(0);
-        //    touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+#if UNITY_EDITOR
+        TouchEditor();
+#elif UNITY_ANDROID
+        TouchMobile();
+#else
+    
+#endif
+    }
 
-        //    if (!hasTouchInput)
-        //    {
-        //        hasTouchInput = true;
+    private void TouchMobile()
+    {
+        if (Input.touchCount > 0)
+        {            
+            touch = Input.GetTouch(0);
+            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
 
-        //        touchOriginalPosition = touchPosition;
-        //        shipOriginalPosition = transform.position;
-        //    }
+            if (touch.fingerId != fingerId)
+            {
+                fingerId = touch.fingerId;
+                hasTouchInput = true;
 
-        //    shipOffsetPosition = touchPosition - touchOriginalPosition;
+                touchOriginalPosition = touchPosition;
+                shipOriginalPosition = transform.position;
+            }
 
-        //    //touchPosition.z = 0;
+            shipOffsetPosition = touchPosition - touchOriginalPosition;
+            transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
+        }
+        else
+        {
+            fingerId = -1;
+            hasTouchInput = false;
+        }
+    }
 
-        //    transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
-        //}
-        //else
-        //{
-        //    hasTouchInput = false;
-        //}
-
+    private void TouchEditor()
+    {
         if (Input.GetKey(KeyCode.Mouse0))
         {
             touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -112,9 +127,6 @@ public class MoveShip : MonoBehaviour
             }
 
             shipOffsetPosition = touchPosition - touchOriginalPosition;
-
-            //touchPosition.z = 0;
-
             transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
         }
         else

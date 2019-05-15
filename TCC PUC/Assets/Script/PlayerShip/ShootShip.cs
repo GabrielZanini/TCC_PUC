@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ShootShip : MonoBehaviour
 {
+    public Transform gun;
     public Transform gunHole;
     public LayerMask targetLayers;
 
 
     [Range(1, 10)] public uint bulletsPerShoot = 1;
-    [Range(1, 15)] public float bulletAngle = 5;
+    [Range(0, 15)] public float bulletAngle = 5;
+    [Range(0, 15)] public float bulletDistance = 1f;
     public bool autoShoot = false;
     
     private float timer = 0f;
@@ -17,8 +19,12 @@ public class ShootShip : MonoBehaviour
     StatusShip status;
     RaycastHit hit;
     bool canShoot;
+
     float totalArc;
     float startAngle;
+
+    float totalDistance;
+    float startDistance;
 
     void Start()
     {
@@ -27,6 +33,8 @@ public class ShootShip : MonoBehaviour
 
     void Update()
     {
+        CastRay();
+
         if (autoShoot)
         {
             AutoShoot();
@@ -40,21 +48,6 @@ public class ShootShip : MonoBehaviour
 
     void AutoShoot()
     {
-        CastRay();
-
-        //if (canShoot)
-        //{
-        //    if (timer <= 0f)
-        //    {
-        //        timer = status.shootingRate;
-        //        Shoot();
-        //    }
-        //    else
-        //    {
-        //        timer -= Time.deltaTime;
-        //    }
-        //}
-
         if (timer <= 0f)
         {
             timer = status.shootingRate;
@@ -92,25 +85,32 @@ public class ShootShip : MonoBehaviour
     {
         for (int i = 0; i < bulletsPerShoot; i++)
         {
-            var bulletObject = BulletPool.Instance.Spawn(gunHole.position, gunHole.rotation * Quaternion.Euler((startAngle - i * bulletAngle), 0,0));
+            var bulletTimebody = BulletPool.Instance.Spawn(gunHole.position, Quaternion.Euler(0,90,0) * Quaternion.Euler((startAngle - i * bulletAngle), 0,0));
 
-            if (bulletObject != null)
+            gun.localRotation = Quaternion.Euler((startDistance + i * bulletDistance), 0, 0);
+
+            if (bulletTimebody != null)
             {
-                bulletObject.GetComponent<Bullet>().speed = status.shootingSpeed;
+                bulletTimebody.GetComponent<Bullet>().speed = status.shootingSpeed;
             }
         }
     }
 
     void CastRay()
     {
+        totalDistance = (bulletsPerShoot - 1) * bulletDistance;
+        startDistance = 0 - totalDistance / 2f;
+
         totalArc = (bulletsPerShoot - 1) * bulletAngle;
         startAngle = totalArc / 2f;
 
         // DEBUG
         for (int i = 0; i < bulletsPerShoot; i++)
         {
+            gun.localRotation = Quaternion.Euler((startDistance + i * bulletDistance), 0, 0);
+
             //Debug.Log("I: " + i + " - Angle: " + (startAngle + i * bulletAngle));
-            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward * 1000, Color.yellow);
+            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * Vector3.right * 1000, Color.yellow);
         }
 
         // Cast
@@ -121,8 +121,10 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-
     
+
+
+
      
     public void MoreBullets()
     {
@@ -150,9 +152,25 @@ public class ShootShip : MonoBehaviour
 
     public void LessAngle()
     {
-        if (bulletAngle > 1)
+        if (bulletAngle > 0)
         {
             bulletAngle--;
         } 
+    }
+    
+    public void MoreDistance()
+    {
+        if (bulletDistance < 15)
+        {
+            bulletDistance++;
+        }
+    }
+
+    public void LessDistance()
+    {
+        if (bulletDistance > 0)
+        {
+            bulletDistance--;
+        }
     }
 }
