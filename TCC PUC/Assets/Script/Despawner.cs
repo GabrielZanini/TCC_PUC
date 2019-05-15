@@ -6,11 +6,11 @@ public class Despawner : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        var timeBody = other.gameObject.GetComponent<TimeBody>();
+        var timebody = other.gameObject.GetComponent<TimeBody>();
 
-        if (timeBody != null)
+        if (timebody != null)
         {
-            timeBody.Despawn();
+            timebody.Despawn();
         }
     }
 }

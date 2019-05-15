@@ -75,10 +75,33 @@ public class MoveShip : MonoBehaviour
 
     private void MoveTouch()
     {
-        if (Input.touchCount > 0)
+        //if (Input.touchCount > 0)
+        //{
+        //    touch = Input.GetTouch(0);
+        //    touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+
+        //    if (!hasTouchInput)
+        //    {
+        //        hasTouchInput = true;
+
+        //        touchOriginalPosition = touchPosition;
+        //        shipOriginalPosition = transform.position;
+        //    }
+
+        //    shipOffsetPosition = touchPosition - touchOriginalPosition;
+
+        //    //touchPosition.z = 0;
+
+        //    transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
+        //}
+        //else
+        //{
+        //    hasTouchInput = false;
+        //}
+
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            touch = Input.GetTouch(0);
-            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+            touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (!hasTouchInput)
             {

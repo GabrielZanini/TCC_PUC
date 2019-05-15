@@ -42,17 +42,27 @@ public class ShootShip : MonoBehaviour
     {
         CastRay();
 
-        if (canShoot)
+        //if (canShoot)
+        //{
+        //    if (timer <= 0f)
+        //    {
+        //        timer = status.shootingRate;
+        //        Shoot();
+        //    }
+        //    else
+        //    {
+        //        timer -= Time.deltaTime;
+        //    }
+        //}
+
+        if (timer <= 0f)
         {
-            if (timer <= 0f)
-            {
-                timer = status.shootingRate;
-                Shoot();
-            }
-            else
-            {
-                timer -= Time.deltaTime;
-            }
+            timer = status.shootingRate;
+            Shoot();
+        }
+        else
+        {
+            timer -= Time.deltaTime;
         }
     }
 
@@ -102,9 +112,6 @@ public class ShootShip : MonoBehaviour
             //Debug.Log("I: " + i + " - Angle: " + (startAngle + i * bulletAngle));
             Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward * 1000, Color.yellow);
         }
-
-        Debug.DrawRay(gunHole.position, (Quaternion.Euler(0, 0, (startAngle + bulletAngle)) * gunHole.forward) * 1000, Color.green);
-        Debug.DrawRay(gunHole.position, (Quaternion.Euler(0, 0, (startAngle - bulletsPerShoot * bulletAngle)) * gunHole.forward) * 1000, Color.green);
 
         // Cast
         for (int i = -1; i < bulletsPerShoot + 1; i++)

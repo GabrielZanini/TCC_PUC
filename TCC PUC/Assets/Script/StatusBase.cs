@@ -71,4 +71,7 @@ public class StatusBase : MonoBehaviour
             currentSpeed = maxSpeed;
         }
     }
+
+
+    
 }

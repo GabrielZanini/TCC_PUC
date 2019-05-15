@@ -67,7 +67,7 @@ public class TimeBody : MonoBehaviour
     {
         if (pool != null && isActive)
         {
-            pool.Despawn(gameObject);
+            pool.Despawn(this);
         }
     }
 

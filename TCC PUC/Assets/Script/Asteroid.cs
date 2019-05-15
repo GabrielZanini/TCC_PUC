@@ -12,11 +12,11 @@ public class Asteroid : MonoBehaviour
     public float lifeTime = 3f;
 
     float despawnCounter = 0f;
-
-    
+    TimeBody timebody;
 
     private void Awake()
     {
+        timebody = GetComponent<TimeBody>();
         status = GetComponent<StatusBase>();
     }
 
@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour
 
         if (despawnCounter <= 0f)
         {
-            BulletPool.Instance.Despawn(gameObject);
+            timebody.Despawn();
         }
     }
 
@@ -71,7 +71,7 @@ public class Asteroid : MonoBehaviour
         if (otherStatus != null)
         {
             otherStatus.AddHp(-status.currentHp);
-            AsteroidPool.Instance.Despawn(gameObject);
+            timebody.Despawn();
         }
     }
 
@@ -79,7 +79,7 @@ public class Asteroid : MonoBehaviour
     {
         //Boom
 
-        AsteroidPool.Instance.Despawn(gameObject);
+        timebody.Despawn();
     }
 }
 

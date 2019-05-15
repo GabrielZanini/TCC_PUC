@@ -12,4 +12,32 @@ public class StatusShip : StatusBase
     public float shootingSpeed = 10f;
 
 
+
+    public void MoreShootingRate()
+    {
+        shootingRate += 0.01f;
+    }
+
+    public void LessShootingRate()
+    {
+        if (shootingRate > 0.01f)
+        {
+            shootingRate -= 0.01f;
+        }
+    }
+
+
+
+    public void MoreShootingSpeed()
+    {
+        shootingSpeed++;
+    }
+
+    public void LessShootingSpeed()
+    {
+        if (shootingSpeed > 1f)
+        {
+            shootingSpeed--;
+        }
+    }
 }

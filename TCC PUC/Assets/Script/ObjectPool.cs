@@ -4,61 +4,91 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public List<GameObject> objects = new List<GameObject>();
+    [SerializeField] List<TimeBody> activeObjects = new List<TimeBody>();
+    [SerializeField] List<TimeBody> inactiveObjects = new List<TimeBody>();
 
-
+    
     void Start()
     {
-        for (int i=0; i<objects.Count; i++)
-        {
-            objects[i].GetComponent<TimeBody>().pool = this;
-        }
+        GetTimebodys();
+        DespawnAll();
+        SetPool();
     }
 
-    public GameObject Spawn()
+
+    public TimeBody Spawn()
     {
-        if (objects.Count == 0)
+        if (inactiveObjects.Count == 0)
         {
             return null;
         }
 
-        var gameObject = objects[0];
-        objects.RemoveAt(0);
+        var timebody = inactiveObjects[0];
 
-        gameObject.GetComponent<TimeBody>().SetActive(true);
+        inactiveObjects.RemoveAt(0);
+        activeObjects.Add(timebody);
 
-        return gameObject;
+        timebody.SetActive(true);
+
+        return timebody;
     }
 
-    public GameObject Spawn(Vector3 position)
+    public TimeBody Spawn(Vector3 position)
     {
-        var gameObject = Spawn();
+        var timebody = Spawn();
 
-        if (gameObject != null)
+        if (timebody != null)
         {
-            gameObject.transform.position = position;
+            timebody.transform.position = position;
         }
 
-        return gameObject;
+        return timebody;
     }
 
-    public GameObject Spawn(Vector3 position, Quaternion rotation)
+    public TimeBody Spawn(Vector3 position, Quaternion rotation)
     {
-        var gameObject = Spawn();
+        var timebody = Spawn();
 
-        if (gameObject != null)
+        if (timebody != null)
         {
-            gameObject.transform.position = position;
-            gameObject.transform.rotation = rotation;
+            timebody.transform.position = position;
+            timebody.transform.rotation = rotation;
         }
 
-        return gameObject;
+        return timebody;
     }
 
-
-    public void Despawn(GameObject gameObject)
+    public void DespawnAll()
     {
-        gameObject.GetComponent<TimeBody>().SetActive(false);
-        objects.Add(gameObject);
+        for (int i=0; i<activeObjects.Count; i++)
+        {
+            Despawn(activeObjects[i]);
+        }
+    }
+
+    public void Despawn(TimeBody timebody)
+    {
+        timebody.SetActive(false);
+
+        activeObjects.Remove(timebody);
+        inactiveObjects.Add(timebody);
+    }
+
+    private void GetTimebodys()
+    {
+        var timebodys = GetComponentsInChildren<TimeBody>();
+
+        for (int i=0; i<timebodys.Length; i++)
+        {
+            inactiveObjects.Add(timebodys[i]);
+        }
+    }
+
+    private void SetPool()
+    {
+        for (int i = 0; i < inactiveObjects.Count; i++)
+        {
+            inactiveObjects[i].pool = this;
+        }
     }
 }
