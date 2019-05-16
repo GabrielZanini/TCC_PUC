@@ -7,10 +7,10 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] ObjectPool pool;
 
     public Vector2 spawningRate;
-    public Vector2 yAxisRange;
+    public Vector2 AxisRange;
 
     float nextSpawn = 0f;
-    float nextY = 0f;
+    float nextX = 0f;
 
     
     Vector3 position;
@@ -48,7 +48,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void RecalculateSpawn()
     {
         nextSpawn = Random.Range(spawningRate.x, spawningRate.y);
-        nextY = Random.Range(yAxisRange.x, yAxisRange.y);
-        position = new Vector3(position.x, nextY, 0);
+        nextX = Random.Range(AxisRange.x, AxisRange.y);
+        position = new Vector3(nextX, 0, position.z);
     }
 }

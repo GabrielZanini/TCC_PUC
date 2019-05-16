@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScrollBackground : MonoBehaviour
 {
     public float scrollSpeed;
-    public float tileSizeZ;
+    public float tileSize;
     public float counter = 0f;
 
     private Vector3 startPosition;
@@ -25,7 +25,7 @@ public class ScrollBackground : MonoBehaviour
 
         counter += Time.deltaTime;
 
-        float newPosition = Mathf.Repeat(counter * scrollSpeed, tileSizeZ);
-        transform.position = startPosition - Vector3.right * newPosition;
+        float newPosition = Mathf.Repeat(counter * scrollSpeed, tileSize);
+        transform.position = startPosition - Vector3.forward * newPosition;
     }
 }

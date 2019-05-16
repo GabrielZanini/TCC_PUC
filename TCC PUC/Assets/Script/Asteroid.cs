@@ -44,7 +44,7 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector3.back * speed * Time.deltaTime);
 
         if (despawnCounter <= 0f)
         {

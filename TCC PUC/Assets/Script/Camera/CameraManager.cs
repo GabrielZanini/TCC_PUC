@@ -8,7 +8,6 @@ public class CameraManager : MonoBehaviour
     public float portraitSize = 0f;
 
     Camera cam;
-    Quaternion landscapeRotation = Quaternion.Euler(0,0,-90);
 
 
     private void Awake()
@@ -26,12 +25,10 @@ public class CameraManager : MonoBehaviour
         if (Screen.height > Screen.width)
         {
             cam.orthographicSize = portraitSize;
-            transform.rotation = landscapeRotation;
         }
         else
         {
             cam.orthographicSize = landscapeSize;
-            transform.rotation = Quaternion.identity;
         }
     }
 

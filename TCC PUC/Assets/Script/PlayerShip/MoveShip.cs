@@ -5,8 +5,8 @@ using UnityEngine;
 public class MoveShip : MonoBehaviour
 {
     public bool canGoBackwards = false;
-
     public bool canRotate;
+    public Transform spawnPoint;
 
     float v;
     float h;
@@ -16,8 +16,10 @@ public class MoveShip : MonoBehaviour
     Animator animator;
 
     public bool hasTouchInput = false;
+
+
+
     Touch touch;
-    Touch[] touches;
     int fingerId;
     Vector3 touchPosition;
     Vector3 touchOriginalPosition;
@@ -33,6 +35,12 @@ public class MoveShip : MonoBehaviour
         if (input == null)
         {
             Destroy(this);
+        }
+
+        if (spawnPoint != null)
+        {
+            transform.position = spawnPoint.position;
+            transform.rotation = spawnPoint.rotation;
         }
     }
 
@@ -58,7 +66,7 @@ public class MoveShip : MonoBehaviour
             return;
         }
 
-        transform.Translate(Vector3.forward * h * status.currentSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * h * status.currentSpeed * Time.deltaTime);
     }
 
     private void MoveVertical()
@@ -69,7 +77,7 @@ public class MoveShip : MonoBehaviour
         }
         else
         {
-            transform.Translate(Vector3.up * v * status.currentSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * v * status.currentSpeed * Time.deltaTime);
         }
 
         animator.SetFloat("Vertical", v);

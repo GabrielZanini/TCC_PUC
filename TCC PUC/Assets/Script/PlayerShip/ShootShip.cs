@@ -85,9 +85,10 @@ public class ShootShip : MonoBehaviour
     {
         for (int i = 0; i < bulletsPerShoot; i++)
         {
-            var bulletTimebody = BulletPool.Instance.Spawn(gunHole.position, Quaternion.Euler(0,90,0) * Quaternion.Euler((startAngle - i * bulletAngle), 0,0));
+            gun.localRotation = Quaternion.Euler(0, (startDistance - i * bulletDistance), 0);
 
-            gun.localRotation = Quaternion.Euler((startDistance + i * bulletDistance), 0, 0);
+            var bulletTimebody = BulletPool.Instance.Spawn(gunHole.position, Quaternion.Euler(0, (startAngle - i * bulletAngle), 0));
+
 
             if (bulletTimebody != null)
             {
@@ -99,7 +100,7 @@ public class ShootShip : MonoBehaviour
     void CastRay()
     {
         totalDistance = (bulletsPerShoot - 1) * bulletDistance;
-        startDistance = 0 - totalDistance / 2f;
+        startDistance = totalDistance / 2f;
 
         totalArc = (bulletsPerShoot - 1) * bulletAngle;
         startAngle = totalArc / 2f;
@@ -107,10 +108,10 @@ public class ShootShip : MonoBehaviour
         // DEBUG
         for (int i = 0; i < bulletsPerShoot; i++)
         {
-            gun.localRotation = Quaternion.Euler((startDistance + i * bulletDistance), 0, 0);
+            gun.localRotation = Quaternion.Euler((startDistance - i * bulletDistance), 0, 0);
 
             //Debug.Log("I: " + i + " - Angle: " + (startAngle + i * bulletAngle));
-            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * Vector3.right * 1000, Color.yellow);
+            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * Vector3.forward * 1000, Color.yellow);
         }
 
         // Cast
