@@ -7,7 +7,13 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] List<TimeBody> activeObjects = new List<TimeBody>();
     [SerializeField] List<TimeBody> inactiveObjects = new List<TimeBody>();
 
-    
+    public int ActiveCount {
+        get { return activeObjects.Count; }
+    }
+    public int InactiveCount {
+        get { return inactiveObjects.Count; }
+    }
+
     void Start()
     {
         GetTimebodys();

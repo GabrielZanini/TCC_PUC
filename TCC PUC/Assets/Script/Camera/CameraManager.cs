@@ -4,51 +4,116 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance { get; private set; }
+
+    public bool resizeByHorizontal = false;
+
     public float landscapeSize = 8f;
     public float portraitSize = 0f;
 
-    Camera cam;
+
+    public float width;
+    public float height;
+
+    [HideInInspector]public Camera camera;
 
 
     private void Awake()
     {
-        cam = GetComponent<Camera>();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        GetCamera();
+        GetNewSize();
     }
 
     private void Start()
     {
-        GetPortraitSize();
+        UpdateSize();
+        
+    }
+
+    private void FixedUpdate()
+    {
+        //UpdateSize();
     }
 
     private void Update()
     {
-        if (Screen.height > Screen.width)
-        {
-            cam.orthographicSize = portraitSize;
-        }
-        else
-        {
-            cam.orthographicSize = landscapeSize;
-        }
+        //UpdateSize();
     }
 
 
-
-    void GetPortraitSize()
+    void GetCamera()
     {
-        float x, y;
+        camera = GetComponent<Camera>();
 
-        x = Screen.width;
-        y = Screen.height;
-
-        if (x > y)
+        if (camera == null)
         {
-            portraitSize = x/y * landscapeSize;
+            camera = Camera.main;
+        }
+    }
+
+    void GetNewSize()
+    {
+        if (resizeByHorizontal)
+        {
+            GetLandscapeSize();
         }
         else
         {
-            portraitSize = y/x * landscapeSize;
+            GetPortraitSize();
         }
+    }
+
+    void GetPortraitSize()
+    {        
+        if (camera.aspect > 1)
+        {
+            landscapeSize = portraitSize / camera.aspect;
+        }
+        else
+        {
+            landscapeSize = portraitSize * camera.aspect;
+        }
+    }
+
+    void GetLandscapeSize()
+    {
+        if (camera.aspect > 1)
+        {
+            portraitSize = landscapeSize * camera.aspect;
+        }
+        else
+        {
+            portraitSize = landscapeSize / camera.aspect;
+        }
+    }
+
+    private void ReadCameraData()
+    {
+        height = camera.orthographicSize;
+        width = height * camera.aspect;
+    }
+
+    private void UpdateSize()
+    {
+        if (Screen.height > Screen.width)
+        {
+            camera.orthographicSize = portraitSize;
+        }
+        else
+        {
+            camera.orthographicSize = landscapeSize;
+        }
+
+        ReadCameraData();
     }
 
 

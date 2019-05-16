@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MoveShip : MonoBehaviour
 {
+    public Camera camera;
+
     public bool canGoBackwards = false;
     public bool canRotate;
     public Transform spawnPoint;
@@ -25,9 +27,11 @@ public class MoveShip : MonoBehaviour
     Vector3 touchOriginalPosition;
     Vector3 shipOriginalPosition;
     Vector3 shipOffsetPosition;
+    Vector3 newShipPosition;
 
     void Start()
     {
+        
         status = GetComponent<StatusShip>();
         input = GetComponent<ShipInput>();
         animator = GetComponent<Animator>();
@@ -111,7 +115,9 @@ public class MoveShip : MonoBehaviour
             }
 
             shipOffsetPosition = touchPosition - touchOriginalPosition;
-            transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
+            newShipPosition = CorrectNewPosition(shipOriginalPosition + shipOffsetPosition);
+
+            transform.position = Vector3.Lerp(transform.position, newShipPosition, 0.5f);
         }
         else
         {
@@ -135,7 +141,9 @@ public class MoveShip : MonoBehaviour
             }
 
             shipOffsetPosition = touchPosition - touchOriginalPosition;
-            transform.position = Vector3.Lerp(transform.position, shipOriginalPosition + shipOffsetPosition, 0.2f);
+            newShipPosition = CorrectNewPosition(shipOriginalPosition + shipOffsetPosition);
+
+            transform.position = Vector3.Lerp(transform.position, newShipPosition, 0.5f);
         }
         else
         {
@@ -151,6 +159,14 @@ public class MoveShip : MonoBehaviour
         } 
 
         transform.Rotate(Vector3.up * h * status.angularSpeed * Time.deltaTime);
+    }
+
+    Vector3 CorrectNewPosition(Vector3 newPosition)
+    {
+        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.width + 1, 0, 0 - CameraManager.Instance.height + 1));
+        newPosition = Vector3.Min(newPosition, new Vector3(CameraManager.Instance.width - 1, 0, CameraManager.Instance.height - 1));
+
+        return newPosition;
     }
     
 }

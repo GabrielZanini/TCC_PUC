@@ -16,7 +16,7 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDisactivate;
 
-    Collider collider;
+    Collider[] colliders;
     StatusBase status;
 
     int hp = 0;
@@ -26,7 +26,7 @@ public class TimeBody : MonoBehaviour
 
     void Awake()
     {
-        collider = GetComponent<Collider>();
+        colliders = GetComponentsInChildren<Collider>();
         status = GetComponent<StatusBase>();
     }
 
@@ -128,9 +128,12 @@ public class TimeBody : MonoBehaviour
 
     void SetColliderEnable(bool enable)
     {
-        if (collider != null)
+        if (colliders != null)
         {
-            collider.enabled = enable;
+            for (int i=0; i<colliders.Length; i++)
+            {
+                colliders[i].enabled = enable;
+            }
         }
     }
 

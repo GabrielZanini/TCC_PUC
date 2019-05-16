@@ -33,8 +33,10 @@ public class DebugCanvas : MonoBehaviour
         text = "";
         text += "FPS: " + (1f / Time.deltaTime).ToString("0.0") + "\n";
         text += "Camera Resolution: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + "\n";
+        text += "Camera Aspect: " + Camera.main.aspect + "\n";
         text += "Screen Orientation: " + Screen.orientation.ToString() + "\n";
-        text += "Screen Resolution: " + Screen.width + "x" + Screen.height + "\n";
+        text += "Bullets: " + BulletPool.Instance.ActiveCount + "\n";
+        text += "Asteroid: " + AsteroidPool.Instance.ActiveCount + "\n";
 
         fps.text = text;
     }
