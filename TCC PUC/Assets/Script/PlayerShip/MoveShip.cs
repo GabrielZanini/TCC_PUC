@@ -8,7 +8,7 @@ public class MoveShip : MonoBehaviour
 
     public bool canGoBackwards = false;
     public bool canRotate;
-    public Transform spawnPoint;
+    public float spawnHeight = 10f;
 
     float v;
     float h;
@@ -41,11 +41,8 @@ public class MoveShip : MonoBehaviour
             Destroy(this);
         }
 
-        if (spawnPoint != null)
-        {
-            transform.position = spawnPoint.position;
-            transform.rotation = spawnPoint.rotation;
-        }
+        transform.position = new Vector3(0, 0, spawnHeight - CameraManager.Instance.portraitSize);
+        transform.rotation = Quaternion.identity;
     }
 
 

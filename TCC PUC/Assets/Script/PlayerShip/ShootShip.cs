@@ -90,10 +90,10 @@ public class ShootShip : MonoBehaviour
             var bulletTimebody = BulletPool.Instance.Spawn(gunHole.position, Quaternion.Euler(0, (startAngle - i * bulletAngle), 0));
 
 
-            if (bulletTimebody != null)
-            {
-                bulletTimebody.GetComponent<Bullet>().speed = status.shootingSpeed;
-            }
+            //if (bulletTimebody != null)
+            //{
+            //    bulletTimebody.GetComponent<Bullet>().speed = status.shootingSpeed;
+            //}
         }
     }
 

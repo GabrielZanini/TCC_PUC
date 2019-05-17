@@ -118,7 +118,10 @@ public class TimeBody : MonoBehaviour
 
     void EnableCollider()
     {
-        SetColliderEnable(true);
+        if (isActive)
+        {
+            SetColliderEnable(true);
+        }        
     }
 
     void DisableCollider()
@@ -147,12 +150,12 @@ public class TimeBody : MonoBehaviour
             PointInTime pointInTime = pointsInTime[0];
 
             transform.position = pointInTime.position;
-            transform.rotation = pointInTime.rotation;
+            //transform.rotation = pointInTime.rotation;
             
-            if (status != null)
-            {
-                status.currentHp = pointInTime.hp;
-            }
+            //if (status != null)
+            //{
+            //    status.currentHp = pointInTime.hp;
+            //}
 
             if (pointInTime.isActive)
             {

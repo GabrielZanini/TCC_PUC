@@ -7,19 +7,23 @@ public class TimeController : MonoBehaviour
 {
     public static TimeController Instance { get; private set; }
 
-
+    [Header("Bools")]
     public bool isRewinding = false;
     public bool isRecording = false;
     public bool isSlowdown = false;
     public bool isOverloaded = false;
 
+    [Header("Control Buttons")]
     public string rewindButton = "Fire1";
     public string slowdownButton = "Fire2";
 
+    [Header("Time Parameters")]
     public float maxTimeRewind = 3f;
     public float rewindTime = 3f;
     public float overloadTime = 2f;
+    [Range(0f, 1f)] public float slowdownScale = 0.5f;
 
+    [Header("Counters")]
     public float rewindCounter = 0f;
     public float recordCounter = 0f;
     public float overloadCounter = 0f;
@@ -59,7 +63,7 @@ public class TimeController : MonoBehaviour
 
     void CheckTime()
     {
-        if (isRewinding || isSlowdown)
+        if (isRewinding)
         {
             if (rewindCounter <= 0)
             {
@@ -82,7 +86,7 @@ public class TimeController : MonoBehaviour
             isOverloaded = false;
         }
 
-        if (!isRewinding && !isSlowdown && !isOverloaded)
+        if (!isRewinding && !isOverloaded)
         {
             if (rewindCounter >= rewindTime)
             {
@@ -97,14 +101,9 @@ public class TimeController : MonoBehaviour
 
     void GetInput()
     {
-        if (isOverloaded)
+        if (!isOverloaded)
         {
-            return;
-        }
-
-        if (!isSlowdown)
-        {
-            if (Input.GetButtonDown(rewindButton) && !isSlowdown)
+            if (Input.GetButtonDown(rewindButton))
             {
                 StartRewind();
             }
@@ -115,18 +114,15 @@ public class TimeController : MonoBehaviour
             }
         }
         
-        if (!isRewinding)
-        {
-            if (Input.GetButtonDown(slowdownButton))
-            {
-                StartSlowdown();
-            }
 
-            if (Input.GetButtonUp(slowdownButton))
-            {
-                StopSlowdown();
-            }
-        }        
+        if (Input.GetButtonDown(slowdownButton))
+        {
+            StartSlowdown();
+        }
+        else if (Input.GetButtonUp(slowdownButton))
+        {
+            StopSlowdown();
+        }
     }
 
     void FixedUpdate()
@@ -151,15 +147,13 @@ public class TimeController : MonoBehaviour
     {
         isRewinding = true;
         isRecording = false;
-        isSlowdown = false;
-        Time.timeScale = 0.5f;
         OnStartRewind.Invoke();
     }
 
     public void StopRewind()
     {
         isRewinding = false;
-        Time.timeScale = 1f;
+        isRecording = true;
         OnStopRewind.Invoke();
     }
 
@@ -168,8 +162,7 @@ public class TimeController : MonoBehaviour
     public void StartSlowdown()
     {
         isSlowdown = true;
-        isRewinding = false;
-        Time.timeScale = 0.5f;
+        Time.timeScale = slowdownScale;
         OnStartSlowdown.Invoke();
     }
 

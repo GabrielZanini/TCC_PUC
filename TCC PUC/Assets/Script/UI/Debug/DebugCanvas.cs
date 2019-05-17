@@ -31,12 +31,17 @@ public class DebugCanvas : MonoBehaviour
     private void PrintFPS()
     {
         text = "";
-        text += "FPS: " + (1f / Time.deltaTime).ToString("0.0") + "\n";
+        text += "FPS: " + ((1f / Time.deltaTime) * Time.timeScale) .ToString("0.0") + "\n";
         text += "Camera Resolution: " + Camera.main.scaledPixelWidth + "x" + Camera.main.scaledPixelHeight + "\n";
         text += "Camera Aspect: " + Camera.main.aspect + "\n";
         text += "Screen Orientation: " + Screen.orientation.ToString() + "\n";
         text += "Bullets: " + BulletPool.Instance.ActiveCount + "\n";
         text += "Asteroid: " + AsteroidPool.Instance.ActiveCount + "\n";
+        text += "Delta Time: " + Time.deltaTime + "\n";
+        text += "Fixed Delta Time: " + Time.fixedDeltaTime + "\n";
+        text += "Time Scale: " + Time.timeScale + "\n";
+        text += "UnscaledDeltaTime: " + Time.unscaledDeltaTime + "\n";
+
 
         fps.text = text;
     }

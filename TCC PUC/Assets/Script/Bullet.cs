@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("OnTriggerEnter - " + gameObject.name + " - Collision: " + other.name);
+        Debug.Log("OnTriggerEnter - Bullet - Collision: " + other.name);
 
         var otherStatus = other.gameObject.GetComponent<StatusBase>();
         
