@@ -163,8 +163,8 @@ public class MoveShip : MonoBehaviour
 
     Vector3 CorrectNewPosition(Vector3 newPosition)
     {
-        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.width + 1, 0, 0 - CameraManager.Instance.height + 1));
-        newPosition = Vector3.Min(newPosition, new Vector3(CameraManager.Instance.width - 1, 0, CameraManager.Instance.height - 1));
+        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.width / 2f + 1, 0, 0 - CameraManager.Instance.height / 2f + 1));
+        newPosition = Vector3.Min(newPosition, new Vector3(CameraManager.Instance.width / 2f - 1, 0, CameraManager.Instance.height / 2f - 1));
 
         return newPosition;
     }

@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class StatusBase : MonoBehaviour
 {
     public int maxHp = 10;
-    public int currentHp = 0;
+    [HideInInspector] public int currentHp = 0;
     public float maxSpeed = 1f;
-    public float currentSpeed = 1f;
+    [HideInInspector] public float currentSpeed = 1f;
 
     [HideInInspector]public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
@@ -33,11 +33,11 @@ public class StatusBase : MonoBehaviour
 
         if (moreHp > 0)
         {
-            OnLoseHp.Invoke();
+            OnGainHp.Invoke();
         }
         else
         {
-            OnGainHp.Invoke();
+            OnLoseHp.Invoke();
         }
 
         if (currentHp > maxHp)

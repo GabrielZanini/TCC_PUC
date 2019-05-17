@@ -7,12 +7,13 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] ObjectPool pool;
 
     public Vector2 spawningRate;
-    public Vector2 AxisRange;
 
     float nextSpawn = 0f;
     float nextX = 0f;
 
-    
+    float minAxis = 0f;
+    float maxAxis = 0f;
+
     Vector3 position;
 
 
@@ -23,11 +24,17 @@ public class AsteroidSpawner : MonoBehaviour
             pool = GetComponent<AsteroidPool>();
         }
         
-        position = transform.position;
+        
     }
 
     void Start()
     {
+        position = new Vector3(0, 0, CameraManager.Instance.height / 2f + 1);
+        transform.position = position;
+
+        maxAxis = CameraManager.Instance.width / 2f - 1;
+        minAxis = -maxAxis;
+
         RecalculateSpawn();
     }
 
@@ -48,7 +55,7 @@ public class AsteroidSpawner : MonoBehaviour
     public void RecalculateSpawn()
     {
         nextSpawn = Random.Range(spawningRate.x, spawningRate.y);
-        nextX = Random.Range(AxisRange.x, AxisRange.y);
+        nextX = Random.Range(minAxis, maxAxis);
         position = new Vector3(nextX, 0, position.z);
     }
 }

@@ -31,17 +31,17 @@ public class CameraManager : MonoBehaviour
 
         GetCamera();
         GetNewSize();
+        UpdateSize();
     }
 
     private void Start()
     {
-        UpdateSize();
         
     }
 
     private void FixedUpdate()
     {
-        //UpdateSize();
+        UpdateSize();
     }
 
     private void Update()
@@ -98,7 +98,7 @@ public class CameraManager : MonoBehaviour
 
     private void ReadCameraData()
     {
-        height = camera.orthographicSize;
+        height = camera.orthographicSize * 2;
         width = height * camera.aspect;
     }
 

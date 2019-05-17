@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ScrollBackground : MonoBehaviour
 {
-    public Camera camera;
     public float scrollSpeed;
     public float counter = 0f;
     public bool goBack = false;
@@ -12,13 +11,14 @@ public class ScrollBackground : MonoBehaviour
 
     private Vector3 startPosition;
     private float tilesScale;
-    float newPosition;
+    private float newPosition;
+    private Camera camera;
 
     void Start()
     {
         if (camera == null)
         {
-            camera = Camera.main;
+            camera = CameraManager.Instance.camera;
         }
 
         GetScale();
@@ -34,7 +34,7 @@ public class ScrollBackground : MonoBehaviour
 
     private void GetScale()
     {
-        tilesScale = camera.orthographicSize * camera.aspect * 2;
+        tilesScale = CameraManager.Instance.width;
         transform.localScale = Vector3.one * tilesScale;
     }
     

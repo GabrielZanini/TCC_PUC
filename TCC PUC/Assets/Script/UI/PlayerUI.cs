@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
 
-    public StatusShip statusPlayer;
-
-    public Slider timeBar;
-    public Slider lifeBar;
+    [SerializeField] StatusShip statusPlayer;
+    [SerializeField] Slider timeBar;
+    [SerializeField] Slider lifeBar;
 
     private void Start()
     {
