@@ -5,51 +5,94 @@ using UnityEngine.Events;
 
 public class StatusBase : MonoBehaviour
 {
-    public int maxHp = 10;
-    [HideInInspector] public int currentHp = 0;
+    [Header("Health")]
+    [SerializeField] private int maxHp = 10;
+    public int MaxHp {
+        get { return maxHp; }
+        set { maxHp = value; }
+    }
+    [HideInInspector] private int currentHp = 0;
+    public int CurrentHp {
+        get { return currentHp; }
+        set {
+            currentHp = value;
+            OnChangeHp.Invoke();
+        }
+    }
+
+    [Header("Speed")]
     public float maxSpeed = 1f;
     [HideInInspector] public float currentSpeed = 1f;
 
     [HideInInspector]public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
+    [HideInInspector] public UnityEvent OnChangeHp;
     [HideInInspector] public UnityEvent OnDeath;
 
     [HideInInspector] public UnityEvent OnGainSpeed;
     [HideInInspector] public UnityEvent OnLoseSpeed;
 
 
+
     private void Awake()
     {
-        currentHp = maxHp;
+        InicializeHealth();
     }
 
-    public void AddHp(int moreHp)
+    private void Start()
     {
-        //Debug.Log("AddHp - " + moreHp + " - " + gameObject.name);
+        GameManager.Instance.Level.OnRestart.AddListener(InicializeHealth);
+    }
 
-        if (moreHp == 0) return;
+    private void OnDestroy()
+    {
+        GameManager.Instance.Level.OnRestart.RemoveListener(InicializeHealth);
+    }
 
-        currentHp += moreHp;
 
-        if (moreHp > 0)
+    
+    private void InicializeHealth()
+    {
+        CurrentHp = MaxHp;
+    }
+
+
+    public void Heal(int health)
+    {
+        if (health <= 0) return;
+                
+        if (CurrentHp + health > maxHp)
         {
-            OnGainHp.Invoke();
+            CurrentHp = maxHp;
+            OnDeath.Invoke();
         }
         else
         {
-            OnLoseHp.Invoke();
+            CurrentHp += health;
         }
 
-        if (currentHp > maxHp)
-        {
-            currentHp = maxHp;
-        }
+        OnGainHp.Invoke();
+    }
 
-        if (currentHp <= 0)
+    public void TakeDamage(int damage)
+    {
+        if (damage <= 0) return;
+
+        if (CurrentHp - damage <= 0)
         {
+            CurrentHp = 0;
             OnDeath.Invoke();
         }
+        else
+        {
+            CurrentHp -= damage;
+        }
+
+        OnLoseHp.Invoke();
     }
+
+
+
 
     public void AddSpeed(float moreSpeed)
     {

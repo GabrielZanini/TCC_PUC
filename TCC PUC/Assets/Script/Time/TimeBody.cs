@@ -5,61 +5,61 @@ using UnityEngine.Events;
 
 public class TimeBody : MonoBehaviour
 {
-    public Enums.TimeBodyType bodyType = Enums.TimeBodyType.Projectile;
+    public Enums.TimeBodyType bodyType = Enums.TimeBodyType.Bullet;
 
     public bool isActive = false;
 
     public List<MonoBehaviour> scriptsToDisable = new List<MonoBehaviour>();
     public List<GameObject> objectsToDisable = new List<GameObject>();
+    public List<PointInTime> pointsInTime = new List<PointInTime>();
+
     public ObjectPool pool;
 
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDisactivate;
 
+    [HideInInspector] public StatusBase status;
+    [HideInInspector] public ScrollBackground scroll;
+
     Collider[] colliders;
-    StatusBase status;
+    PointInTime auxPointInTime;
+    
 
-    int hp = 0;
-
-    List<PointInTime> pointsInTime = new List<PointInTime>();
 
 
     void Awake()
     {
         colliders = GetComponentsInChildren<Collider>();
         status = GetComponent<StatusBase>();
+        scroll = GetComponent<ScrollBackground>();
     }
 
     void Start()
     {
-        if (bodyType != Enums.TimeBodyType.System)
-        {
-            TimeController.Instance.OnRewind.AddListener(Rewind);
-            TimeController.Instance.OnRecord.AddListener(Record);
-            TimeController.Instance.OnOverload.AddListener(ClearList);
-        }
+        TimeController.Instance.AddTimebody(this);
+
+        //TimeController.Instance.OnRewind.AddListener(Rewind);
+        //TimeController.Instance.OnRecord.AddListener(Record);
+        //TimeController.Instance.OnOverload.AddListener(ClearList);
 
         TimeController.Instance.OnStartRewind.AddListener(DisableScripts);
         TimeController.Instance.OnStartRewind.AddListener(DisableCollider);
-        TimeController.Instance.OnStopRewind.AddListener(EnableScripts);
-        TimeController.Instance.OnStopRewind.AddListener(EnableCollider);
+
+        TimeController.Instance.OnStopRewind.AddListener(Activate);
 
         SetActive(isActive);
     }
 
     void OnDestroy()
     {
-        if (bodyType != Enums.TimeBodyType.System)
-        {
-            TimeController.Instance.OnRewind.RemoveListener(Rewind);
-            TimeController.Instance.OnRecord.RemoveListener(Record);
-            TimeController.Instance.OnOverload.RemoveListener(ClearList);
-        }
+        //TimeController.Instance.OnRewind.RemoveListener(Rewind);
+        //TimeController.Instance.OnRecord.RemoveListener(Record);
+        //TimeController.Instance.OnOverload.RemoveListener(ClearList);
 
         TimeController.Instance.OnStartRewind.RemoveListener(DisableScripts);
         TimeController.Instance.OnStartRewind.RemoveListener(DisableCollider);
-        TimeController.Instance.OnStopRewind.RemoveListener(EnableScripts);
-        TimeController.Instance.OnStopRewind.RemoveListener(EnableCollider);
+
+        TimeController.Instance.OnStopRewind.RemoveListener(Activate);
     }
 
 
@@ -72,7 +72,7 @@ public class TimeBody : MonoBehaviour
     }
 
 
-    // Other Scripts
+    // Component Scripts
 
     void EnableScripts()
     {
@@ -95,12 +95,12 @@ public class TimeBody : MonoBehaviour
 
     // Objects
 
-    void EnableObjects()
+    public void EnableObjects()
     {
         SetObjectsEnable(true);
     }
 
-    void DisableObjects()
+    public void DisableObjects()
     {
         SetObjectsEnable(false);
     }
@@ -143,53 +143,80 @@ public class TimeBody : MonoBehaviour
 
     // Time Methods
 
-    void Rewind()
+    public void Rewind()
     {
         if (pointsInTime.Count > 0)
         {
-            PointInTime pointInTime = pointsInTime[0];
-
-            transform.position = pointInTime.position;
-            //transform.rotation = pointInTime.rotation;
-            
-            //if (status != null)
-            //{
-            //    status.currentHp = pointInTime.hp;
-            //}
-
-            if (pointInTime.isActive)
-            {
-                EnableObjects();
-            }
-            else
-            {
-                DisableObjects();
-            }
-
+            auxPointInTime = pointsInTime[0];
             pointsInTime.RemoveAt(0);
+
+            SetPointInTime(auxPointInTime);
         }
     }
 
-    void Record()
+    public void Record()
     {
-        if (pointsInTime.Count > Mathf.Round(TimeController.Instance.maxTimeRewind / Time.fixedDeltaTime))
+        if (pointsInTime.Count > TimeController.Instance.MaxPointsInTime)
         {
-            pointsInTime.RemoveAt(pointsInTime.Count - 1);
+            auxPointInTime = pointsInTime[pointsInTime.Count - 1];
+            pointsInTime.Remove(auxPointInTime);
         }
-        
-        if (status != null)
+        else
         {
-            hp = status.currentHp;
+            auxPointInTime = GetNewPointInTime();
         }
 
-        pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation, isActive, hp));
+        auxPointInTime.Save();
+
+        pointsInTime.Insert(0, auxPointInTime);
     }
 
-    void ClearList()
+
+    // Set Point In Time
+
+    public void SetPointInTime(int index)
+    {
+        if (index < pointsInTime.Count)
+        {
+            SetPointInTime(pointsInTime[index]);
+        }
+    }
+
+    public void SetPointInTime(PointInTime pointInTime)
+    {
+        pointInTime.Load();
+    }
+
+
+    // PIT List
+
+    public void ClearList()
     {
         pointsInTime.Clear();
     }
 
+    public void ShortList(int size)
+    {
+        while (pointsInTime.Count > size)
+        {
+            pointsInTime.RemoveAt(size);
+        }
+    }
+    
+
+    // Other Methods
+
+    void Activate()
+    {
+        if (pool != null)
+        {
+            Despawn();
+        }
+        else
+        {
+            SetActive(isActive);
+        }
+    } 
 
     public void SetActive(bool active)
     {
@@ -207,6 +234,41 @@ public class TimeBody : MonoBehaviour
         }
         
         isActive = active;
+    }    
+
+    private PointInTime GetNewPointInTime()
+    {
+        if (bodyType == Enums.TimeBodyType.Bullet)
+        {
+            auxPointInTime = new PointInTimeBullet();
+        }
+        else if (bodyType == Enums.TimeBodyType.Missile)
+        {
+            auxPointInTime = new PointInTimeMissile();
+        }
+        else if (bodyType == Enums.TimeBodyType.Ship)
+        {
+            auxPointInTime = new PointInTimeShip();
+        }
+        else if (bodyType == Enums.TimeBodyType.Asteroid)
+        {
+            auxPointInTime = new PointInTimeAsteroid();
+        }
+        else if (bodyType == Enums.TimeBodyType.Collectable)
+        {
+            auxPointInTime = new PointinTimeCollectable();
+        }
+        else if (bodyType == Enums.TimeBodyType.Background)
+        {
+            auxPointInTime = new PointInTimeBackground();
+        }
+        else
+        {
+            auxPointInTime = new PointInTime();
+        }
+
+        auxPointInTime.timebody = this;
+
+        return auxPointInTime;
     }
-    
 }

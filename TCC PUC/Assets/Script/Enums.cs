@@ -9,8 +9,11 @@ public static class Enums
     {
         System,
         Background,
-        Projectile,
-        Ship
+        Bullet,
+        Ship,
+        Asteroid,
+        Collectable,
+        Missile
     }
 
     public enum Direction
@@ -21,4 +24,15 @@ public static class Enums
         Right
     }
     
+    public enum Platform
+    {
+        Android,
+        Iphone,
+        Windows,
+        Mac,
+        Lunix,
+        Playstation,
+        Xbox,
+        Switch,
+    }
 }

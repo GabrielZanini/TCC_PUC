@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2599801274209963544}
   - component: {fileID: 215178872630587421}
   m_Layer: 5
-  m_Name: UI_ShipPlayer
+  m_Name: CanvasUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,9 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3885e7f9b1ed4b8b67505ca3c51fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timebody: {fileID: 7152724393694647314}
   status: {fileID: 7152724393694647313}
   lifeBar: {fileID: 5637435416997946659}
+  hideLifeAtMax: 1
 --- !u!1 &3515944558763827127
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04922517724bf054494f9d1cfea0223d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyType: 2
+  bodyType: 4
   isActive: 0
   scriptsToDisable:
   - {fileID: 7152724393694647325}
@@ -489,6 +489,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  status: {fileID: 0}
+  scroll: {fileID: 0}
 --- !u!114 &7152724393694647313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +504,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
-  currentHp: 0
   maxSpeed: 10
   currentSpeed: 5
   OnGainHp:
@@ -511,6 +512,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnLoseHp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnChangeHp:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -655,6 +661,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7152724393694647312}
     m_Modifications:
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -711,22 +729,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5715
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Name
-      value: Mesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9fc560fb6c36cc5439471998b3622721, type: 2}
+    - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
 --- !u!4 &7152724392929676718 stripped

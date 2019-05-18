@@ -40,7 +40,7 @@ public class ScrollBackground : MonoBehaviour
     
     private void Scroll()
     {
-        if (TimeController.Instance.isRewinding)
+        if (TimeController.Instance.IsRewinding)
         {
             counter -= Time.deltaTime;
         }
