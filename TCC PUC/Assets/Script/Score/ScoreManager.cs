@@ -75,6 +75,7 @@ public class ScoreManager : MonoBehaviour
         if (Current > highest)
         {
             Highest = Current;
+            Save();
             OnNewHighest.Invoke();
         }
     }
@@ -90,5 +91,15 @@ public class ScoreManager : MonoBehaviour
     void Load()
     {
         Highest = PlayerPrefs.GetInt("HighestScore");
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        Save();
+    }
+
+    private void OnApplicationQuit()
+    {
+        Save();
     }
 }
