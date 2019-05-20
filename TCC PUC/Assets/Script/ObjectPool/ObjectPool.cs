@@ -138,6 +138,15 @@ public class ObjectPool : MonoBehaviour
     }
 
 
+    public void DestroyObject(TimeBody timebody)
+    {
+        activeObjects.Remove(timebody);
+        inactiveObjects.Remove(timebody);
+
+        Destroy(timebody.gameObject);
+    }
+
+
     private void GetTimebodys()
     {
         var timebodys = GetComponentsInChildren<TimeBody>();

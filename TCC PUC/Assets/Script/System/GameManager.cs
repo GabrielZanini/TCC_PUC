@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
+        Debug.Log("GameManager.Instance");
+
         GetPlatform();
     }
 

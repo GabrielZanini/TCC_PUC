@@ -46,8 +46,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0.2}
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!54 &1380411986902633554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,6 +82,7 @@ MonoBehaviour:
   - {fileID: 6033173156273224755}
   objectsToDisable:
   - {fileID: 5954416243182872246}
+  smoothPosition: 0
   pool: {fileID: 0}
   OnActivate:
     m_PersistentCalls:
@@ -95,6 +96,8 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   status: {fileID: 0}
   scroll: {fileID: 0}
+  particle: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &6033173156273224755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4090650662268160946
 Transform:
   m_ObjectHideFlags: 0

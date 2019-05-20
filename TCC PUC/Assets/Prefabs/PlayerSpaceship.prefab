@@ -765,6 +765,7 @@ MonoBehaviour:
   canRotate: 0
   spawnHeight: 8
   marging: 1
+  margingBottom: 5
 --- !u!114 &547857050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,7 +783,7 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 1536
-  bulletsPerShoot: 5
+  bulletsPerShoot: 3
   bulletAngle: 0
   bulletDistance: 10
   autoShoot: 1
@@ -895,7 +896,7 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: f72a225f0b2bed84f9856eb68a9438a6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 06ad9b0885ed104478a7bacd01c0297c, type: 2}
+      objectReference: {fileID: 2100000, guid: 450916f129d9ecb43bb9c3bf91b05663, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f72a225f0b2bed84f9856eb68a9438a6, type: 3}
 --- !u!4 &5888991287077162961 stripped

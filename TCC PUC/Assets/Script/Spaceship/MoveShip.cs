@@ -28,11 +28,6 @@ public class MoveShip : MonoBehaviour
 
 
 
-    private void OnEnable()
-    {
-        GameManager.Instance.Level.OnBeforeStart.AddListener(StartShip);
-        GameManager.Instance.Level.OnPause.AddListener(ClearTouch);
-    }
 
     void Start()
     {
@@ -44,6 +39,11 @@ public class MoveShip : MonoBehaviour
         {
             Destroy(this);
         }
+
+        GameManager.Instance.Level.OnBeforeStart.AddListener(StartShip);
+        GameManager.Instance.Level.OnPause.AddListener(ClearTouch);
+
+        StartShip();
     }
     
     void Update()
@@ -65,7 +65,7 @@ public class MoveShip : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.Instance.Level.OnBeforeStart.RemoveListener(StartShip);
         GameManager.Instance.Level.OnPause.RemoveListener(ClearTouch);

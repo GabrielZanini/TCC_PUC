@@ -40,6 +40,8 @@ public class Bullet : MonoBehaviour
         if (otherStatus != null)
         {
             otherStatus.TakeDamage(damage);
+
+            GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
         }
 
         timeBody.Despawn();

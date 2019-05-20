@@ -12,6 +12,8 @@ public class TimeBody : MonoBehaviour
     public List<MonoBehaviour> scriptsToDisable = new List<MonoBehaviour>();
     public List<GameObject> objectsToDisable = new List<GameObject>();
 
+    public bool smoothPosition = false;
+
     public List<PointInTime> pointsInTime = new List<PointInTime>();
     private List<PointInTime> hiddenPointsInTime = new List<PointInTime>();
 
@@ -24,10 +26,17 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public StatusBase status;
     [HideInInspector] public ScrollBackground scroll;
     [HideInInspector] public ParticleEffect particle;
+    [HideInInspector] public Vector3 targetPosition;
+
+
+    int pointIndex = 0;
 
     Collider[] colliders;
+
+    //Aux Variebles
     PointInTime auxPointInTime;
-    
+    PointInTime previuos;
+    PointInTime next;
 
 
     void Awake()
@@ -44,6 +53,24 @@ public class TimeBody : MonoBehaviour
         SetActive(isActive);
     }
 
+    private void Update()
+    {
+        if (TimeController.Instance.IsRewinding && smoothPosition && isActive)
+        {
+            previuos = PreviuosPoint();
+            next = NextPoint();
+
+            if ((previuos == null || next == null) || !previuos.isActive || !next.isActive)
+            {
+                transform.position = targetPosition;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPosition, 0.5f);
+            }            
+        }
+    }
+
     void OnDestroy()
     {
         RemoveListener();
@@ -56,6 +83,47 @@ public class TimeBody : MonoBehaviour
         if (pool != null && isActive)
         {
             pool.Despawn(this);
+        }
+    }
+
+    public void DestroyObject()
+    {
+        TimeController.Instance.RemoveTimebody(this);
+
+        if (pool != null)
+        {
+            pool.DestroyObject(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
+
+    PointInTime PreviuosPoint()
+    {
+        if (pointIndex == 0)
+        {
+            return null;
+        }
+        else
+        {
+            return pointsInTime[pointIndex - 1];
+        }
+    }
+    
+    PointInTime NextPoint()
+    {
+        if (pointIndex == pointsInTime.Count - 1)
+        {
+            return null;
+        }
+        else
+        {
+            return pointsInTime[pointIndex + 1];
         }
     }
 
@@ -206,19 +274,21 @@ public class TimeBody : MonoBehaviour
     // Set Point In Time
 
     public void SetPointInTime(int index)
-    {        
+    {
+
         if(index < TimeController.Instance.MaxPointsInTime)
         {
             while (pointsInTime.Count <= index)
             {
                 pointsInTime.Add(GetNewPointInTime(false));
             }
-
+            
+            pointIndex = index;
             SetPointInTime(pointsInTime[index]);
         }
     }
 
-    public void SetPointInTime(PointInTime pointInTime)
+    void SetPointInTime(PointInTime pointInTime)
     {
         pointInTime.Load();
     }

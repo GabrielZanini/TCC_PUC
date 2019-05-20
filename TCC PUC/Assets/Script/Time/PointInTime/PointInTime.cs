@@ -18,7 +18,15 @@ public class PointInTime
         if (isActive)
         {
             timebody.EnableObjects();
-            timebody.transform.position = position;
+
+            if (timebody.smoothPosition)
+            {
+                timebody.targetPosition = position;
+            }
+            else
+            {
+                timebody.transform.position = position;
+            }            
         }
         else
         {

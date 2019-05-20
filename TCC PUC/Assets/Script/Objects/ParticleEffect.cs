@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParticleEffect : MonoBehaviour
 {
     public ParticleSystem particle;
-    private float lifeTime = 3f;
+    private float lifeTime = 0f;
     public float time = 0f;
 
     TimeBody timebody;
@@ -27,7 +27,11 @@ public class ParticleEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        lifeTime = particle.main.duration;
+        if (lifeTime >= 0f)
+        {
+            lifeTime = particle.main.duration;
+        }
+        
         time = 0f;
         particle.Play(true);
     }
@@ -60,6 +64,7 @@ public class ParticleEffect : MonoBehaviour
             else
             {
                 timebody.Despawn();
+                //timebody.DestroyObject();
             }
         }        
     }
@@ -68,16 +73,18 @@ public class ParticleEffect : MonoBehaviour
     void AddListeners()
     {
         TimeController.Instance.OnStopRewind.AddListener(EnableParticle);
+        timebody.OnActivate.AddListener(EnableParticle);
         timebody.OnDisactivate.AddListener(EnableParticle);
     }
 
     void RemoveListeners()
     {
         TimeController.Instance.OnStopRewind.RemoveListener(EnableParticle);
+        timebody.OnActivate.RemoveListener(EnableParticle);
         timebody.OnDisactivate.RemoveListener(EnableParticle);
     }
     
-
+    
     void DisableParticle()
     {
         //for (int i=0; i<particles.Length; i++)
@@ -86,31 +93,21 @@ public class ParticleEffect : MonoBehaviour
         //    particles[i].useAutoRandomSeed = false;
         //}
     }
-
-
+    
     void EnableParticle()
     {
         //Debug.Log(gameObject.name + " - EnableParticle - " + timebody.isActive.ToString());
         
-        //for (int i = 0; i < particles.Length; i++)
-        //{
-        //    particles[i].Stop(false);
-        //    particles[i].useAutoRandomSeed = isRandom[i];
-        //}
-
         if (timebody.isActive)
         {
-
             particle.Play(true);
         }
         else
         {
-            particle.Simulate(lifeTime);
             particle.Stop(true);
         }
     }
-
-
+    
 
     public void Simulate(float t)
     {

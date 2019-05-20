@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
     {
         if (GameManager.Instance.IsMobile && !hasStarted)
         {
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 StartLevel();
             }
@@ -130,9 +130,9 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Level - Restart");
 
-        BeforeStart();
-
         OnRestart.Invoke();
+
+        BeforeStart();
     }
     
     public void Stop()
