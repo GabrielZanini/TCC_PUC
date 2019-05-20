@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DebugCanvas : MonoBehaviour
 {
+    public bool hideAtStart = true;
+
     [Header("Data")]
     public Text data;
 
@@ -23,6 +25,16 @@ public class DebugCanvas : MonoBehaviour
     string text = "";
     bool hide = false;
 
+
+
+    private void Start()
+    {
+        if (hideAtStart)
+        {
+            Hide();
+        }
+    }
+
     private void Update()
     {
         PrintFPS();
@@ -33,6 +45,9 @@ public class DebugCanvas : MonoBehaviour
         PrintAngle();
         PrintBullets();
     }
+
+
+
 
     private void PrintFPS()
     {
@@ -59,7 +74,7 @@ public class DebugCanvas : MonoBehaviour
         text += "\n";
         text += "TimeBodys: " + TimeController.Instance.TimebodysCount + "\n";
         text += "Max PITs: " + TimeController.Instance.MaxPointsInTime + "\n";
-        text += "Points In Time: " + TimeController.Instance.PointsInTimeCount + "\n";
+        text += "Points in time: " + TimeController.Instance.PointsInTimeCount + "\n";
         text += "Current PIT: " + TimeController.Instance.CurrentPointInTime + "\n";
 
         text += "\n";
@@ -107,4 +122,67 @@ public class DebugCanvas : MonoBehaviour
 
         hide = !hide;
     }
+
+
+
+    public void NBullett(bool add)
+    {
+        if (add)
+        {
+            GameManager.Instance.Player.shoot.MoreBullets();
+        }
+        else
+        {
+            GameManager.Instance.Player.shoot.LessBullets();
+        }
+    }
+
+    public void NAngle(bool add)
+    {
+        if (add)
+        {
+            GameManager.Instance.Player.shoot.MoreAngle();
+        }
+        else
+        {
+            GameManager.Instance.Player.shoot.LessAngle();
+        }
+    }
+    
+    public void NDistance(bool add)
+    {
+        if (add)
+        {
+            GameManager.Instance.Player.shoot.MoreDistance();
+        }
+        else
+        {
+            GameManager.Instance.Player.shoot.LessDistance();
+        }
+    }
+
+    public void NRate(bool add)
+    {
+        if (add)
+        {
+            GameManager.Instance.Player.status.MoreShootingRate();
+        }
+        else
+        {
+            GameManager.Instance.Player.status.LessShootingRate();
+        }
+    }
+    
+    public void NSpeed(bool add)
+    {
+        if (add)
+        {
+            GameManager.Instance.Player.status.MoreShootingSpeed();
+        }
+        else
+        {
+            GameManager.Instance.Player.status.LessShootingSpeed();
+        }
+    }
+
 }

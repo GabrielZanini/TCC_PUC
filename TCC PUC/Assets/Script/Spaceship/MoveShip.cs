@@ -8,6 +8,7 @@ public class MoveShip : MonoBehaviour
     public bool canRotate;
     public float spawnHeight = 10f;
     public float marging = 1f;
+    public float margingBottom = 5f;
 
     float v;
     float h;
@@ -25,6 +26,14 @@ public class MoveShip : MonoBehaviour
     Vector3 shipOffsetPosition;
     Vector3 newShipPosition;
 
+
+
+    private void OnEnable()
+    {
+        GameManager.Instance.Level.OnBeforeStart.AddListener(StartShip);
+        GameManager.Instance.Level.OnPause.AddListener(ClearTouch);
+    }
+
     void Start()
     {
         status = GetComponent<StatusShip>();
@@ -35,8 +44,6 @@ public class MoveShip : MonoBehaviour
         {
             Destroy(this);
         }
-        
-        GameManager.Instance.Level.OnRestart.AddListener(StartShip);
     }
     
     void Update()
@@ -58,9 +65,10 @@ public class MoveShip : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        GameManager.Instance.Level.OnRestart.RemoveListener(StartShip);
+        GameManager.Instance.Level.OnBeforeStart.RemoveListener(StartShip);
+        GameManager.Instance.Level.OnPause.RemoveListener(ClearTouch);
     }
 
 
@@ -153,6 +161,12 @@ public class MoveShip : MonoBehaviour
         }
     }
 
+    private void ClearTouch()
+    {
+        fingerId = -1;
+        hasTouchInput = false;
+    }
+
     private void Rotate()
     {
         if (canGoBackwards && v < 0)
@@ -165,7 +179,7 @@ public class MoveShip : MonoBehaviour
 
     Vector3 CorrectNewPosition(Vector3 newPosition)
     {
-        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.landscapeSize + marging, 0, 0 - CameraManager.Instance.portraitSize + marging));
+        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.landscapeSize + marging, 0, 0 - CameraManager.Instance.portraitSize + marging + margingBottom));
         newPosition = Vector3.Min(newPosition, new Vector3(CameraManager.Instance.landscapeSize - marging, 0, CameraManager.Instance.portraitSize - marging));
 
         return newPosition;

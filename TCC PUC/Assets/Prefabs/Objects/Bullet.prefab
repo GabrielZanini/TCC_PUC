@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1380411986902633554}
   - component: {fileID: 1787198813054797460}
   - component: {fileID: 6033173156273224755}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1787198813054797460
 MonoBehaviour:
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 4090650662268160946}
   - component: {fileID: 7559198259609841656}
   - component: {fileID: 6185715540803631824}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

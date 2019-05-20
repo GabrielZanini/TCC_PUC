@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+
     [SerializeField] Enums.Platform platform;
     public Enums.Platform Platform {
         get { return platform; }
@@ -24,11 +25,26 @@ public class GameManager : MonoBehaviour
         private set { pools = value; }
     }
 
+    [SerializeField] AudioManager audio;
+    public AudioManager Audio {
+        get { return audio; }
+        private set { audio = value; }
+    }
+
+    [SerializeField] ShipManager player;
+    public ShipManager Player {
+        get { return player; }
+        private set { player = value; }
+    }
+    
+    
     public bool IsMobile {
         get {
             return Platform == Enums.Platform.Android || Platform == Enums.Platform.Iphone;
         }
     }
+
+    
 
     private void Awake()
     {

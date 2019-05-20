@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Bools")]
     [SerializeField] bool hasStarted = false;
     public bool HasStarted {
         get { return hasStarted; }
@@ -18,6 +19,14 @@ public class LevelManager : MonoBehaviour
         private set { isPlaying = value; }
     }
 
+
+    [SerializeField] bool isPaused = false;
+    public bool IsPaused {
+        get { return isPaused; }
+        private set { isPaused = value; }
+    }
+
+
     [SerializeField] bool isFinished = false;
     public bool IsFinished {
         get { return isFinished; }
@@ -25,16 +34,20 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
+    [HideInInspector] public UnityEvent OnBeforeStart;
     [HideInInspector] public UnityEvent OnStart;
-    [HideInInspector] public UnityEvent OnFinish;
-    [HideInInspector] public UnityEvent OnRestart;
+    [HideInInspector] public UnityEvent OnPause;
+    [HideInInspector] public UnityEvent OnContinue;
     [HideInInspector] public UnityEvent OnStop;
+    [HideInInspector] public UnityEvent OnRestart;
+    [HideInInspector] public UnityEvent OnFinish;
 
 
 
     void Start()
     {
-        
+        BeforeStart();
     }
 
     void Update()
@@ -43,11 +56,12 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
     void ReadInput()
     {
         if (GameManager.Instance.IsMobile && !hasStarted)
         {
-            if (Input.GetKey(KeyCode.Mouse0) || Input.touchCount > 0)
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 StartLevel();
             }
@@ -55,33 +69,89 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
+    void BeforeStart()
+    {
+        Debug.Log("Level - Before Start");
+
+        HasStarted = false;
+        IsPlaying = false;
+        IsPaused = false;
+        IsFinished = false;
+
+        OnBeforeStart.Invoke();
+    }
+    
     void StartLevel()
     {
+        Debug.Log("Level - Start");
+
         HasStarted = true;
         IsPlaying = true;
+
         OnStart.Invoke();
     }
 
     void FinishLevel()
     {
+        Debug.Log("Level - Finish");
+
         IsPlaying = false;
         IsFinished = true;
+
         OnFinish.Invoke();
     }
-    
+
+    public void Pause()
+    {
+        Debug.Log("Level - Pause");
+
+        IsPlaying = false;
+        IsPaused = true;
+
+        Time.timeScale = 0f;
+
+        OnPause.Invoke();
+    }
+
+    public void Continue()
+    {
+        Debug.Log("Level - Continue");
+
+        IsPlaying = true;
+        IsPaused = false;
+
+        Time.timeScale = 1f;
+
+        OnContinue.Invoke();
+    }
 
     public void Restart()
     {
-        IsPlaying = true;
-        IsFinished = false;
+        Debug.Log("Level - Restart");
 
-        OnStart.Invoke();
+        BeforeStart();
+
         OnRestart.Invoke();
     }
-
+    
     public void Stop()
     {
+        Debug.Log("Level - Stop");
+
         IsPlaying = false;
+        Time.timeScale = 1f;
+
         OnStop.Invoke();
+    }
+
+
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (IsPlaying)
+        {
+            Pause();
+        }        
     }
 }

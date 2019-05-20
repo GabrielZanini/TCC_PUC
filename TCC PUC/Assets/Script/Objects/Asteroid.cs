@@ -40,7 +40,10 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        Tranlate();
+        if (!GameManager.Instance.Level.IsPaused)
+        {
+            Tranlate();
+        }        
     }
 
     private void FixedUpdate()
@@ -50,6 +53,8 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log(gameObject.name + " - OnTriggerEnter - " + other.gameObject.name);
+
         var otherStatus = other.gameObject.GetComponent<StatusBase>();
 
         if (otherStatus != null)

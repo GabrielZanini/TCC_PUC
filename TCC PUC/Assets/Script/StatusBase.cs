@@ -24,6 +24,8 @@ public class StatusBase : MonoBehaviour
     public float maxSpeed = 1f;
     [HideInInspector] public float currentSpeed = 1f;
 
+    public Enums.EffectType deathEffect = Enums.EffectType.BigExplosion;
+
     [HideInInspector]public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
     [HideInInspector] public UnityEvent OnChangeHp;
@@ -81,7 +83,7 @@ public class StatusBase : MonoBehaviour
         if (CurrentHp - damage <= 0)
         {
             CurrentHp = 0;
-            OnDeath.Invoke();
+            Death();
         }
         else
         {
@@ -92,6 +94,12 @@ public class StatusBase : MonoBehaviour
     }
 
 
+
+    void Death()
+    {
+        SpawnEffect();
+        OnDeath.Invoke();
+    }
 
 
     public void AddSpeed(float moreSpeed)
@@ -116,5 +124,27 @@ public class StatusBase : MonoBehaviour
     }
 
 
-    
+    public void SpawnEffect()
+    {
+        if (deathEffect == Enums.EffectType.BigExplosion)
+        {
+            GameManager.Instance.Pools.BigExplosion.Spawn(transform.position);
+        }
+        else if (deathEffect == Enums.EffectType.DustExplosion)
+        {
+            GameManager.Instance.Pools.DustExplosion.Spawn(transform.position);
+        }
+        else if (deathEffect == Enums.EffectType.SmallExplosion)
+        {
+            GameManager.Instance.Pools.SmallExplosion.Spawn(transform.position);
+        }
+        else if (deathEffect == Enums.EffectType.TinyExplosion)
+        {
+            GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
+        }
+        else
+        {
+
+        }
+    }
 }

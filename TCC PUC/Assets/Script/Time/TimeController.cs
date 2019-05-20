@@ -95,9 +95,11 @@ public class TimeController : MonoBehaviour
         }
 
         MaxPointsInTime = (int)Mathf.Round(rewindTime / Time.fixedDeltaTime);
+    }
 
-        mobileRewindButton.OnPress.AddListener(StartRewind);
-        mobileRewindButton.OnRelease.AddListener(StopRewind);
+    void OnEnable()
+    {
+        AddListener();
     }
 
     void Start()
@@ -116,25 +118,27 @@ public class TimeController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isRewinding)
+        if (GameManager.Instance.Level.IsPlaying)
         {
-            Rewind();
-        }
-        else if (!isOverloaded)
-        {
-            Record();
-        }
+            if (isRewinding)
+            {
+                Rewind();
+            }
+            else if (!isOverloaded)
+            {
+                Record();
+            }
 
-        if (isSlowdown)
-        {
-            Slowdown();
-        }
+            if (isSlowdown)
+            {
+                Slowdown();
+            }
+        }        
     }
     
-    private void OnDestroy()
+    private void OnDisable()
     {
-        mobileRewindButton.OnPress.RemoveListener(StartRewind);
-        mobileRewindButton.OnRelease.RemoveListener(StopRewind);
+        RemoveListener();
     }
 
 
@@ -206,6 +210,32 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    void UpdateParameters()
+    {
+        PointsInTimeCount = timebodys[0].pointsInTime.Count;
+        CurrentPointInTime = pointsInTimeCount;
+    }
+
+    void AddListener()
+    {
+        mobileRewindButton.OnPress.AddListener(StartRewind);
+        mobileRewindButton.OnRelease.AddListener(StopRewind);
+
+        GameManager.Instance.Level.OnStart.AddListener(ClearList);
+        GameManager.Instance.Level.OnStop.AddListener(ClearList);
+    }
+
+    void RemoveListener()
+    {
+        mobileRewindButton.OnPress.RemoveListener(StartRewind);
+        mobileRewindButton.OnRelease.RemoveListener(StopRewind);
+
+        GameManager.Instance.Level.OnStart.RemoveListener(ClearList);
+        GameManager.Instance.Level.OnStop.RemoveListener(ClearList);
+    }
+
+
+    // Slowdown
 
     public void StartRewind()
     {
@@ -229,7 +259,6 @@ public class TimeController : MonoBehaviour
         OnStopRewind.Invoke();
     }
     
-
     public void Rewind()
     {
         if (GameManager.Instance.IsMobile)
@@ -261,6 +290,9 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    
+    // Record
+
     public void Record()
     {
         for (int i=0; i<timebodys.Count; i++)
@@ -277,7 +309,7 @@ public class TimeController : MonoBehaviour
     }
 
 
-
+    // Slowdown
 
     public void StartSlowdown()
     {
@@ -301,6 +333,8 @@ public class TimeController : MonoBehaviour
     }
 
 
+    // Overload
+
     public void Overload()
     {
         if (isRewinding)
@@ -312,6 +346,8 @@ public class TimeController : MonoBehaviour
     }
 
 
+    //Time Bodys
+
     public void AddTimebody(TimeBody timebody)
     {
         timebodys.Add(timebody);
@@ -322,25 +358,18 @@ public class TimeController : MonoBehaviour
         timebodys.Remove(timebody);
     }
 
-
-    private void UpdateParameters()
-    {
-        PointsInTimeCount = timebodys[0].pointsInTime.Count;
-        CurrentPointInTime = pointsInTimeCount;
-    }
-
-
     public void ClearList()
     {
-        //Debug.Log("TimeController - ClearList");
+        Debug.Log("TimeController - ClearList");
 
         for (int i = 0; i < timebodys.Count; i++)
         {
-            timebodys[i].ShortList(CurrentPointInTime - 1);
+            timebodys[i].ShortList(CurrentPointInTime);
         }
 
         UpdateParameters();
     }
+
 
 
 

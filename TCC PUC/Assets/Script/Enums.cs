@@ -12,8 +12,9 @@ public static class Enums
         Bullet,
         Ship,
         Asteroid,
-        Collectable,
-        Missile
+        PickUp,
+        Missile,
+        Particle
     }
 
     public enum Direction
@@ -34,5 +35,13 @@ public static class Enums
         Playstation,
         Xbox,
         Switch,
+    }
+
+    public enum EffectType
+    {
+        BigExplosion,
+        DustExplosion,
+        SmallExplosion,
+        TinyExplosion,
     }
 }

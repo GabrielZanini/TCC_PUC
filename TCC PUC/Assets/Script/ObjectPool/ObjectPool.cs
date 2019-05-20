@@ -25,26 +25,29 @@ public class ObjectPool : MonoBehaviour
         get { return InactiveCount + ActiveCount; }
     }
 
+
+
     void Start()
     {
         GetTimebodys();
         DespawnAll();
         SetPool();
 
-        GameManager.Instance.Level.OnRestart.AddListener(DespawnAll);
+        GameManager.Instance.Level.OnBeforeStart.AddListener(DespawnAll);
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.Level.OnRestart.RemoveListener(DespawnAll);
+        GameManager.Instance.Level.OnBeforeStart.AddListener(DespawnAll);
     }
+
 
 
     public TimeBody Spawn()
     {
         if (InactiveCount == 0)
         {
-            if (maxCount > TotalCount)
+            if (maxCount > TotalCount && prefab != null)
             {
                 CreateObject();
             }
@@ -53,14 +56,14 @@ public class ObjectPool : MonoBehaviour
                 return null;
             }            
         }
-
+        
         var timebody = inactiveObjects[0];
 
         inactiveObjects.RemoveAt(0);
         activeObjects.Add(timebody);
-
+        
         timebody.SetActive(true);
-
+        
         return timebody;
     }
 
@@ -88,6 +91,32 @@ public class ObjectPool : MonoBehaviour
 
         return timebody;
     }
+        
+    public TimeBody SpwanRandom()
+    {
+        if (InactiveCount == 0)
+        {
+            if (maxCount > TotalCount && prefab != null)
+            {
+                CreateObject();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        int index = Random.Range(0, inactiveObjects.Count);
+        var timebody = inactiveObjects[index];
+
+        inactiveObjects.RemoveAt(index);
+        activeObjects.Add(timebody);
+
+        timebody.SetActive(true);
+
+        return timebody;
+    }
+
 
 
     public void DespawnAll()
@@ -129,8 +158,11 @@ public class ObjectPool : MonoBehaviour
 
     private void CreateObject()
     {
-        var timebody =  Instantiate(prefab, transform).GetComponent<TimeBody>();
-        timebody.pool = this;
-        Despawn(timebody);
+        if (prefab != null)
+        {
+            var timebody = Instantiate(prefab, transform).GetComponent<TimeBody>();
+            timebody.pool = this;
+            Despawn(timebody);
+        }        
     }
 }

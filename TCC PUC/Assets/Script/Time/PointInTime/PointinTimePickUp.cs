@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointinTimeCollectable : PointInTime
+public class PointinTimePickUp : PointInTime
 {
     public override void Load()
     {

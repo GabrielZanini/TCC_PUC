@@ -5,7 +5,10 @@ using UnityEngine;
 public class ShipManager : MonoBehaviour
 {
     public TimeBody timebody;
-    public StatusBase status;
+    public StatusShip status;
+    public MoveShip movement;
+    public ShipInput input;
+    public ShootShip shoot;
 
     private void Start()
     {

@@ -11,33 +11,59 @@ public class TimeBody : MonoBehaviour
 
     public List<MonoBehaviour> scriptsToDisable = new List<MonoBehaviour>();
     public List<GameObject> objectsToDisable = new List<GameObject>();
-    public List<PointInTime> pointsInTime = new List<PointInTime>();
 
-    public ObjectPool pool;
+    public List<PointInTime> pointsInTime = new List<PointInTime>();
+    private List<PointInTime> hiddenPointsInTime = new List<PointInTime>();
+
+    [HideInInspector] public ObjectPool pool;
+
 
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDisactivate;
-
+    
     [HideInInspector] public StatusBase status;
     [HideInInspector] public ScrollBackground scroll;
+    [HideInInspector] public ParticleEffect particle;
 
     Collider[] colliders;
     PointInTime auxPointInTime;
     
 
 
-
     void Awake()
     {
-        colliders = GetComponentsInChildren<Collider>();
-        status = GetComponent<StatusBase>();
-        scroll = GetComponent<ScrollBackground>();
+        GetComponents();
     }
 
     void Start()
     {
         TimeController.Instance.AddTimebody(this);
 
+        AddListener();
+
+        SetActive(isActive);
+    }
+
+    void OnDestroy()
+    {
+        RemoveListener();
+    }
+
+
+
+    public void Despawn()
+    {
+        if (pool != null && isActive)
+        {
+            pool.Despawn(this);
+        }
+    }
+
+
+    // Listners
+
+    void AddListener()
+    {
         //TimeController.Instance.OnRewind.AddListener(Rewind);
         //TimeController.Instance.OnRecord.AddListener(Record);
         //TimeController.Instance.OnOverload.AddListener(ClearList);
@@ -47,10 +73,10 @@ public class TimeBody : MonoBehaviour
 
         TimeController.Instance.OnStopRewind.AddListener(Activate);
 
-        SetActive(isActive);
+        GameManager.Instance.Level.OnRestart.AddListener(ClearList);
     }
 
-    void OnDestroy()
+    void RemoveListener()
     {
         //TimeController.Instance.OnRewind.RemoveListener(Rewind);
         //TimeController.Instance.OnRecord.RemoveListener(Record);
@@ -60,15 +86,8 @@ public class TimeBody : MonoBehaviour
         TimeController.Instance.OnStartRewind.RemoveListener(DisableCollider);
 
         TimeController.Instance.OnStopRewind.RemoveListener(Activate);
-    }
 
-
-    public void Despawn()
-    {
-        if (pool != null && isActive)
-        {
-            pool.Despawn(this);
-        }
+        GameManager.Instance.Level.OnRestart.RemoveListener(ClearList);
     }
 
 
@@ -149,6 +168,7 @@ public class TimeBody : MonoBehaviour
         {
             auxPointInTime = pointsInTime[0];
             pointsInTime.RemoveAt(0);
+            //DeletePointinTimeAt(0);
 
             SetPointInTime(auxPointInTime);
         }
@@ -159,10 +179,21 @@ public class TimeBody : MonoBehaviour
         if (pointsInTime.Count > TimeController.Instance.MaxPointsInTime)
         {
             auxPointInTime = pointsInTime[pointsInTime.Count - 1];
+            
             pointsInTime.Remove(auxPointInTime);
+            //DeletePointinTime(auxPointInTime);
         }
         else
         {
+            //if (hiddenPointsInTime.Count > 0)
+            //{
+            //    auxPointInTime = ReUsePointInTime();
+            //}
+            //else
+            //{
+            //    auxPointInTime = GetNewPointInTime();
+            //}
+
             auxPointInTime = GetNewPointInTime();
         }
 
@@ -175,9 +206,14 @@ public class TimeBody : MonoBehaviour
     // Set Point In Time
 
     public void SetPointInTime(int index)
-    {
-        if (index < pointsInTime.Count)
+    {        
+        if(index < TimeController.Instance.MaxPointsInTime)
         {
+            while (pointsInTime.Count <= index)
+            {
+                pointsInTime.Add(GetNewPointInTime(false));
+            }
+
             SetPointInTime(pointsInTime[index]);
         }
     }
@@ -192,15 +228,41 @@ public class TimeBody : MonoBehaviour
 
     public void ClearList()
     {
-        pointsInTime.Clear();
+        //while (pointsInTime.Count > 0)
+        //{
+        //    DeletePointinTime(pointsInTime[0]);
+        //}
+
+        while (pointsInTime.Count > 0)
+        {
+            pointsInTime.RemoveAt(0);
+        }
     }
 
     public void ShortList(int size)
     {
+        //Debug.Log("ShortList - " + gameObject.name + " - Count: " + pointsInTime.Count + " - Size: " + size);
+
+        //while (pointsInTime.Count > size)
+        //{
+        //    DeletePointinTime(pointsInTime[size]);
+        //}
+        
         while (pointsInTime.Count > size)
         {
-            pointsInTime.RemoveAt(size);
+            pointsInTime.RemoveAt(size - 1);
         }
+    }
+    
+    void DeletePointinTimeAt(int index)
+    {
+        DeletePointinTime(pointsInTime[index]);
+    }
+
+    void DeletePointinTime(PointInTime pointInTime)
+    {
+        pointsInTime.Remove(pointInTime);
+        hiddenPointsInTime.Add(pointInTime);
     }
     
 
@@ -208,7 +270,8 @@ public class TimeBody : MonoBehaviour
 
     void Activate()
     {
-        if (pool != null)
+
+        if (pool != null && !isActive)
         {
             Despawn();
         }
@@ -218,8 +281,21 @@ public class TimeBody : MonoBehaviour
         }
     } 
 
+    void GetComponents()
+    {
+        colliders = GetComponentsInChildren<Collider>();
+
+        status = GetComponent<StatusBase>();
+        scroll = GetComponent<ScrollBackground>();
+        particle = GetComponent<ParticleEffect>();
+    }
+
     public void SetActive(bool active)
     {
+        //Debug.Log(gameObject.name + " - TimeBody.SetActive - Active: " + active.ToString());
+
+        isActive = active;
+
         SetScriptsEnable(active);
         SetObjectsEnable(active);
         SetColliderEnable(active);
@@ -232,8 +308,6 @@ public class TimeBody : MonoBehaviour
         {
             OnDisactivate.Invoke();
         }
-        
-        isActive = active;
     }    
 
     private PointInTime GetNewPointInTime()
@@ -254,13 +328,17 @@ public class TimeBody : MonoBehaviour
         {
             auxPointInTime = new PointInTimeAsteroid();
         }
-        else if (bodyType == Enums.TimeBodyType.Collectable)
+        else if (bodyType == Enums.TimeBodyType.PickUp)
         {
-            auxPointInTime = new PointinTimeCollectable();
+            auxPointInTime = new PointinTimePickUp();
         }
         else if (bodyType == Enums.TimeBodyType.Background)
         {
             auxPointInTime = new PointInTimeBackground();
+        }
+        else if (bodyType == Enums.TimeBodyType.Particle)
+        {
+            auxPointInTime = new PointInTimeParticle();
         }
         else
         {
@@ -270,5 +348,25 @@ public class TimeBody : MonoBehaviour
         auxPointInTime.timebody = this;
 
         return auxPointInTime;
+    }
+
+
+    private PointInTime GetNewPointInTime(bool active)
+    {
+        auxPointInTime = GetNewPointInTime();
+
+        auxPointInTime.isActive = active;
+
+        return auxPointInTime;
+    }
+
+
+    private PointInTime ReUsePointInTime()
+    {
+        PointInTime pointInTime = hiddenPointsInTime[0];
+
+        hiddenPointsInTime.RemoveAt(0);
+
+        return pointInTime;
     }
 }
