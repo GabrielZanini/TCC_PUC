@@ -11,6 +11,7 @@ public class Asteroid : MonoBehaviour
     Vector3 rotation;
     float speed;
     public float lifeTime = 3f;
+    public int points = 10;
 
     float despawnCounter = 0f;
     TimeBody timebody;
@@ -89,7 +90,7 @@ public class Asteroid : MonoBehaviour
     void Death()
     {
         //Boom
-
+        GameManager.Instance.Score.Add(points);
         timebody.Despawn();
     }
 }

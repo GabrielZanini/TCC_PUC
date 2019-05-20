@@ -36,8 +36,14 @@ public class GameManager : MonoBehaviour
         get { return player; }
         private set { player = value; }
     }
-    
-    
+
+    [SerializeField] ScoreManager score;
+    public ScoreManager Score {
+        get { return score; }
+        private set { score = value; }
+    }
+
+
     public bool IsMobile {
         get {
             return Platform == Enums.Platform.Android || Platform == Enums.Platform.Iphone;
