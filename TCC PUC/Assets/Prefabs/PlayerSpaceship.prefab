@@ -348,9 +348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3885e7f9b1ed4b8b67505ca3c51fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: {fileID: 7705742626160985280}
+  status: {fileID: 8291628941404942032}
   lifeBar: {fileID: 1093606811}
   hideLifeAtMax: 0
+  hideBeforeStart: 0
 --- !u!1 &1595531407
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +741,7 @@ MonoBehaviour:
   status: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
+  bullet: {fileID: 0}
   audio: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2411336268020461224
@@ -790,14 +792,16 @@ MonoBehaviour:
   maxBarrels: 3
   barrelAngle: 10
   barrelMaxAngle: 90
-  bulletAngle: 0
-  bulletMaxAngle: 90
+  muzzleAngle: 0
+  muzzlesMaxAngle: 90
   bulletPool: {fileID: 0}
   bulletdamage: 1
   bulletSpeed: 30
   bulletRate: 0.1
-  autoShoot: 1
-  canShoot: 1
+  inColor: {r: 1, g: 1, b: 1, a: 1}
+  outColor: {r: 0, g: 0, b: 1, a: 1}
+  isLocked: 0
+  isTriggerPulled: 0
   audio: {fileID: 2411336268020461224}
 --- !u!1 &1352387610207713539
 GameObject:
@@ -1058,10 +1062,10 @@ GameObject:
   - component: {fileID: 5944963692496991497}
   - component: {fileID: 5023579175131762022}
   - component: {fileID: 3090274017238769261}
-  - component: {fileID: 7705742626160985280}
+  - component: {fileID: 8291628941404942032}
   - component: {fileID: 6925002696348766379}
   - component: {fileID: 547857050}
-  - component: {fileID: 242437974116626423}
+  - component: {fileID: 8885030267875715289}
   m_Layer: 13
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -1180,6 +1184,7 @@ MonoBehaviour:
   status: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
+  bullet: {fileID: 0}
   audio: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3090274017238769261
@@ -1194,10 +1199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ccaab11f0912345b2503b6e59fd369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newPosition: {x: 0, y: 0, z: 0}
+  AutoMovemente: 1
   vertical: 0
   horizontal: 0
-  shoot: 0
---- !u!114 &7705742626160985280
+  autoshoot: 1
+--- !u!114 &8291628941404942032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1206,12 +1213,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3234200816637188330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92d5f2d352df794ba4f8b00ff470009, type: 3}
+  m_Script: {fileID: 11500000, guid: f76299cbcceec0c48b478079483d66ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
+  currentHp: 0
   maxSpeed: 15
-  currentSpeed: 10
+  angularSpeed: 180
+  currentSpeed: 1
+  smoothness: 1
   deathEffect: 0
   OnGainHp:
     m_PersistentCalls:
@@ -1243,10 +1253,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  angularSpeed: 180
-  slowdownModifier: 1.5
-  shootingRate: 0.1
-  shootingSpeed: 40
 --- !u!114 &6925002696348766379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,7 +1284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guns:
   - {fileID: 7684264618153191169}
---- !u!114 &242437974116626423
+--- !u!114 &8885030267875715289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1291,7 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timebody: {fileID: 5023579175131762022}
-  status: {fileID: 7705742626160985280}
+  status: {fileID: 8291628941404942032}
   movement: {fileID: 6925002696348766379}
   input: {fileID: 3090274017238769261}
   shoot: {fileID: 547857050}

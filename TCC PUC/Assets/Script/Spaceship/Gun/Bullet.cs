@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(TimeBody))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] TimeBody timeBody;
@@ -10,9 +12,17 @@ public class Bullet : MonoBehaviour
     public float lifeTime = 2f;
     public int damage;
 
+    public SpriteRenderer inRender;
+    public SpriteRenderer outRender;
+
     float despawnCounter = 0f;
 
-    
+
+    private void Reset()
+    {
+        timeBody = GetComponent<TimeBody>();
+    }
+
     void Awake()
     {
         timeBody.OnActivate.AddListener(ResetCounter);

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TimeBody))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(TimeBody))]
 public class AudioManager : MonoBehaviour
 {
     [Header("Source")]
@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour
     private void Reset()
     {
         source = GetComponent<AudioSource>();
+        source.playOnAwake = false;
         timebody = GetComponent<TimeBody>();
         timebody.scriptsToDisable.Add(this);
     }
@@ -48,7 +49,7 @@ public class AudioManager : MonoBehaviour
         AddListener();
         UpdateSource();
 
-        if (playAtStar)
+        if (playAtStar && timebody.isActive)
         {
             Play();
         }

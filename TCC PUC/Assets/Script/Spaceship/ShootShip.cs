@@ -6,6 +6,8 @@ public class ShootShip : MonoBehaviour
 {
     public List<Gun> guns = new List<Gun>();
 
+
+
     private void Start()
     {
         for (int i = 0; i < guns.Count; i++)
@@ -13,21 +15,40 @@ public class ShootShip : MonoBehaviour
             guns[i].gameObject.SetActive(true);
         }
     }
+    
+        
 
-
-    public void MoreBullet()
-    {
-        for (int i=0; i<guns.Count; i++)
-        {
-            guns[i].MoreBullet();
-        }
-    }
-
-    public void LessBullet()
+    public void PullTriggers()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBullet();
+            guns[i].PullTrigger();
+        }
+    }
+
+    public void ReleaseTriggers()
+    {        
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].ReleaseTrigger();
+        }
+    }
+
+
+
+    public void MoreBullets()
+    {
+        for (int i=0; i<guns.Count; i++)
+        {
+            guns[i].MoreBullets();
+        }
+    }
+
+    public void LessBullets()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].LessBullets();
         }
     }
 
@@ -47,19 +68,19 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-    public void MoreBulletAngle()
+    public void MoreMuzzleAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].MoreBulletAngle();
+            guns[i].MoreMuzzleAngle();
         }
     }
 
-    public void LessBulletAngle()
+    public void LessMuzzleAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBulletAngle();
+            guns[i].LessMuzzleAngle();
         }
     }
 

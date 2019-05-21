@@ -6,7 +6,7 @@ public class Gun : MonoBehaviour
 {
     [Header("Barrels")]
     [SerializeField] List<Barrel> barrels = new List<Barrel>();
-
+    
 
     [Header("Barrels Setting")]
     [Range(1,10)][SerializeField] int maxBarrels = 10;
@@ -27,26 +27,32 @@ public class Gun : MonoBehaviour
         set { barrelMaxAngle = value; RotateBarrels(); }
     }
 
+    [Header("Muzzle Settings")]
+    [SerializeField] float muzzleAngle = 0f;
+    public float MuzzleAngle {
+        get { return muzzleAngle; }
+        set { muzzleAngle = value; CalculateMuzzlesOffste(); }
+    }
+    [SerializeField] float muzzlesMaxAngle = 90f;
+    public float MuzzlesMaxAngle {
+        get { return muzzlesMaxAngle; }
+        set { muzzlesMaxAngle = value; CalculateMuzzlesOffste(); }
+    }
+
+
     [Header("Bullet Settings")]
-    [SerializeField] float bulletAngle = 0f;
-    public float BulletAngle {
-        get { return bulletAngle; }
-        set { bulletAngle = value; CalculateMuzzlesOffste(); }
-    }
-    [SerializeField] float bulletMaxAngle = 90f;
-    public float BulletMaxAngle {
-        get { return bulletMaxAngle; }
-        set { bulletMaxAngle = value; CalculateMuzzlesOffste(); }
-    }
-
-
-    [Header("Bullet Spwaning")]
     public ObjectPool bulletPool;
     public int bulletdamage = 1;
     public float bulletSpeed = 30f;
     [Range(0.01f, 1f)] public float bulletRate = 0.1f;
-    public bool autoShoot = true;
-    public bool canShoot = true;
+    public Color inColor = Color.white;
+    public Color outColor = Color.blue;
+
+
+    [Header("Control")]
+    public bool isLocked = false;
+    public bool isTriggerPulled = false;
+
 
     [Header("Audio")]
     [SerializeField] AudioManager audio;
@@ -55,8 +61,7 @@ public class Gun : MonoBehaviour
     // AUx variables
     private float timer = 0f;
     Quaternion forwardRotation;
-    TimeBody timebody;
-    Bullet bullet;
+    TimeBody bulletTimebody;
 
 
     private void Awake()
@@ -70,57 +75,34 @@ public class Gun : MonoBehaviour
     {
         AjustBarrols();
     }
-
-
+    
     void Update()
     {
-        if (GameManager.Instance.Level.IsPlaying)
+        if (isTriggerPulled && !isLocked)
         {
-            if (autoShoot)
+            if (timer <= 0f)
             {
-                AutoShoot();
+                timer = bulletRate;
+                Shoot();
             }
             else
             {
-                ManualShoot();
+                timer -= Time.deltaTime;
             }
         }
     }
 
-    void AutoShoot()
+    public void PullTrigger()
     {
-        if (timer <= 0f)
-        {
-            timer = bulletRate;
-            Shoot();
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-        }
+        isTriggerPulled = true;
+    }
+    
+    public void ReleaseTrigger()
+    {
+        isTriggerPulled = false;
     }
 
-    void ManualShoot()
-    {
-        if (timer <= 0f)
-        {
-            if (Input.GetButton("Jump"))
-            {
-                timer = bulletRate;
 
-                Shoot();
-            }
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            timer = 0f;
-        }
-    }
 
     void Shoot()
     {
@@ -128,11 +110,13 @@ public class Gun : MonoBehaviour
 
         for (int i = 0; i < MaxBarrels; i++)
         {
-            timebody = bulletPool.Spawn(barrels[i].muzzle.position, forwardRotation * barrels[i].offset);
-            bullet = timebody.GetComponent<Bullet>();
+            bulletTimebody = bulletPool.Spawn(barrels[i].muzzle.position, forwardRotation * barrels[i].offset);
 
-            bullet.speed = bulletSpeed;
-            bullet.damage = bulletdamage;
+            bulletTimebody.bullet.speed = bulletSpeed;
+            bulletTimebody.bullet.damage = bulletdamage;
+
+            bulletTimebody.bullet.inRender.color = inColor;
+            bulletTimebody.bullet.outRender.color = outColor;
         }
 
         if (hasAudio)
@@ -185,12 +169,12 @@ public class Gun : MonoBehaviour
 
     void CalculateMuzzlesOffste()
     {
-        float totalAngle = (MaxBarrels - 1) * bulletAngle;
-        float offsetAngles = bulletAngle;
+        float totalAngle = (MaxBarrels - 1) * muzzleAngle;
+        float offsetAngles = muzzleAngle;
 
-        if (totalAngle > bulletMaxAngle)
+        if (totalAngle > muzzlesMaxAngle)
         {
-            totalAngle = bulletMaxAngle;
+            totalAngle = muzzlesMaxAngle;
             offsetAngles = totalAngle / (MaxBarrels - 1);
         }
 
@@ -206,34 +190,47 @@ public class Gun : MonoBehaviour
 
     // External Control
 
-    public void MoreBullet()
+    public void MoreBullets()
     {
-        MaxBarrels += 1;
+        if (MaxBarrels < 10)
+        {
+            MaxBarrels += 1;
+            AjustBarrols();
+        }        
     }
 
-    public void LessBullet()
+    public void LessBullets()
     {
-        MaxBarrels -= 1;
+        if (MaxBarrels > 1)
+        {
+            MaxBarrels -= 1;
+            AjustBarrols();
+        }
     }
     
     public void MoreBarrelAngle()
     {
         BarrelAngle += 1;
+        RotateBarrels();
+
     }
 
     public void LessBarrelAngle()
     {
         BarrelAngle -= 1;
+        RotateBarrels();
     }
     
-    public void MoreBulletAngle()
+    public void MoreMuzzleAngle()
     {
-        BulletAngle += 1;
+        MuzzleAngle += 1;
+        CalculateMuzzlesOffste();
     }
 
-    public void LessBulletAngle()
+    public void LessMuzzleAngle()
     {
-        BulletAngle -= 1;
+        MuzzleAngle -= 1;
+        CalculateMuzzlesOffste();
     }
 
     public void MoreBulletSpeed()
@@ -248,11 +245,14 @@ public class Gun : MonoBehaviour
 
     public void MoreBulletRate()
     {
-        bulletRate += 0.1f;
+        bulletRate += 0.01f;
     }
 
     public void LessBulletRate()
     {
-        bulletRate -= 0.1f;
+        if (bulletRate > 0.01f)
+        {
+            bulletRate -= 0.01f;
+        }        
     }
 }

@@ -4837,7 +4837,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4965,6 +4965,7 @@ MonoBehaviour:
   status: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
+  bullet: {fileID: 0}
   audio: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3902005932388166865

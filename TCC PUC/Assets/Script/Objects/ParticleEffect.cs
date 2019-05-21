@@ -41,7 +41,11 @@ public class ParticleEffect : MonoBehaviour
         }
         
         time = 0f;
-        particle.Play(true);
+
+        if (timebody.isActive)
+        {
+            particle.Play(true);
+        }        
     }
 
     void Start()

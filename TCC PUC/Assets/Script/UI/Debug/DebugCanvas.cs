@@ -60,18 +60,6 @@ public class DebugCanvas : MonoBehaviour
         text += "Screen Orientation: " + Screen.orientation.ToString() + "\n";
 
         text += "\n";
-        text += "Ative Bullets: " + BulletPool.Instance.ActiveCount + "\n";
-        text += "Inactive Bullets: " + BulletPool.Instance.InactiveCount + "\n";
-        text += "Total Bullets: " + BulletPool.Instance.TotalCount + "\n";
-        text += "Max Bullets: " + BulletPool.Instance.MaxCount + "\n";
-
-        text += "\n";
-        text += "Ative Asteroid: " + AsteroidPool.Instance.ActiveCount + "\n";
-        text += "Inactive Asteroid: " + AsteroidPool.Instance.InactiveCount + "\n";
-        text += "Total Asteroid: " + AsteroidPool.Instance.TotalCount + "\n";
-        text += "Max Asteroid: " + AsteroidPool.Instance.MaxCount + "\n";
-
-        text += "\n";
         text += "TimeBodys: " + TimeController.Instance.TimebodysCount + "\n";
         text += "Max PITs: " + TimeController.Instance.MaxPointsInTime + "\n";
         text += "Points in time: " + TimeController.Instance.PointsInTimeCount + "\n";
@@ -107,7 +95,7 @@ public class DebugCanvas : MonoBehaviour
 
     private void PrintAngle()
     {
-        angle.text = shootPlayer.guns[0].BulletAngle.ToString("0");
+        angle.text = shootPlayer.guns[0].MuzzleAngle.ToString("0");
     }
 
     private void PrintBullets()
@@ -129,11 +117,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBullet();
+            GameManager.Instance.Player.shoot.MoreBullets();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBullet();
+            GameManager.Instance.Player.shoot.LessBullets();
         }
     }
 
@@ -141,11 +129,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBulletAngle();
+            GameManager.Instance.Player.shoot.MoreMuzzleAngle();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBulletAngle();
+            GameManager.Instance.Player.shoot.LessMuzzleAngle();
         }
     }
     

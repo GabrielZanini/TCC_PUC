@@ -11,7 +11,9 @@ public class StatusBase : MonoBehaviour
         get { return maxHp; }
         set { maxHp = value; }
     }
-    [HideInInspector] private int currentHp = 0;
+
+    [SerializeField]
+    private int currentHp = 0;
     public int CurrentHp {
         get { return currentHp; }
         set {
@@ -22,8 +24,11 @@ public class StatusBase : MonoBehaviour
 
     [Header("Speed")]
     public float maxSpeed = 1f;
+    public float angularSpeed = 180f;
     [HideInInspector] public float currentSpeed = 1f;
+    public float smoothness = 1f;
 
+    [Header("FX")]
     public Enums.EffectType deathEffect = Enums.EffectType.BigExplosion;
 
     [HideInInspector]public UnityEvent OnGainHp;

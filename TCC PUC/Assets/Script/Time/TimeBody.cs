@@ -29,6 +29,7 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public StatusBase status;
     [HideInInspector] public ScrollBackground scroll;
     [HideInInspector] public ParticleEffect particle;
+    [HideInInspector] public Bullet bullet;
     [HideInInspector] public AudioManager audio;
     [HideInInspector] public Vector3 targetPosition;
 
@@ -389,6 +390,7 @@ public class TimeBody : MonoBehaviour
         status = GetComponent<StatusBase>();
         scroll = GetComponent<ScrollBackground>();
         particle = GetComponent<ParticleEffect>();
+        bullet = GetComponent<Bullet>();
     }
 
     public void SetActive(bool active)

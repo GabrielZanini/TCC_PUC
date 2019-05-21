@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public GameObject prefab;
+    [SerializeField] List<GameObject> prefabs = new List<GameObject>();
+
+    [Header("Settings")]
+    [SerializeField] int minCount = 0;
+    public int MinCount {
+        get { return minCount; }
+        private set { minCount = value; }
+    }
     [SerializeField] int maxCount = 10;
     public int MaxCount {
         get { return maxCount; }
         private set { maxCount = value; }
     }
 
-
+    [Header("Objects")]
     [SerializeField] List<TimeBody> activeObjects = new List<TimeBody>();
     [SerializeField] List<TimeBody> inactiveObjects = new List<TimeBody>();
 
@@ -30,6 +37,7 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         GetTimebodys();
+        CreateMinimum();
         DespawnAll();
         SetPool();
 
@@ -47,7 +55,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (InactiveCount == 0)
         {
-            if (maxCount > TotalCount && prefab != null)
+            if (maxCount > TotalCount && prefabs.Count > 0)
             {
                 CreateObject();
             }
@@ -98,7 +106,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (InactiveCount == 0)
         {
-            if (maxCount > TotalCount && prefab != null)
+            if (maxCount > TotalCount && prefabs.Count > 0)
             {
                 CreateObject();
             }
@@ -120,6 +128,13 @@ public class ObjectPool : MonoBehaviour
     }
 
 
+    public void CreateMinimum()
+    {
+        while (TotalCount < MinCount)
+        {
+            CreateObject();
+        }
+    }
 
     public void DespawnAll()
     {
@@ -169,10 +184,13 @@ public class ObjectPool : MonoBehaviour
 
     private void CreateObject()
     {
-        if (prefab != null)
+        if (prefabs.Count > 0)
         {
-            var timebody = Instantiate(prefab, transform).GetComponent<TimeBody>();
+            int index = TotalCount % prefabs.Count;
+
+            var timebody = Instantiate(prefabs[index], transform).GetComponent<TimeBody>();
             timebody.pool = this;
+
             Despawn(timebody);
         }        
     }

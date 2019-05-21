@@ -9,20 +9,21 @@ public class SpaceBodyUI : MonoBehaviour
     [SerializeField] Slider lifeBar;
 
     public bool hideLifeAtMax = true;
+    public bool hideBeforeStart = false;
 
 
     void Start()
     {
         lifeBar.maxValue = status.MaxHp;
 
-        status.OnChangeHp.AddListener(UpdateBar);
+        AddListeners();
 
         UpdateBar();
     }
 
     void OnDestroy()
     {
-        status.OnChangeHp.RemoveListener(UpdateBar);
+        RemoveListeners();
     }
 
     private void OnEnable()
@@ -31,13 +32,32 @@ public class SpaceBodyUI : MonoBehaviour
     }
 
 
+    // Listener
+
+    void AddListeners()
+    {
+        status.OnChangeHp.AddListener(UpdateBar);
+        GameManager.Instance.Level.OnBeforeStart.AddListener(UpdateBar);
+        GameManager.Instance.Level.OnStart.AddListener(UpdateBar);
+    }
+
+    void RemoveListeners()
+    {
+        status.OnChangeHp.RemoveListener(UpdateBar);
+        GameManager.Instance.Level.OnBeforeStart.RemoveListener(UpdateBar);
+        GameManager.Instance.Level.OnStart.RemoveListener(UpdateBar);
+    }
+
+
 
     void UpdateBar()
     {
         lifeBar.value = status.CurrentHp;
 
+        bool hideMax = hideLifeAtMax && lifeBar.value == lifeBar.maxValue;
+        bool hideStart = hideBeforeStart && !GameManager.Instance.Level.HasStarted;
 
-        if (hideLifeAtMax && lifeBar.value == lifeBar.maxValue)
+        if (hideMax || hideStart)
         {
             lifeBar.gameObject.SetActive(false);
         }

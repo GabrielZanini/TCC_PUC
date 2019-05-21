@@ -3,41 +3,121 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipInput : MonoBehaviour
-{
+{    
+    public Vector3 newPosition;
+    public bool AutoMovemente = true;
 
+    
     public float vertical = 0;
     public float horizontal = 0;
 
-    public bool shoot = false;
+    public InputButtonKey shoot = new InputButtonKey();
+    public bool autoshoot = true;
+
+
+
     public Touch touch;
+
+
+
+    private void Awake()
+    {
+        shoot.AddButton("Jump");
+    }
+
 }
 
 
-public class InputButton
+public class InputButtonKey
 {
-    private string _name;
-
-    public bool Up {
-        get {
-            return Input.GetButtonUp(_name);
-        }
-    }
+    private List<string> buttons = new List<string>();
+    private List<KeyCode> keys = new List<KeyCode>();
+    
     public bool Down {
         get {
-            return Input.GetButtonDown(_name);
+            return IsDown();
         }
     }
     public bool Hold {
         get {
-            return Input.GetButton(_name);
+            return IsHold();
+        }
+    }
+    public bool Up {
+        get {
+            return IsUp();
         }
     }
 
-
-    public InputButton(string name)
+    public void AddButton(string name)
     {
-        _name = name;
+        buttons.Add(name);
     }
+
+    public void RemoveButton(string name)
+    {
+        buttons.Remove(name);
+    }
+
+    public void AddKey(KeyCode key)
+    {
+        keys.Add(key);
+    }
+
+    public void RemovedKey(KeyCode key)
+    {
+        keys.Remove(key);
+    }
+
+
+    bool IsDown()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            if (Input.GetButtonDown(buttons[i])) return true;
+        }
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (Input.GetKeyDown(keys[i])) return true;
+        }
+
+        return false;
+    }
+
+    bool IsHold()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            if (Input.GetButton(buttons[i])) return true;
+        }
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (Input.GetKey(keys[i])) return true;
+        }
+
+        return false;
+    }
+
+    bool IsUp()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            if (Input.GetButtonUp(buttons[i])) return true;
+        }
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (Input.GetKeyUp(keys[i])) return true;
+        }
+
+        return false;
+    }
+
+
+
+
 
 }
 
