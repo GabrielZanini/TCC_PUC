@@ -86,7 +86,8 @@ public class AudioManager : MonoBehaviour
 
     void AddListener()
     {
-        GameManager.Instance.Audio.OnChangeVolume.AddListener(UpdateSource);
+        GameManager.Instance.Audio.OnChangeVolume.AddListener(UpdateVolume);
+        GameManager.Instance.Audio.OnMute.AddListener(UpdateMute);
 
         timebody.OnSpawn.AddListener(Replay);
         timebody.OnActivate.AddListener(Replay);
@@ -100,7 +101,8 @@ public class AudioManager : MonoBehaviour
 
     void RemoveListener()
     {
-        GameManager.Instance.Audio.OnChangeVolume.RemoveListener(UpdateSource);
+        GameManager.Instance.Audio.OnChangeVolume.RemoveListener(UpdateVolume);
+        GameManager.Instance.Audio.OnMute.RemoveListener(UpdateMute);
 
         timebody.OnSpawn.RemoveListener(Replay);
         timebody.OnActivate.RemoveListener(Replay);
@@ -120,12 +122,11 @@ public class AudioManager : MonoBehaviour
     {
         source.clip = clip;
         source.loop = loop;
-        source.mute = mute;
 
-        Stop();
+        UpdateMute();
         UpdateVolume();
     }
-    
+
     void UpdateVolume()
     {
         if (GameManager.Instance != null)
@@ -135,7 +136,19 @@ public class AudioManager : MonoBehaviour
         else
         {
             source.volume = volume;
-        }        
+        }
+    }
+
+    void UpdateMute()
+    {
+        if (GameManager.Instance != null)
+        {
+            source.mute = mute || GameManager.Instance.Audio.Mute;
+        }
+        else
+        {
+            source.mute = mute;
+        }
     }
 
 

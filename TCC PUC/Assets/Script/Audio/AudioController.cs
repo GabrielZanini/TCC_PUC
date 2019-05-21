@@ -10,21 +10,29 @@ public class AudioController : MonoBehaviour
     [SerializeField] float musicVolume = 1f;
     public float MusicVolume {
         get { return musicVolume; }
-        private set { musicVolume = value; OnChange(); }
+        private set { musicVolume = value; ChangeVolume(); }
     }
 
     [Range(0f, 1f)]
     [SerializeField] float sfxVolume = 1f;
     public float SfxVolume {
         get { return sfxVolume; }
-        private set { sfxVolume = value; OnChange(); }
+        private set { sfxVolume = value; ChangeVolume(); }
     }
 
     [Range(0f, 1f)]
     [SerializeField] float voiceVolume = 1f;
     public float VoiceVolume {
         get { return voiceVolume; }
-        private set { voiceVolume = value; OnChange(); }
+        private set { voiceVolume = value; ChangeVolume(); }
+    }
+
+
+    [Header("Mute")]
+    [SerializeField] bool mute = false;
+    public bool Mute {
+        get { return mute; }
+        set { mute = value; ChangeMute(); }
     }
 
 
@@ -35,6 +43,7 @@ public class AudioController : MonoBehaviour
 
 
     [HideInInspector] public UnityEvent OnChangeVolume;
+    [HideInInspector] public UnityEvent OnMute;
 
 
 
@@ -45,7 +54,8 @@ public class AudioController : MonoBehaviour
 
     private void OnValidate()
     {
-        OnChange();
+        ChangeVolume();
+        ChangeMute();
     }
 
     private void OnApplicationPause(bool pause)
@@ -86,19 +96,19 @@ public class AudioController : MonoBehaviour
     public void SetVolumeMusic(float volume)
     {
         musicVolume = volume;
-        OnChange();
+        ChangeVolume();
     }
 
     public void SetVolumeSfx(float volume)
     {
         sfxVolume = volume;
-        OnChange();
+        ChangeVolume();
     }
 
     public void SetVolumeVoice(float volume)
     {
         voiceVolume = volume;
-        OnChange();
+        ChangeVolume();
     }
 
 
@@ -149,10 +159,16 @@ public class AudioController : MonoBehaviour
 
     // Event
 
-    void OnChange()
+    void ChangeVolume()
     {
         Save();
         OnChangeVolume.Invoke();
+    }
+
+    void ChangeMute()
+    {
+        Save();
+        OnMute.Invoke();
     }
 
 
@@ -164,6 +180,7 @@ public class AudioController : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", MusicVolume);
         PlayerPrefs.SetFloat("SfxVolume", SfxVolume);
         PlayerPrefs.SetFloat("VoiceVolume", VoiceVolume);
+        PlayerPrefs.SetInt("Mute", Mute ? 1 : 0);
     }
 
     void Load()
@@ -195,6 +212,15 @@ public class AudioController : MonoBehaviour
             voiceVolume = 1;
         }
 
+
+        if (PlayerPrefs.HasKey("Mute"))
+        {
+            mute = PlayerPrefs.GetInt("Mute") == 1;
+        }
+        else
+        {
+            mute = false;
+        }
     }
 
 

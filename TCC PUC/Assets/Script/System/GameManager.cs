@@ -97,7 +97,12 @@ public class GameManager : MonoBehaviour
 
     void OnSetVibration()
     {
-        Save();
+        if (UseVibration)
+        {
+            Handheld.Vibrate();
+        }
+
+        Save(); 
         OnVibrationChange.Invoke();
     }
 
@@ -155,6 +160,10 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("Vibrate"))
         {
             useVibration = PlayerPrefs.GetInt("Vibrate") == 1;
+        }
+        else
+        {
+            useVibration = true;
         }
     }
 }

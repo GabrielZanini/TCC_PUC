@@ -9,6 +9,7 @@ public class SettingsPanel : MonoBehaviour
     public Slider sfx;
     public Slider voice;
 
+    public Toggle mute;
     public Toggle vibraterion;
 
 
@@ -35,6 +36,11 @@ public class SettingsPanel : MonoBehaviour
         GameManager.Instance.Audio.SetVolumeVoice(voice.value);
     }
 
+    public void UpdateMute()
+    {
+        GameManager.Instance.Audio.Mute = mute.isOn;
+    }
+
     public void UpdateVibration()
     {
         GameManager.Instance.UseVibration = vibraterion.isOn;
@@ -45,6 +51,11 @@ public class SettingsPanel : MonoBehaviour
         music.value = GameManager.Instance.Audio.MusicVolume;
         sfx.value = GameManager.Instance.Audio.SfxVolume;
         voice.value = GameManager.Instance.Audio.VoiceVolume;
+    }
+
+    void GetMute()
+    {
+        mute.isOn = GameManager.Instance.Audio.Mute;
     }
 
     void GetVibration()
