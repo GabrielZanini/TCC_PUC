@@ -72,7 +72,7 @@ public class LevelManager : MonoBehaviour
 
     void BeforeStart()
     {
-        Debug.Log("Level - Before Start");
+        //Debug.Log("Level - Before Start");
 
         HasStarted = false;
         IsPlaying = false;
@@ -84,7 +84,7 @@ public class LevelManager : MonoBehaviour
     
     void StartLevel()
     {
-        Debug.Log("Level - Start");
+        //Debug.Log("Level - Start");
 
         HasStarted = true;
         IsPlaying = true;
@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour
 
     void FinishLevel()
     {
-        Debug.Log("Level - Finish");
+        //Debug.Log("Level - Finish");
 
         IsPlaying = false;
         IsFinished = true;
@@ -104,7 +104,7 @@ public class LevelManager : MonoBehaviour
 
     public void Pause()
     {
-        Debug.Log("Level - Pause");
+        //Debug.Log("Level - Pause");
 
         IsPlaying = false;
         IsPaused = true;
@@ -116,7 +116,7 @@ public class LevelManager : MonoBehaviour
 
     public void Continue()
     {
-        Debug.Log("Level - Continue");
+        //Debug.Log("Level - Continue");
 
         IsPlaying = true;
         IsPaused = false;
@@ -128,7 +128,7 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
-        Debug.Log("Level - Restart");
+        //Debug.Log("Level - Restart");
 
         OnRestart.Invoke();
 
@@ -137,7 +137,7 @@ public class LevelManager : MonoBehaviour
     
     public void Stop()
     {
-        Debug.Log("Level - Stop");
+        //Debug.Log("Level - Stop");
 
         IsPlaying = false;
         Time.timeScale = 1f;

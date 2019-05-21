@@ -92,27 +92,27 @@ public class DebugCanvas : MonoBehaviour
 
     private void PrintSpeed()
     {
-        speed.text = statusPlayer.shootingSpeed.ToString("0");
+        speed.text = shootPlayer.guns[0].bulletSpeed.ToString("0");
     }
 
     private void PrintRate()
     {
-        rate.text = statusPlayer.shootingRate.ToString("0.00");
+        rate.text = shootPlayer.guns[0].bulletRate.ToString("0.00");
     }
 
     private void PrintDistance()
     {
-        distance.text = shootPlayer.bulletDistance.ToString("0");
+        distance.text = shootPlayer.guns[0].BarrelAngle.ToString("0");
     }
 
     private void PrintAngle()
     {
-        angle.text = shootPlayer.bulletAngle.ToString("0");
+        angle.text = shootPlayer.guns[0].BulletAngle.ToString("0");
     }
 
     private void PrintBullets()
     {
-        bullets.text = shootPlayer.bulletsPerShoot.ToString("0");
+        bullets.text = shootPlayer.guns[0].MaxBarrels.ToString("0");
     }
 
     public void Hide()
@@ -129,11 +129,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBullets();
+            GameManager.Instance.Player.shoot.MoreBullet();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBullets();
+            GameManager.Instance.Player.shoot.LessBullet();
         }
     }
 
@@ -141,11 +141,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreAngle();
+            GameManager.Instance.Player.shoot.MoreBulletAngle();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessAngle();
+            GameManager.Instance.Player.shoot.LessBulletAngle();
         }
     }
     
@@ -153,11 +153,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreDistance();
+            GameManager.Instance.Player.shoot.MoreBarrelAngle();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessDistance();
+            GameManager.Instance.Player.shoot.LessBarrelAngle();
         }
     }
 
@@ -165,11 +165,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.status.MoreShootingRate();
+            GameManager.Instance.Player.shoot.MoreBulletRate();
         }
         else
         {
-            GameManager.Instance.Player.status.LessShootingRate();
+            GameManager.Instance.Player.shoot.LessBulletRate();
         }
     }
     
@@ -177,11 +177,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.status.MoreShootingSpeed();
+            GameManager.Instance.Player.shoot.MoreBulletSpeed();
         }
         else
         {
-            GameManager.Instance.Player.status.LessShootingSpeed();
+            GameManager.Instance.Player.shoot.MoreBulletSpeed();
         }
     }
 

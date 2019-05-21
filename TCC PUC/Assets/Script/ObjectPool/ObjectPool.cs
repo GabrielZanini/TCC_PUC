@@ -61,7 +61,9 @@ public class ObjectPool : MonoBehaviour
 
         inactiveObjects.RemoveAt(0);
         activeObjects.Add(timebody);
-        
+
+        timebody.OnSpawn.Invoke();
+
         timebody.SetActive(true);
         
         return timebody;

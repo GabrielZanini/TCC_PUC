@@ -44,4 +44,11 @@ public static class Enums
         SmallExplosion,
         TinyExplosion,
     }
+
+    public enum AudioType
+    {
+        Music,
+        SFX,
+        Voice,
+    }
 }

@@ -2,27 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TimeBody))]
 public class ParticleEffect : MonoBehaviour
 {
     public ParticleSystem particle;
     private float lifeTime = 0f;
     public float time = 0f;
 
+    [SerializeField]
     TimeBody timebody;
-    ParticleSystem[] particles;
-    bool[] isRandom;
+    //ParticleSystem[] particles;
+    //bool[] isRandom;
 
 
     private void Awake()
     {
-        timebody = GetComponent<TimeBody>();
-        particles = GetComponentsInChildren<ParticleSystem>();
-        isRandom = new bool[particles.Length];
+        //particles = GetComponentsInChildren<ParticleSystem>();
+        //isRandom = new bool[particles.Length];
 
-        for (int i = 0; i < particles.Length; i++)
-        {
-            isRandom[i] = particles[i].useAutoRandomSeed;
-        }
+        //for (int i = 0; i < particles.Length; i++)
+        //{
+        //    isRandom[i] = particles[i].useAutoRandomSeed;
+        //}
+    }
+
+    private void Reset()
+    {
+        timebody = GetComponent<TimeBody>();
+        timebody.scriptsToDisable.Add(this);
+        particle = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnEnable()

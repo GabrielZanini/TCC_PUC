@@ -20,12 +20,16 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public ObjectPool pool;
 
 
+    [HideInInspector] public UnityEvent OnSpawn;
+    [HideInInspector] public UnityEvent OnDespawn;
+
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDisactivate;
-    
+
     [HideInInspector] public StatusBase status;
     [HideInInspector] public ScrollBackground scroll;
     [HideInInspector] public ParticleEffect particle;
+    [HideInInspector] public AudioManager audio;
     [HideInInspector] public Vector3 targetPosition;
 
 
@@ -46,8 +50,11 @@ public class TimeBody : MonoBehaviour
 
     void Start()
     {
-        TimeController.Instance.AddTimebody(this);
-
+        if (bodyType != Enums.TimeBodyType.System)
+        {
+            TimeController.Instance.AddTimebody(this);
+        }
+        
         AddListener();
 
         SetActive(isActive);
@@ -83,6 +90,7 @@ public class TimeBody : MonoBehaviour
         if (pool != null && isActive)
         {
             pool.Despawn(this);
+            OnDespawn.Invoke();
         }
     }
 
@@ -232,6 +240,11 @@ public class TimeBody : MonoBehaviour
 
     public void Rewind()
     {
+        if (bodyType == Enums.TimeBodyType.System)
+        {
+            return;
+        }
+
         if (pointsInTime.Count > 0)
         {
             auxPointInTime = pointsInTime[0];
@@ -244,6 +257,11 @@ public class TimeBody : MonoBehaviour
 
     public void Record()
     {
+        if (bodyType == Enums.TimeBodyType.System)
+        {
+            return;
+        }
+
         if (pointsInTime.Count > TimeController.Instance.MaxPointsInTime)
         {
             auxPointInTime = pointsInTime[pointsInTime.Count - 1];
@@ -275,8 +293,12 @@ public class TimeBody : MonoBehaviour
 
     public void SetPointInTime(int index)
     {
+        if (bodyType == Enums.TimeBodyType.System)
+        {
+            return;
+        }
 
-        if(index < TimeController.Instance.MaxPointsInTime)
+        if (index < TimeController.Instance.MaxPointsInTime)
         {
             while (pointsInTime.Count <= index)
             {
@@ -317,11 +339,20 @@ public class TimeBody : MonoBehaviour
         //{
         //    DeletePointinTime(pointsInTime[size]);
         //}
-        
-        while (pointsInTime.Count > size)
+
+        if (bodyType == Enums.TimeBodyType.System)
         {
-            pointsInTime.RemoveAt(size - 1);
+            return;
         }
+
+        if (size > 0)
+        {
+            while (pointsInTime.Count > size)
+            {
+                pointsInTime.RemoveAt(size - 1);
+            }
+        }        
+        
     }
     
     void DeletePointinTimeAt(int index)

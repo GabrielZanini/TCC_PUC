@@ -4,179 +4,95 @@ using UnityEngine;
 
 public class ShootShip : MonoBehaviour
 {
-    public Transform gun;
-    public Transform gunHole;
-    public LayerMask targetLayers;
+    public List<Gun> guns = new List<Gun>();
 
-
-    [Range(1, 10)] public uint bulletsPerShoot = 1;
-    [Range(0, 15)] public float bulletAngle = 5;
-    [Range(0, 15)] public float bulletDistance = 1f;
-    public bool autoShoot = false;
-    
-    private float timer = 0f;
-
-    StatusShip status;
-    RaycastHit hit;
-    bool canShoot;
-
-    float totalArc;
-    float startAngle;
-
-    float totalDistance;
-    float startDistance;
-
-
-
-    void Start()
+    private void Start()
     {
-        status = GetComponent<StatusShip>();
-    }
-
-    void Update()
-    {
-        if (GameManager.Instance.Level.IsPlaying)
+        for (int i = 0; i < guns.Count; i++)
         {
-            CastRay();
-
-            if (autoShoot)
-            {
-                AutoShoot();
-            }
-            else
-            {
-                ManualShoot();
-            }
-        }        
+            guns[i].gameObject.SetActive(true);
+        }
     }
 
 
-
-    void AutoShoot()
+    public void MoreBullet()
     {
-        if (timer <= 0f)
+        for (int i=0; i<guns.Count; i++)
         {
-            timer = status.shootingRate;
-            Shoot();
-        }
-        else
-        {
-            timer -= Time.deltaTime;
+            guns[i].MoreBullet();
         }
     }
 
-    void ManualShoot()
+    public void LessBullet()
     {
-        if (timer <= 0f)
+        for (int i = 0; i < guns.Count; i++)
         {
-            if (Input.GetButton("Jump"))
-            {
-                timer = status.shootingRate;
-
-                Shoot();
-            }
-        }
-        else
-        {
-            timer -= Time.deltaTime;
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            timer = 0f;
+            guns[i].LessBullet();
         }
     }
 
-    void Shoot()
+    public void MoreBarrelAngle()
     {
-        for (int i = 0; i < bulletsPerShoot; i++)
+        for (int i = 0; i < guns.Count; i++)
         {
-            gun.localRotation = Quaternion.Euler(0, (startDistance - i * bulletDistance), 0);
-
-            var bulletTimebody = BulletPool.Instance.Spawn(gunHole.position, Quaternion.Euler(0, (startAngle - i * bulletAngle), 0));
-            
-            if (bulletTimebody != null)
-            {
-                bulletTimebody.GetComponent<Bullet>().speed = status.shootingSpeed;
-            }
+            guns[i].MoreBarrelAngle();
         }
     }
 
-    void CastRay()
+    public void LessBarrelAngle()
     {
-        totalDistance = (bulletsPerShoot - 1) * bulletDistance;
-        startDistance = totalDistance / 2f;
-
-        totalArc = (bulletsPerShoot - 1) * bulletAngle;
-        startAngle = totalArc / 2f;
-
-        // DEBUG
-        for (int i = 0; i < bulletsPerShoot; i++)
+        for (int i = 0; i < guns.Count; i++)
         {
-            gun.localRotation = Quaternion.Euler((startDistance - i * bulletDistance), 0, 0);
-
-            //Debug.Log("I: " + i + " - Angle: " + (startAngle + i * bulletAngle));
-            Debug.DrawRay(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * Vector3.forward * 1000, Color.yellow);
-        }
-
-        // Cast
-        for (int i = -1; i < bulletsPerShoot + 1; i++)
-        {
-            canShoot = Physics.Raycast(gunHole.position, Quaternion.Euler(0, 0, (startAngle - i * bulletAngle)) * gunHole.forward, out hit, Mathf.Infinity, targetLayers);
-            if (canShoot) break;
+            guns[i].LessBarrelAngle();
         }
     }
 
-    
-
-
-
-     
-    public void MoreBullets()
+    public void MoreBulletAngle()
     {
-        if (bulletsPerShoot < 10)
+        for (int i = 0; i < guns.Count; i++)
         {
-            bulletsPerShoot++;
+            guns[i].MoreBulletAngle();
         }
     }
 
-    public void LessBullets()
+    public void LessBulletAngle()
     {
-        if (bulletsPerShoot > 1)
+        for (int i = 0; i < guns.Count; i++)
         {
-            bulletsPerShoot--;
+            guns[i].LessBulletAngle();
         }
     }
 
-    public void MoreAngle()
+    public void MoreBulletSpeed()
     {
-        if (bulletAngle < 15)
+        for (int i = 0; i < guns.Count; i++)
         {
-            bulletAngle++;
+            guns[i].MoreBulletSpeed();
         }
     }
 
-    public void LessAngle()
+    public void LessBulletSpeed()
     {
-        if (bulletAngle > 0)
+        for (int i = 0; i < guns.Count; i++)
         {
-            bulletAngle--;
-        } 
-    }
-    
-    public void MoreDistance()
-    {
-        if (bulletDistance < 15)
-        {
-            bulletDistance++;
+            guns[i].LessBulletSpeed();
         }
     }
 
-    public void LessDistance()
+    public void MoreBulletRate()
     {
-        if (bulletDistance > 0)
+        for (int i = 0; i < guns.Count; i++)
         {
-            bulletDistance--;
+            guns[i].MoreBulletRate();
         }
     }
+
+    public void LessBulletRate()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].LessBulletRate();
+        }
+    }
+
 }

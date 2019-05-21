@@ -14,6 +14,9 @@ public class GameplayCanvas : MonoBehaviour
     [Header("Pause")]
     public GameObject pausePanel;
 
+    [Header("Settings")]
+    public GameObject settingsPanel;
+
     [Header("Gameover")]
     public GameObject gameoverPanel;
 
@@ -69,7 +72,14 @@ public class GameplayCanvas : MonoBehaviour
         StartCoroutine(ShowgameGameover());
     }
 
-    void PauseGame()
+    void GameOver()
+    {
+        ClearUI();
+        gameoverPanel.SetActive(true);
+        scoresPanel.SetActive(true);
+    }
+
+    public void PauseGame()
     {
         ClearUI();
         pausePanel.SetActive(true);
@@ -82,12 +92,32 @@ public class GameplayCanvas : MonoBehaviour
         gameplayPanel.SetActive(true);
     }
 
+    public void SettingsGame()
+    {
+        ClearUI();
+        settingsPanel.SetActive(true);
+    }
+
+    public void SettingsBack()
+    {
+        if (GameManager.Instance.Level.IsPaused)
+        {
+            PauseGame();
+        }
+        else
+        {
+            GameOver();
+        }
+    }
+
+
 
     void ClearUI()
     {
         startPanel.SetActive(false);
         gameplayPanel.SetActive(false);
         pausePanel.SetActive(false);
+        settingsPanel.SetActive(false);
         gameoverPanel.SetActive(false);
         scoresPanel.SetActive(false);
     }
@@ -99,7 +129,6 @@ public class GameplayCanvas : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        gameoverPanel.SetActive(true);
-        scoresPanel.SetActive(true);
+        GameOver();
     }
 }

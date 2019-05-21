@@ -360,7 +360,7 @@ public class TimeController : MonoBehaviour
 
     public void ClearList()
     {
-        Debug.Log("TimeController - ClearList");
+        //Debug.Log("TimeController - ClearList");
 
         for (int i = 0; i < timebodys.Count; i++)
         {
