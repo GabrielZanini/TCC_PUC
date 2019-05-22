@@ -29,14 +29,14 @@ public class PlayerManager : ShipManager
     protected override void AddListeners()
     {
         base.AddListeners();
-        status.OnChangeHp.AddListener(Vibrate);
+        status.OnLoseHp.AddListener(Vibrate);
         GameManager.Instance.Level.OnRestart.AddListener(Revive);
     }
 
     protected override void RemoveListeners()
     {
         base.RemoveListeners();
-        status.OnChangeHp.RemoveListener(Vibrate);
+        status.OnLoseHp.RemoveListener(Vibrate);
         GameManager.Instance.Level.OnRestart.RemoveListener(Revive);
     }
 

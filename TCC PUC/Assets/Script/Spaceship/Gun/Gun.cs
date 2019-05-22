@@ -87,10 +87,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.Level.IsPlaying)
-        {
-            CheckForShoot();
-        }        
+        CheckForShoot();
     }
 
 

@@ -36,10 +36,16 @@ public class PlayerInput : ShipInput
     private void Start()
     {
         AddListeners();
+
+        if (autoShoot)
+        {
+            shootButton.SetFixValue(true, false, false);
+        }        
     }
 
     private void Update()
     {
+        //autoShoot = GameManager.Instance.Level.IsPlaying && GameManager.Instance.IsMobile;
         autoMovement = HasTouch;
         MoveTouch();
     }

@@ -146,6 +146,30 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    public void CheckLists(TimeBody timebody)
+    {
+        if (timebody.isActive)
+        {
+            inactiveObjects.Remove(timebody);
+
+            if (!activeObjects.Contains(timebody))
+            {
+                activeObjects.Add(timebody);
+            }
+        }
+        else
+        {
+            activeObjects.Remove(timebody);
+
+            if (!inactiveObjects.Contains(timebody))
+            {
+                inactiveObjects.Add(timebody);
+            }
+        }
+
+        timebody.SetActive(timebody.isActive);
+    }
+
     public void Despawn(TimeBody timebody)
     {
         timebody.SetActive(false);

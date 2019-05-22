@@ -45,6 +45,12 @@ public class InputButtonKey
     }
 
 
+    private bool fixValueDown;
+    private bool fixValueHold;
+    private bool fixValueUp;
+    private bool useFixValue;
+
+
     public InputButtonKey()
     {
     }
@@ -59,7 +65,7 @@ public class InputButtonKey
         AddButton(button);
     }
 
-    
+
     public void AddButton(string name)
     {
         buttons.Add(name);
@@ -86,9 +92,27 @@ public class InputButtonKey
         keys.Clear();
     }
 
+    public void SetFixValue(bool down, bool hold, bool up)
+    {
+        useFixValue = true;
+        fixValueDown = down;
+        fixValueHold = hold;
+        fixValueUp = up;
+    }
+
+    public void ClearFixValue()
+    {
+        useFixValue = false;
+    }
+
 
     bool IsDown()
     {
+        if (useFixValue)
+        {
+            return fixValueDown;
+        }
+
         for (int i = 0; i < buttons.Count; i++)
         {
             if (Input.GetButtonDown(buttons[i])) return true;
@@ -104,6 +128,11 @@ public class InputButtonKey
 
     bool IsHold()
     {
+        if (useFixValue)
+        {
+            return fixValueHold;
+        }
+
         for (int i = 0; i < buttons.Count; i++)
         {
             if (Input.GetButton(buttons[i])) return true;
@@ -119,6 +148,11 @@ public class InputButtonKey
 
     bool IsUp()
     {
+        if (useFixValue)
+        {
+            return fixValueUp;
+        }
+
         for (int i = 0; i < buttons.Count; i++)
         {
             if (Input.GetButtonUp(buttons[i])) return true;

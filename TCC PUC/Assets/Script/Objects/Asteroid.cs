@@ -38,7 +38,7 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance.Level.IsPaused)
+        if (!GameManager.Instance.Level.IsPaused && TimeController.Instance.IsRewinding)
         {
             Tranlate();
             Rotate();

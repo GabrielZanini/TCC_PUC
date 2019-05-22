@@ -58,6 +58,8 @@ public class TimeBody : MonoBehaviour
         
         AddListener();
 
+        PoulateList();
+
         SetActive(isActive);
     }
 
@@ -374,12 +376,26 @@ public class TimeBody : MonoBehaviour
 
     // Other Methods
 
+    void PoulateList()
+    {
+        while (pointsInTime.Count < TimeController.Instance.CurrentPointInTime)
+        {
+            pointsInTime.Add(GetNewPointInTime(false));
+        }
+    }
+
     void Activate()
     {
-
-        if (pool != null && !isActive)
+        if (pool != null)
         {
-            Despawn();
+            if (isActive)
+            {
+                pool.CheckLists(this);
+            }
+            else
+            {
+                Despawn();
+            }            
         }
         else
         {

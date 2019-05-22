@@ -28,33 +28,36 @@ public class ShipManager : ObjectManager
 
         Setlayer();
         SetMovement();
-        SetCombat();
+        //SetCombat();
     }
 
 
     private void Update()
     {
-        if (GameManager.Instance.Level.IsPlaying)
+        if (GameManager.Instance.Level.HasStarted)
         {
             Combat();
             Movement();
-        }
+        }        
     }
     
     
     
     void Combat()
     {
-        if (!input.autoShoot)
+        if (input.shootButton.Down)
         {
-            if (input.shootButton.Down)
-            {
-                shoot.PullTriggers();
-            }
-            else if (input.shootButton.Up)
-            {
-                shoot.ReleaseTriggers();
-            }
+            //Debug.Log("Pull Triger");
+            shoot.PullTriggers();
+        }
+        else if (input.shootButton.Up)
+        {
+            //Debug.Log("Dont Pull Triger");
+            shoot.ReleaseTriggers();
+        }
+        else
+        {
+            //Debug.Log("NO Triger");
         }
     }
 

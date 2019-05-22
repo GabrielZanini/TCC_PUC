@@ -14,7 +14,11 @@ public class ShipAi : ShipInput
             rotationAxis.SetFixValue(1);
             verticalAxis.SetFixValue(-1);
         }
-        
+
+        if (autoShoot)
+        {
+            shootButton.SetFixValue(true, false, false);
+        }
     }
 
     private void Update()
