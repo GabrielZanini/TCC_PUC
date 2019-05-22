@@ -26,10 +26,10 @@ public class SpaceBodyUI : MonoBehaviour
         RemoveListeners();
     }
 
-    private void OnEnable()
-    {
-        UpdateBar();
-    }
+    //private void OnEnable()
+    //{
+    //    UpdateBar();
+    //}
 
 
     // Listener

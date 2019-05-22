@@ -31,22 +31,22 @@ public class Despawner : MonoBehaviour
         switch (position)
         {
             case Enums.Direction.Up:
-                transform.position = new Vector3(0,0, CameraManager.Instance.portraitSize + margin);
+                transform.position = new Vector3(0,0, CameraManager.Instance.verticalSize + margin);
                 transform.localScale = new Vector3(CameraManager.Instance.width + margin * 2, 2f, 2f); 
                 break;
 
             case Enums.Direction.Down:
-                transform.position = new Vector3(0, 0, -CameraManager.Instance.portraitSize - margin);
+                transform.position = new Vector3(0, 0, -CameraManager.Instance.verticalSize - margin);
                 transform.localScale = new Vector3(CameraManager.Instance.width + margin * 2, 2f, 2f); 
                 break;
 
             case Enums.Direction.Right:
-                transform.position = new Vector3(CameraManager.Instance.landscapeSize + margin, 0, 0);
+                transform.position = new Vector3(CameraManager.Instance.horizontalSize + margin, 0, 0);
                 transform.localScale = new Vector3(2f, 2f, CameraManager.Instance.height + margin * 2);
                 break;
 
             case Enums.Direction.Left:
-                transform.position = new Vector3(-CameraManager.Instance.landscapeSize - margin, 0, 0);
+                transform.position = new Vector3(-CameraManager.Instance.horizontalSize - margin, 0, 0);
                 transform.localScale = new Vector3(2f, 2f, CameraManager.Instance.height + margin * 2);
                 break;
 

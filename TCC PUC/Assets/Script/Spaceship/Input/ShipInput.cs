@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipInput : MonoBehaviour
-{    
-    public Vector3 newPosition;
-    public bool AutoMovemente = true;
+{
+    [Header("Settings")]
+    public bool autoMovement = true;
+    public bool autoShoot = true;
 
-    
-    public float vertical = 0;
-    public float horizontal = 0;
+    // Movement
+    [HideInInspector] public Vector3 newPosition;
+    [HideInInspector] public Touch touch;
 
-    public InputButtonKey shoot = new InputButtonKey();
-    public bool autoshoot = true;
+    // Axes
+    public InputAxis verticalAxis = new InputAxis();
+    public InputAxis horizontalAxis = new InputAxis();
+    public InputAxis rotationAxis = new InputAxis();
 
-
-
-    public Touch touch;
-
-
-
-    private void Awake()
-    {
-        shoot.AddButton("Jump");
-    }
-
+    // Buttons
+    public InputButtonKey shootButton = new InputButtonKey();
 }
 
 
@@ -33,6 +27,7 @@ public class InputButtonKey
     private List<string> buttons = new List<string>();
     private List<KeyCode> keys = new List<KeyCode>();
     
+
     public bool Down {
         get {
             return IsDown();
@@ -49,6 +44,22 @@ public class InputButtonKey
         }
     }
 
+
+    public InputButtonKey()
+    {
+    }
+
+    public InputButtonKey(KeyCode key)
+    {
+        AddKey(key);
+    }
+
+    public InputButtonKey(string button)
+    {
+        AddButton(button);
+    }
+
+    
     public void AddButton(string name)
     {
         buttons.Add(name);
@@ -67,6 +78,12 @@ public class InputButtonKey
     public void RemovedKey(KeyCode key)
     {
         keys.Remove(key);
+    }
+
+    public void Clear()
+    {
+        buttons.Clear();
+        keys.Clear();
     }
 
 
@@ -114,30 +131,89 @@ public class InputButtonKey
 
         return false;
     }
-
-
-
-
-
 }
 
 public class InputAxis
 {
-    private string _name;
+    private List<string> axes = new List<string>();
+    private float axis;
+
+    private float fixValue;
+    private bool useFixValue;
 
     public float Smooth {
         get {
-            return Input.GetAxis(_name);
+            return GetSmooth();
         }
     }
     public float Raw {
         get {
-            return Input.GetAxisRaw(_name);
+            return GetRaw();
         }
+    }
+
+
+    public InputAxis()
+    {
     }
 
     public InputAxis(string name)
     {
-        _name = name;
+        AddAxis(name);
+    }
+    
+
+    public void AddAxis(string name)
+    {
+        axes.Add(name);
+    }
+
+    public void RemoveAxis(string name)
+    {
+        axes.Remove(name);
+    }
+    
+    public void SetFixValue(float value)
+    {
+        useFixValue = true;
+        fixValue = value;
+    }
+
+    public void ClearFixValue()
+    {
+        useFixValue = false;
+    }
+
+
+    float GetSmooth()
+    {
+        if (useFixValue)
+        {
+            return fixValue;
+        }
+
+        for (int i = 0; i < axes.Count; i++)
+        {
+            axis = Input.GetAxis(axes[i]);
+            if (axis != 0) return axis;
+        }
+
+        return 0f;
+    }
+
+    float GetRaw()
+    {
+        if (useFixValue)
+        {
+            return fixValue;
+        }
+
+        for (int i = 0; i < axes.Count; i++)
+        {
+            axis = Input.GetAxisRaw(axes[i]);
+            if (axis != 0) return axis;
+        }
+
+        return 0f;
     }
 }

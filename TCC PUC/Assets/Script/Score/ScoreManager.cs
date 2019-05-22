@@ -65,7 +65,7 @@ public class ScoreManager : MonoBehaviour
 
     public void Add(int points)
     {
-        Current += points;
+        Current += (int) (points * GameManager.Instance.Level.DifficultyModifire);
         UpdateScore();
         OnChange.Invoke();
     }

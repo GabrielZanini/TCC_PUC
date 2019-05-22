@@ -51,4 +51,34 @@ public static class Enums
         SFX,
         Voice,
     }
+
+    public enum GunType
+    {
+        Catling,
+        Laser,
+        Wave,
+    }
+
+    public enum BulletType
+    {
+        Egg,
+        Sphere,
+        Drop,
+    }
+
+
+    public enum ShipType
+    {
+        Player,
+        Enemy,
+    }
+
+
+    public enum AiType
+    {
+        EnemyShip,
+        Boss,
+        Rotate,
+        Snake,
+    }
 }

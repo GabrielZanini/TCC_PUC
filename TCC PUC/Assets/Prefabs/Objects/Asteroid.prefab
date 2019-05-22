@@ -115,6 +115,7 @@ MonoBehaviour:
   status: {fileID: 7152724393694647313}
   lifeBar: {fileID: 5637435416997946659}
   hideLifeAtMax: 1
+  hideBeforeStart: 0
 --- !u!1 &3515944558763827127
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +424,7 @@ GameObject:
   - component: {fileID: 7152724393694647314}
   - component: {fileID: 7152724393694647313}
   - component: {fileID: 7152724393694647325}
+  - component: {fileID: 498934554953354446}
   m_Layer: 10
   m_Name: Asteroid
   m_TagString: Untagged
@@ -490,12 +492,24 @@ MonoBehaviour:
   bodyType: 4
   isActive: 0
   scriptsToDisable:
+  - {fileID: 7152724393694647313}
   - {fileID: 7152724393694647325}
+  - {fileID: 498934554953354446}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
   smoothPosition: 0
   pool: {fileID: 0}
+  OnSpawn:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDespawn:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   OnActivate:
     m_PersistentCalls:
       m_Calls: []
@@ -509,6 +523,8 @@ MonoBehaviour:
   status: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
+  bullet: {fileID: 0}
+  audio: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7152724393694647313
 MonoBehaviour:
@@ -523,8 +539,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
-  maxSpeed: 10
-  currentSpeed: 5
+  currentHp: 0
+  speed: 1
+  angularSpeed: 180
+  smoothness: 0.5
   deathEffect: 1
   OnGainHp:
     m_PersistentCalls:
@@ -569,6 +587,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 7152724392929676718}
+  minSpeed: 10
+  maxSpeed: 15
+  minRotation: -5
+  maxRotation: 5
+  minOffset: -0.03
+  maxOffset: 0.03
+--- !u!114 &498934554953354446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152724393694647324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaedd66ca0aab64abc4adbfa8c7b2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timebody: {fileID: 7152724393694647314}
+  status: {fileID: 7152724393694647313}
+  asteroid: {fileID: 7152724393694647325}
+  points: 10
   lifeTime: 3
 --- !u!1 &7260191389596961555
 GameObject:

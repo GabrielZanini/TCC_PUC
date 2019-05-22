@@ -93,6 +93,10 @@ public class TimeBody : MonoBehaviour
             pool.Despawn(this);
             OnDespawn.Invoke();
         }
+        else
+        {
+            SetActive(false);
+        }
     }
 
     public void DestroyObject()

@@ -54,7 +54,14 @@ public class GameManager : MonoBehaviour
         get { return useVibration; }
         set { useVibration = value; OnSetVibration(); }
     }
-    
+
+
+    public string playerLayer;
+    public string playerBulletLayer;
+    public string enemyLayer;
+    public string enemyBulletLayer;
+
+
     public bool IsMobile {
         get {
             return Platform == Enums.Platform.Android || Platform == Enums.Platform.Iphone;

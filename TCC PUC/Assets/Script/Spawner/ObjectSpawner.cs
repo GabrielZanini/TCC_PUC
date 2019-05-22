@@ -2,42 +2,98 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ObjectSpawner : MonoBehaviour
+public class ObjectSpawner : MonoBehaviour
 {
+    [Header("Object Pool")]
     [SerializeField] protected ObjectPool pool;
+    [Header("Spawn Points")]
+    [SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
-    [SerializeField] protected float minSpawnRate = 0f;
-    [SerializeField] protected float maxSpawnRate = 0f;
+    [Header("Number of Objects")]
+    public int numberOfObjects = 1;
 
-    protected Vector3 spawnPosition;
+    [Header("Margin")]
+    public float margin = 1f;
+    
+    List<int> spawnIds = new List<int>();
+    List<int> usedIds = new List<int>();
+
     protected float spawnCounter = 0f;
 
+    
 
-    void Start()
+    private void Awake()
     {
-        SpawnerStart();
+        AjustSpawnPoints();
+        CreateIdList();
+    }
+
+    protected virtual void Start()
+    {
+        transform.position = new Vector3(0f, 0f, CameraManager.Instance.verticalSize + 1);
+        transform.localScale = new Vector3(CameraManager.Instance.horizontalSize - 2 * margin, 1f, 1f);
+    }
+
+
+
+    public void Spawn()
+    {
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            pool.Spawn(spawnPoints[i].position);
+        }
     }
     
-    void Update()
+    public void SpawnAt(int index)
     {
-        if (GameManager.Instance.Level.IsPlaying)
+        if (index < spawnPoints.Count)
         {
-            if (spawnCounter <= 0f)
-            {
-                pool.Spawn(spawnPosition);
-                RecalculateSpawn();
-            }
-            else
-            {
-                spawnCounter -= Time.deltaTime;
-            }
-        }
-
-        SpawnerUpdate();
+            pool.Spawn(spawnPoints[index].position);
+        }        
     }
 
-    protected abstract void SpawnerStart();
-    protected abstract void SpawnerUpdate();
+    public void SpawnRandom()
+    {
+        int index;
+        usedIds.Clear();
 
-    protected abstract void RecalculateSpawn();
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            if (spawnIds.Count == 0)
+            {
+                CreateIdList();
+                usedIds.Clear();
+            }
+            
+            index = Random.Range(0, spawnIds.Count - 1);
+
+            spawnIds.Remove(index);
+            usedIds.Add(index);
+
+            pool.Spawn(spawnPoints[index].position);
+        }
+
+        CreateIdList();
+        usedIds.Clear();
+    }
+
+    void CreateIdList()
+    {
+        spawnIds.Clear();
+
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            spawnIds.Add(i);
+        }
+    }
+
+    void AjustSpawnPoints()
+    {
+        float distance = 2f / (spawnPoints.Count - 1f);
+
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            spawnPoints[i].localPosition = new Vector3(-1 + (i * distance), 0f, 0f);
+        }
+    }
 }

@@ -8,14 +8,14 @@ public class CameraManager : MonoBehaviour
 
     public bool resizeByHorizontal = false;
 
-    public float landscapeSize = 8f;
-    public float portraitSize = 0f;
+    public float horizontalSize = 8f;
+    public float verticalSize = 0f;
 
 
     public float width;
     public float height;
 
-    [HideInInspector]public Camera camera;
+    [HideInInspector] public Camera camera;
 
 
     private void Awake()
@@ -41,7 +41,7 @@ public class CameraManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateSize();
+        //UpdateSize();
     }
 
     private void Update()
@@ -74,13 +74,13 @@ public class CameraManager : MonoBehaviour
 
     void GetPortraitSize()
     {        
-        if (camera.aspect > 1)
+        if (resizeByHorizontal)
         {
-            landscapeSize = portraitSize / camera.aspect;
+            verticalSize = horizontalSize * camera.aspect;
         }
         else
         {
-            landscapeSize = portraitSize * camera.aspect;
+            horizontalSize = verticalSize * camera.aspect;
         }
     }
 
@@ -88,29 +88,37 @@ public class CameraManager : MonoBehaviour
     {
         if (camera.aspect > 1)
         {
-            portraitSize = landscapeSize * camera.aspect;
+            horizontalSize = verticalSize * camera.aspect;
         }
         else
         {
-            portraitSize = landscapeSize / camera.aspect;
+            horizontalSize = verticalSize / camera.aspect;
         }
     }
 
     private void ReadCameraData()
     {
-        height = camera.orthographicSize * 2;
-        width = height * camera.aspect;
+        if (resizeByHorizontal)
+        {
+            width = horizontalSize * 2;
+            height = width / camera.aspect;
+        }
+        else
+        {
+            height = verticalSize * 2;
+            width = height * camera.aspect;
+        }
     }
 
     private void UpdateSize()
     {
         if (Screen.height > Screen.width)
         {
-            camera.orthographicSize = portraitSize;
+            camera.orthographicSize = verticalSize;
         }
         else
         {
-            camera.orthographicSize = landscapeSize;
+            camera.orthographicSize = horizontalSize;
         }
 
         ReadCameraData();

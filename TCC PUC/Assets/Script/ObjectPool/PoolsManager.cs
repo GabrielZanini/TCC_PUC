@@ -11,12 +11,22 @@ public class PoolsManager : MonoBehaviour
         private set { asteroids = value; }
     }
 
-    [SerializeField] ObjectPool bullets;
-    public ObjectPool Bullets {
-        get { return bullets; }
-        private set { bullets = value; }
+    [Header("Bullets")]
+    [SerializeField] ObjectPool sphereBullets;
+    public ObjectPool SphereBullets {
+        get { return sphereBullets; }
+        private set { sphereBullets = value; }
     }
-    
+    [SerializeField] ObjectPool eggBullets;
+    public ObjectPool EggBullets {
+        get { return eggBullets; }
+        private set { eggBullets = value; }
+    }
+    [SerializeField] ObjectPool dropBullets;
+    public ObjectPool DropBullets {
+        get { return dropBullets; }
+        private set { dropBullets = value; }
+    }
 
     [Header("Particles")]
     [SerializeField] ObjectPool bigExplosion;

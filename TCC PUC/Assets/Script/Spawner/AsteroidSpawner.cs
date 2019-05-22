@@ -4,48 +4,23 @@ using UnityEngine;
 
 public class AsteroidSpawner : ObjectSpawner
 {
-    float nextX = 0f;
-    float lastX = 0f;
+    [Header("Spawning Rate")]
+    [SerializeField] protected float minSpawnRate = 0f;
+    [SerializeField] protected float maxSpawnRate = 0f;
 
-    float minAxis = 0f;
-    float maxAxis = 0f;
-    
-    
-
-    protected override void SpawnerStart()
+    private void Update()
     {
-        spawnPosition = new Vector3(0, 0, CameraManager.Instance.height / 2f + 1);
-        transform.position = spawnPosition;
-
-        maxAxis = CameraManager.Instance.landscapeSize - 3;
-        minAxis = -maxAxis;
-
-        RecalculateSpawn();
-    }
-
-    protected override void SpawnerUpdate()
-    {
-        
-    }
-    
-    protected override void RecalculateSpawn()
-    {
-        spawnCounter = Random.Range(minSpawnRate, maxSpawnRate);
-        nextX = Random.Range(minAxis, maxAxis);
-
-        if (nextX - lastX > -1 && nextX - lastX < 1)
+        if (GameManager.Instance.Level.IsPlaying)
         {
-            if (nextX - lastX > 0)
+            if (spawnCounter <= 0f)
             {
-                nextX += -1;
+                SpawnRandom();
+                spawnCounter = Random.Range(minSpawnRate, maxSpawnRate);
             }
             else
             {
-                nextX += 1;
+                spawnCounter -= Time.deltaTime;
             }
         }
-
-        spawnPosition = new Vector3(nextX, 0, spawnPosition.z);
-        lastX = nextX;
     }
 }

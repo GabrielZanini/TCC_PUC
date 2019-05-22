@@ -12,20 +12,17 @@ public class LevelManager : MonoBehaviour
         private set { hasStarted = value; }
     }
 
-
     [SerializeField] bool isPlaying = false;
     public bool IsPlaying {
         get { return isPlaying; }
         private set { isPlaying = value; }
     }
 
-
     [SerializeField] bool isPaused = false;
     public bool IsPaused {
         get { return isPaused; }
         private set { isPaused = value; }
     }
-
 
     [SerializeField] bool isFinished = false;
     public bool IsFinished {
@@ -34,6 +31,19 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    [Header("Difficulty")]
+    [SerializeField] float startingDifficulty = 1f;
+    [SerializeField] float difficultySpeed = 0.01f;
+    [SerializeField] float difficultyModifire = 1f;
+    public float DifficultyModifire {
+        get { return difficultyModifire; }
+        private set { difficultyModifire = value; }
+    }
+    [SerializeField] bool increasingDifficulty = false;
+    public bool IncreasingDifficulty {
+        get { return increasingDifficulty; }
+        private set { increasingDifficulty = value; }
+    }
 
     [HideInInspector] public UnityEvent OnBeforeStart;
     [HideInInspector] public UnityEvent OnStart;
@@ -53,6 +63,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         ReadInput();
+        IncreaseDifficulty();
     }
 
 
@@ -68,7 +79,18 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void IncreaseDifficulty()
+    {
+        if (IsPlaying && IncreasingDifficulty)
+        {
+            DifficultyModifire += difficultySpeed * Time.deltaTime;
+        }
+    }
 
+    private void RestarDifficulty()
+    {
+        DifficultyModifire = startingDifficulty;
+    }
 
     void BeforeStart()
     {
@@ -88,6 +110,8 @@ public class LevelManager : MonoBehaviour
 
         HasStarted = true;
         IsPlaying = true;
+
+        RestarDifficulty();
 
         OnStart.Invoke();
     }

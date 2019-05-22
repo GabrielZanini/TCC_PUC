@@ -4,63 +4,30 @@ using UnityEngine;
 
 public class MoveShip : MonoBehaviour
 {
-    public bool canGoBackwards = false;
-    public bool canRotate;
-    public float spawnHeight = 10f;
-    public float marging = 1f;
-    public float margingBottom = 5f;
+    public float speed = 1f;
+    public float angularSpeed = 180f;
+    public float smoothness = 0.5f;
 
-    float v;
-    float h;
+    
+    public Vector3 startPosition;
 
-    StatusShip status;
-    ShipInput input;
-    Animator animator;
 
-    bool hasTouchInput = false;
-    Touch touch;
-    int fingerId;
-    Vector3 touchPosition;
-    Vector3 touchOriginalPosition;
-    Vector3 shipOriginalPosition;
-    Vector3 shipOffsetPosition;
+    bool useLimits = false;
+    bool useStartPosition = false;
+
+    Vector3 maxPosition;
+    Vector3 minPosition;
+
     Vector3 newShipPosition;
-
-
-
+    
 
     void Start()
     {
-        status = GetComponent<StatusShip>();
-        input = GetComponent<ShipInput>();
-        animator = GetComponent<Animator>();
-
-        if (input == null)
-        {
-            Destroy(this);
-        }
-
         AddListeners();
 
-        StartShip();
-    }
-    
-    void Update()
-    {
-        if (GameManager.Instance.Level.IsPlaying)
+        if (useStartPosition)
         {
-            if (GameManager.Instance.IsMobile)
-            {
-                MoveTouch();
-            }
-            else
-            {
-                v = input.vertical;
-                h = input.horizontal;
-
-                MoveHorizontal();
-                MoveVertical();
-            }
+            StartShip();
         }
     }
 
@@ -76,134 +43,81 @@ public class MoveShip : MonoBehaviour
     void AddListeners()
     {
         GameManager.Instance.Level.OnBeforeStart.AddListener(StartShip);
-        GameManager.Instance.Level.OnPause.AddListener(ClearTouch);
     }
 
     void RemoveListeners()
     {
         GameManager.Instance.Level.OnBeforeStart.RemoveListener(StartShip);
-        GameManager.Instance.Level.OnPause.RemoveListener(ClearTouch);
     }
 
 
-
-
-
-    private void MoveHorizontal()
+    public void MoveHorizontal(float horizontal)
     {
-        if (!canGoBackwards && v < 0)
-        {
-            return;
-        }
-
-        transform.Translate(Vector3.right * h * status.currentSpeed * Time.deltaTime);
+        //transform.Translate(Vector3.right * horizontal * speed * Time.deltaTime);
+        
+        newShipPosition = transform.position + (Vector3.right * horizontal * speed * Time.deltaTime * Time.timeScale);
+        MoveToPosition(newShipPosition);
     }
 
-    private void MoveVertical()
+    public void MoveVertical(float vertical)
     {
-        if (canRotate)
-        {
-            Rotate();
-        }
-        else
-        {
-            transform.Translate(Vector3.forward * v * status.currentSpeed * Time.deltaTime);
-        }
+        //transform.Translate(Vector3.forward * vertical * speed * Time.deltaTime);
 
-        animator.SetFloat("Vertical", v);
+        newShipPosition = transform.position + (Vector3.forward * vertical * speed * Time.deltaTime * Time.timeScale);
+        MoveToPosition(newShipPosition);
     }
-
-    private void MoveTouch()
-    {
-#if UNITY_EDITOR
-        TouchEditor();
-#elif UNITY_ANDROID
-        TouchMobile();
-#else
     
-#endif
-    }
-
-    private void TouchMobile()
+    public void MoveToPosition(Vector3 newPositon)
     {
-        if (Input.touchCount > 0)
-        {            
-            touch = Input.GetTouch(0);
-            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-
-            if (touch.fingerId != fingerId)
-            {
-                fingerId = touch.fingerId;
-                hasTouchInput = true;
-
-                touchOriginalPosition = touchPosition;
-                shipOriginalPosition = transform.position;
-            }
-
-            shipOffsetPosition = touchPosition - touchOriginalPosition;
-            newShipPosition = CorrectNewPosition(shipOriginalPosition + shipOffsetPosition);
-
-            transform.position = Vector3.Lerp(transform.position, newShipPosition, 0.5f);
-        }
-        else
+        if (useLimits)
         {
-            fingerId = -1;
-            hasTouchInput = false;
+            newShipPosition = CorrectNewPosition(newPositon);
         }
-    }
-
-    private void TouchEditor()
-    {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            if (!hasTouchInput)
-            {
-                hasTouchInput = true;
-
-                touchOriginalPosition = touchPosition;
-                shipOriginalPosition = transform.position;
-            }
-
-            shipOffsetPosition = touchPosition - touchOriginalPosition;
-            newShipPosition = CorrectNewPosition(shipOriginalPosition + shipOffsetPosition);
-
-            transform.position = Vector3.Lerp(transform.position, newShipPosition, 0.5f);
-        }
-        else
-        {
-            hasTouchInput = false;
-        }
-    }
-
-    private void ClearTouch()
-    {
-        fingerId = -1;
-        hasTouchInput = false;
-    }
-
-    private void Rotate()
-    {
-        if (canGoBackwards && v < 0)
-        {
-            h *= -1;
-        } 
-
-        transform.Rotate(Vector3.up * h * status.angularSpeed * Time.deltaTime);
+        
+        transform.position = Vector3.Lerp(transform.position, newShipPosition, smoothness);
     }
 
     Vector3 CorrectNewPosition(Vector3 newPosition)
     {
-        newPosition = Vector3.Max(newPosition, new Vector3(0 - CameraManager.Instance.landscapeSize + marging, 0, 0 - CameraManager.Instance.portraitSize + marging + margingBottom));
-        newPosition = Vector3.Min(newPosition, new Vector3(CameraManager.Instance.landscapeSize - marging, 0, CameraManager.Instance.portraitSize - marging));
+        newPosition = Vector3.Max(newPosition, minPosition);
+        newPosition = Vector3.Min(newPosition, maxPosition);
 
         return newPosition;
     }
+
+
+    public void Rotate(float rotation)
+    {
+        transform.rotation = transform.rotation * Quaternion.Euler(0f, rotation * angularSpeed * Time.deltaTime * Time.timeScale, 0f);
+    }
+
+
+    public void SetLimits(Vector3 min, Vector3 max)
+    {
+        useLimits = true;
+        minPosition = min;
+        maxPosition = max;
+    }
+
+    public void ClearLimits()
+    {
+        useLimits = false;
+    }
     
+    public void SetStartPosition(Vector3 position)
+    {
+        useStartPosition = true;
+        startPosition = position;
+        StartShip();
+    }
+
+    public void ClearStartposition()
+    {
+        useStartPosition = false;
+    }
+
     private void StartShip()
     {
-        hasTouchInput = false;
-        transform.position = new Vector3(0, 0, spawnHeight - CameraManager.Instance.portraitSize);
+        transform.position = startPosition;
     }
 }

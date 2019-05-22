@@ -6,37 +6,34 @@ public class Asteroid : MonoBehaviour
 {
     public Transform mesh;
 
-    StatusBase status;
-    Vector3 offset;
+    [Header("Speed")]
+    public float minSpeed = 0f;
+    public float maxSpeed = 10f;
+
+    [Header("Rotation")]
+    public float minRotation = -5f;
+    public float maxRotation = 5;
+
+    [Header("Translate Offset")]
+    public float minOffset = -0.03f;
+    public float maxOffset = 0.03f;
+
+    Vector3 offset = Vector3.zero;
     Vector3 rotation;
     float speed;
-    public float lifeTime = 3f;
-    public int points = 10;
 
-    float despawnCounter = 0f;
-    TimeBody timebody;
+    LevelManager level;
 
-
-    
-    private void Awake()
+    private void Start()
     {
-        timebody = GetComponent<TimeBody>();
-        status = GetComponent<StatusBase>();
+        level = GameManager.Instance.Level;
+        rotation = new Vector3(Random.Range(minRotation, maxRotation), Random.Range(minRotation, 5), Random.Range(minRotation, maxRotation));
     }
-    
-    void Start()
-    {
-        status.OnDeath.AddListener(Death);
-    }
-        
+
     void OnEnable()
-    {
-        despawnCounter = lifeTime;
-        status.CurrentHp = status.MaxHp;
-
-        rotation = new Vector3(Random.Range(-5,5), Random.Range(-5, 5), Random.Range(-5, 5));
-        speed = Random.Range(status.currentSpeed, status.maxSpeed);
-        offset = new Vector3(Random.Range(-0.03f, 0.03f), 0, 0);
+    {   
+        speed = Random.Range(minSpeed, maxSpeed);
+        offset.x = Random.Range(minOffset, maxOffset);
     }
 
     void Update()
@@ -44,54 +41,18 @@ public class Asteroid : MonoBehaviour
         if (!GameManager.Instance.Level.IsPaused)
         {
             Tranlate();
+            Rotate();
         }        
     }
-
-    private void FixedUpdate()
-    {
-        Rotate();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log(gameObject.name + " - OnTriggerEnter - " + other.gameObject.name);
-
-        var otherStatus = other.gameObject.GetComponent<StatusBase>();
-
-        if (otherStatus != null)
-        {
-            otherStatus.TakeDamage(status.CurrentHp);
-            timebody.Despawn();
-        }
-    }
-
-    void OnDestroy()
-    {
-        status.OnDeath.RemoveListener(Death);
-    }
-
-
-
+    
     void Tranlate()
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime + offset);
-
-        if (despawnCounter <= 0f)
-        {
-            timebody.Despawn();
-        }
+        transform.Translate(Vector3.back * speed * level.DifficultyModifire * Time.deltaTime + offset);        
     }
 
     void Rotate()
     {
         mesh.Rotate(rotation);
-    }
-
-    void Death()
-    {
-        //Boom
-        GameManager.Instance.Score.Add(points);
-        timebody.Despawn();
     }
 }
 

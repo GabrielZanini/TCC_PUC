@@ -7,16 +7,71 @@ public class ShootShip : MonoBehaviour
     public List<Gun> guns = new List<Gun>();
 
 
+    private void Reset()
+    {
+        GetGuns();
+    }
+    
+    private void Awake()
+    {        
+        ActivateGuns();
+    }
 
-    private void Start()
+    private void OnEnable()
+    {
+        ActivateGuns();
+    }
+
+    private void OnDisable()
+    {
+        DeactivateGuns();
+    }
+
+    private void OnValidate()
+    {
+        GetGuns();
+    }
+
+
+
+    void GetGuns()
+    {
+        var g = GetComponentsInChildren<Gun>(true);
+
+        guns.Clear();
+
+        for (int i=0; i<g.Length; i++)
+        {
+            guns.Add(g[i]);
+        }
+    }
+
+    void ActivateGuns()
     {
         for (int i = 0; i < guns.Count; i++)
         {
             guns[i].gameObject.SetActive(true);
         }
     }
-    
-        
+
+    void DeactivateGuns()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].gameObject.SetActive(false);
+        }
+    }
+
+
+    public void SetBulletsLayer(string layer)
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].SetBulletLayer(layer);
+        }
+    }
+
+
 
     public void PullTriggers()
     {

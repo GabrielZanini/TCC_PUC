@@ -23,13 +23,12 @@ public class StatusBase : MonoBehaviour
     }
 
     [Header("Speed")]
-    public float maxSpeed = 1f;
+    public float speed = 1f;
     public float angularSpeed = 180f;
-    [HideInInspector] public float currentSpeed = 1f;
-    public float smoothness = 1f;
+    public float smoothness = 0.5f;
 
     [Header("FX")]
-    public Enums.EffectType deathEffect = Enums.EffectType.BigExplosion;
+    public Enums.EffectType deathEffect = Enums.EffectType.SmallExplosion;
 
     [HideInInspector]public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
@@ -46,23 +45,20 @@ public class StatusBase : MonoBehaviour
         InicializeHealth();
     }
 
-    private void Start()
-    {
-        GameManager.Instance.Level.OnRestart.AddListener(InicializeHealth);
-    }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        GameManager.Instance.Level.OnRestart.RemoveListener(InicializeHealth);
+        InicializeHealth();
     }
 
 
-    
     private void InicializeHealth()
     {
         CurrentHp = MaxHp;
     }
 
+
+    // Health
 
     public void Heal(int health)
     {
@@ -97,22 +93,21 @@ public class StatusBase : MonoBehaviour
 
         OnLoseHp.Invoke();
     }
-
-
-
+    
     void Death()
     {
-        SpawnEffect();
         OnDeath.Invoke();
     }
+    
 
+    // Speed
 
     public void AddSpeed(float moreSpeed)
     {
         if (moreSpeed == 0) return;
 
-        currentSpeed += moreSpeed;
-
+        speed += moreSpeed;
+        
         if (moreSpeed > 0)
         {
             OnLoseSpeed.Invoke();
@@ -121,35 +116,8 @@ public class StatusBase : MonoBehaviour
         {
             OnGainSpeed.Invoke();
         }
-
-        if (currentSpeed > maxSpeed)
-        {
-            currentSpeed = maxSpeed;
-        }
     }
 
 
-    public void SpawnEffect()
-    {
-        if (deathEffect == Enums.EffectType.BigExplosion)
-        {
-            GameManager.Instance.Pools.BigExplosion.Spawn(transform.position);
-        }
-        else if (deathEffect == Enums.EffectType.DustExplosion)
-        {
-            GameManager.Instance.Pools.DustExplosion.Spawn(transform.position);
-        }
-        else if (deathEffect == Enums.EffectType.SmallExplosion)
-        {
-            GameManager.Instance.Pools.SmallExplosion.Spawn(transform.position);
-        }
-        else if (deathEffect == Enums.EffectType.TinyExplosion)
-        {
-            GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
-        }
-        else
-        {
-
-        }
-    }
+    
 }

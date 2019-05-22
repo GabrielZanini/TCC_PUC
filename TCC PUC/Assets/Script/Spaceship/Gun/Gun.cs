@@ -5,27 +5,28 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [Header("Barrels")]
+    [SerializeField] GameObject barrelPrefab;
     [SerializeField] List<Barrel> barrels = new List<Barrel>();
-    
+
 
     [Header("Barrels Setting")]
-    [Range(1,10)][SerializeField] int maxBarrels = 10;
+    [Range(1, 10)] [SerializeField] int maxBarrels = 10;
     public int MaxBarrels {
         get { return maxBarrels; }
         set { maxBarrels = value; AjustBarrols(); }
     }
-
     [SerializeField] float barrelAngle = 10f;
     public float BarrelAngle {
         get { return barrelAngle; }
         set { barrelAngle = value; RotateBarrels(); }
     }
-
     [SerializeField] float barrelMaxAngle = 90f;
     public float BarrelMaxAngle {
         get { return barrelMaxAngle; }
         set { barrelMaxAngle = value; RotateBarrels(); }
     }
+    [SerializeField] float barrelSize = 1f;
+
 
     [Header("Muzzle Settings")]
     [SerializeField] float muzzleAngle = 0f;
@@ -41,12 +42,15 @@ public class Gun : MonoBehaviour
 
 
     [Header("Bullet Settings")]
+    public Enums.BulletType bulletType = Enums.BulletType.Sphere;
     public ObjectPool bulletPool;
     public int bulletdamage = 1;
     public float bulletSpeed = 30f;
     [Range(0.01f, 1f)] public float bulletRate = 0.1f;
     public Color inColor = Color.white;
     public Color outColor = Color.blue;
+    public string layerName;
+    int bulletLayer = 0;
 
 
     [Header("Control")]
@@ -60,8 +64,8 @@ public class Gun : MonoBehaviour
 
     // AUx variables
     private float timer = 0f;
-    Quaternion forwardRotation;
     TimeBody bulletTimebody;
+
 
 
     private void Awake()
@@ -71,12 +75,39 @@ public class Gun : MonoBehaviour
         AjustBarrols();
     }
 
+    private void Start()
+    {
+        GetBulletPool();
+    }
+
     private void OnValidate()
     {
         AjustBarrols();
     }
-    
+
     void Update()
+    {
+        if (GameManager.Instance.Level.IsPlaying)
+        {
+            CheckForShoot();
+        }        
+    }
+
+
+
+    // Shooting
+
+    public void PullTrigger()
+    {
+        isTriggerPulled = true;
+    }
+
+    public void ReleaseTrigger()
+    {
+        isTriggerPulled = false;
+    }
+
+    void CheckForShoot()
     {
         if (isTriggerPulled && !isLocked)
         {
@@ -92,25 +123,14 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void PullTrigger()
-    {
-        isTriggerPulled = true;
-    }
-    
-    public void ReleaseTrigger()
-    {
-        isTriggerPulled = false;
-    }
-
-
-
     void Shoot()
     {
-        forwardRotation = Quaternion.LookRotation(transform.forward);
 
         for (int i = 0; i < MaxBarrels; i++)
         {
-            bulletTimebody = bulletPool.Spawn(barrels[i].muzzle.position, forwardRotation * barrels[i].offset);
+            bulletTimebody = bulletPool.Spawn(barrels[i].muzzle.position, barrels[i].muzzle.rotation);
+
+            bulletTimebody.gameObject.layer = bulletLayer;
 
             bulletTimebody.bullet.speed = bulletSpeed;
             bulletTimebody.bullet.damage = bulletdamage;
@@ -127,13 +147,39 @@ public class Gun : MonoBehaviour
 
 
 
+    // Gun Settings
+
     void AjustBarrols()
     {
+        GetBarrel();
+        CreateBarrels();
         EnableDisableBarrels();
         RotateBarrels();
+        ResizeBarrel();
         CalculateMuzzlesOffste();
     }
 
+    void GetBarrel()
+    {
+        barrels.Clear();
+
+        var barr = GetComponentsInChildren<Barrel>(true);
+
+        for (int i=0; i<barr.Length; i++)
+        {
+            barrels.Add(barr[i]);
+        }
+    }
+
+    void CreateBarrels()
+    {
+        while (maxBarrels > barrels.Count)
+        {
+            var barrel = Instantiate(barrelPrefab, transform);
+            barrels.Add(barrel.GetComponent<Barrel>());
+        }
+    }
+    
     void EnableDisableBarrels()
     {
         for (int i=0; i<barrels.Count; i++)
@@ -163,7 +209,15 @@ public class Gun : MonoBehaviour
 
         for (int i=0; i<maxBarrels; i++)
         {
-            barrels[i].transform.rotation = Quaternion.Euler(0f, (startAngle - i * offsetAngles), 0f);
+            barrels[i].transform.localRotation = Quaternion.Euler(0f, (startAngle - i * offsetAngles), 0f);
+        }
+    }
+
+    void ResizeBarrel()
+    {
+        for (int i = 0; i < maxBarrels; i++)
+        {
+            barrels[i].muzzle.localPosition = new Vector3(0f, 0f, barrelSize);
         }
     }
 
@@ -171,6 +225,7 @@ public class Gun : MonoBehaviour
     {
         float totalAngle = (MaxBarrels - 1) * muzzleAngle;
         float offsetAngles = muzzleAngle;
+        Quaternion forwardRotation = Quaternion.LookRotation(transform.forward);
 
         if (totalAngle > muzzlesMaxAngle)
         {
@@ -182,10 +237,35 @@ public class Gun : MonoBehaviour
 
         for (int i = 0; i < maxBarrels; i++)
         {
-            barrels[i].offset = Quaternion.Euler(0f, (startAngle - i * offsetAngles), 0f);
+            barrels[i].muzzle.rotation = forwardRotation * Quaternion.Euler(0f, (startAngle - i * offsetAngles), 0f);
         }
     }
 
+    public void SetBulletLayer(string layer)
+    {
+        layerName = layer;
+        bulletLayer = LayerMask.NameToLayer(layer);
+    }
+
+    void GetBulletPool()
+    {
+        if (bulletType == Enums.BulletType.Sphere)
+        {
+            bulletPool = GameManager.Instance.Pools.SphereBullets;
+        }
+        else if (bulletType == Enums.BulletType.Egg)
+        {
+            bulletPool = GameManager.Instance.Pools.EggBullets;
+        }
+        else if (bulletType == Enums.BulletType.Drop)
+        {
+            bulletPool = GameManager.Instance.Pools.DropBullets;
+        }
+        else
+        {
+
+        }
+    }
 
 
     // External Control
@@ -212,13 +292,14 @@ public class Gun : MonoBehaviour
     {
         BarrelAngle += 1;
         RotateBarrels();
-
+        CalculateMuzzlesOffste();
     }
 
     public void LessBarrelAngle()
     {
         BarrelAngle -= 1;
         RotateBarrels();
+        CalculateMuzzlesOffste();
     }
     
     public void MoreMuzzleAngle()
