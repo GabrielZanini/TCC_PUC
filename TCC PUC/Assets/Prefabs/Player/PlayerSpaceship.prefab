@@ -635,6 +635,8 @@ MonoBehaviour:
   objectsToDisable: []
   smoothPosition: 0
   pool: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
   OnSpawn:
     m_PersistentCalls:
       m_Calls: []
@@ -974,6 +976,8 @@ MonoBehaviour:
   - {fileID: 1312847582}
   smoothPosition: 0
   pool: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
   OnSpawn:
     m_PersistentCalls:
       m_Calls: []
@@ -1096,6 +1100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guns:
   - {fileID: 7684264618153191169}
+  triggersPulled: 0
 --- !u!114 &7990060464562977410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1114,9 +1119,11 @@ MonoBehaviour:
   input: {fileID: 3090274017238769261}
   shoot: {fileID: 547857050}
   type: 0
+  playAfterStop: 0
   spawnMargingBottom: 10
   marging: 1
   margingBottom: 5
+  camerManager: {fileID: 0}
 --- !u!1 &3795141736809314659
 GameObject:
   m_ObjectHideFlags: 0

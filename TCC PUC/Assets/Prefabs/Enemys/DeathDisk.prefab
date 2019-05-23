@@ -1362,6 +1362,8 @@ MonoBehaviour:
   - {fileID: 623253972}
   smoothPosition: 0
   pool: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
   OnSpawn:
     m_PersistentCalls:
       m_Calls: []
@@ -1485,6 +1487,7 @@ MonoBehaviour:
   - {fileID: 2386141448514777152}
   - {fileID: 2386141448563296753}
   - {fileID: 2386141448322832085}
+  triggersPulled: 0
 --- !u!114 &1565141133272527084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,6 +1506,7 @@ MonoBehaviour:
   input: {fileID: 1565141133272527089}
   shoot: {fileID: 1565141133272527090}
   type: 1
+  playAfterStop: 1
   points: 10
 --- !u!1 &1565141133389270282
 GameObject:
