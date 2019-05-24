@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Backgrounds : MonoBehaviour
 {
     [Header("Camera")]
@@ -19,6 +20,11 @@ public class Backgrounds : MonoBehaviour
         GetBackground();
     }
 
+    private void Awake()
+    {
+        AddListeners();
+    }
+
     void Start()
     {
         GetBackground();
@@ -29,6 +35,27 @@ public class Backgrounds : MonoBehaviour
         GetBackground();
     }
 
+    void OnDestroy()
+    {
+        RemoveListeners();
+    }
+    
+
+    void AddListeners()
+    {
+        if (camerManager != null)
+        {
+            camerManager.OnChange.AddListener(GetBackground);
+        }
+    }
+
+    void RemoveListeners()
+    {
+        if (camerManager != null)
+        {
+            camerManager.OnChange.RemoveListener(GetBackground);
+        }
+    }
 
 
 

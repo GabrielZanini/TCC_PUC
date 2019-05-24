@@ -37,6 +37,11 @@ public class ScrollBackground : MonoBehaviour
         SetBackground();
     }
 
+    private void OnEnable()
+    {
+        SetBackground();
+    }
+
     void Update()
     {
         Scroll();

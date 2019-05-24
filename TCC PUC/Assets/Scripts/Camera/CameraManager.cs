@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[ExecuteInEditMode]
 public class CameraManager : MonoBehaviour
 {
     [Header("Camera Object")]
@@ -33,7 +34,7 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(camera.aspect + "");   
+          
     }
 
     private void FixedUpdate()

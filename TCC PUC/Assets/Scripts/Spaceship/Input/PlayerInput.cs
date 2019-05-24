@@ -44,7 +44,15 @@ public class PlayerInput : ShipInput
     {
         //autoShoot = GameManager.Instance.Level.IsPlaying && GameManager.Instance.IsMobile;
         autoMovement = HasTouch;
-        MoveTouch();
+
+        if (autoMovement)
+        {
+            MoveTouch();
+        }
+        else
+        {
+            ClearTouch();
+        }
     }
 
     private void OnDestroy()
