@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class CameraManager : MonoBehaviour
     public float width;
     public float height;
 
+
+    [HideInInspector] public UnityEvent OnChange;
 
     private void Reset()
     {
@@ -72,7 +75,38 @@ public class CameraManager : MonoBehaviour
         height = verticalSize * 2;
 
         camera.orthographicSize = verticalSize;
+
+        OnChange.Invoke();
     }
 
+    
+    public void More()
+    {
+        if (resizeByHorizontal)
+        {
+            horizontalSize += 1;
+        }
+        else
+        {
+            verticalSize += 1;
+        }
+        
+        ResizeCamera();
+    }
+
+
+    public void Less()
+    {
+        if (resizeByHorizontal)
+        {
+            horizontalSize -= 1;
+        }
+        else
+        {
+            verticalSize -= 1;
+        }
+
+        ResizeCamera();
+    }
 
 }

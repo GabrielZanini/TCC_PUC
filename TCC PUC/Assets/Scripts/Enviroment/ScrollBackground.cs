@@ -18,6 +18,20 @@ public class ScrollBackground : MonoBehaviour
 
 
 
+
+    private void OnValidate()
+    {
+        if (camerManager != null)
+        {
+            SetBackground();
+        }
+    }
+
+    void Awake()
+    {
+        AddListeners();
+    }
+
     void Start()
     {
         SetBackground();
@@ -28,11 +42,26 @@ public class ScrollBackground : MonoBehaviour
         Scroll();
     }
 
-    private void OnValidate()
+    void OnDestroy()
+    {
+        RemoveListeners();
+    }
+
+
+
+    void AddListeners()
     {
         if (camerManager != null)
         {
-            SetBackground();
+            camerManager.OnChange.AddListener(SetBackground);
+        }
+    }
+
+    void RemoveListeners()
+    {
+        if (camerManager != null)
+        {
+            camerManager.OnChange.RemoveListener(SetBackground);
         }
     }
 

@@ -22,6 +22,11 @@ public class ScreenDespawners : MonoBehaviour
 
 
 
+    void Awake()
+    {
+        AddListeners();
+    }
+
     void Start()
     {
         SetPositionAndScale();
@@ -31,7 +36,30 @@ public class ScreenDespawners : MonoBehaviour
     {
         SetPositionAndScale();
     }
-    
+
+    void OnDestroy()
+    {
+        RemoveListeners();
+    }
+
+
+
+    void AddListeners()
+    {
+        if (camerManager != null)
+        {
+            camerManager.OnChange.AddListener(SetPositionAndScale);
+        }
+    }
+
+    void RemoveListeners()
+    {
+        if (camerManager != null)
+        {
+            camerManager.OnChange.RemoveListener(SetPositionAndScale);
+        }
+    }
+
 
 
     void SetPositionAndScale()

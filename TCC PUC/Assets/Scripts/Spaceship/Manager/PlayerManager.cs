@@ -23,11 +23,8 @@ public class PlayerManager : ShipManager
     protected override void Start()
     {        
         base.Start();
-        SetMovementLimits();
-        SetMovementStart();
+        SetMovementPlayer();
     }
-
-
 
 
     protected override void AddListeners()
@@ -36,6 +33,7 @@ public class PlayerManager : ShipManager
         status.OnLoseHp.AddListener(Vibrate);
         GameManager.Instance.Level.OnStop.AddListener(shoot.ReleaseTriggers);
         GameManager.Instance.Level.OnRestart.AddListener(Revive);
+        camerManager.OnChange.AddListener(SetMovementPlayer);
     }
 
     protected override void RemoveListeners()
@@ -44,11 +42,16 @@ public class PlayerManager : ShipManager
         status.OnLoseHp.RemoveListener(Vibrate);
         GameManager.Instance.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
         GameManager.Instance.Level.OnRestart.RemoveListener(Revive);
+        camerManager.OnChange.RemoveListener(SetMovementPlayer);
     }
 
 
 
-
+    void SetMovementPlayer()
+    {
+        SetMovementStart();
+        SetMovementLimits();
+    }
 
     void SetMovementStart()
     {

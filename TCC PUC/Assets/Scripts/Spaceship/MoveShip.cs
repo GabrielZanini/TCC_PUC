@@ -53,13 +53,13 @@ public class MoveShip : MonoBehaviour
 
     public void MoveHorizontal(float horizontal)
     {
-        newShipPosition = transform.position + (Vector3.right * horizontal * speed * Time.deltaTime);
+        newShipPosition = transform.localPosition + (Vector3.right * horizontal * speed * Time.deltaTime);
         MoveToPosition(newShipPosition);
     }
 
     public void MoveVertical(float vertical)
     {
-        newShipPosition = transform.position + (Vector3.forward * vertical * speed * Time.deltaTime);
+        newShipPosition = transform.localPosition + (Vector3.up * vertical * speed * Time.deltaTime);
         MoveToPosition(newShipPosition);
     }
     
@@ -70,7 +70,7 @@ public class MoveShip : MonoBehaviour
             newShipPosition = CorrectNewPosition(newPositon);
         }
         
-        transform.position = Vector3.Lerp(transform.position, newShipPosition, smoothness);
+        transform.localPosition = Vector3.Lerp(transform.position, newShipPosition, smoothness);
     }
 
     Vector3 CorrectNewPosition(Vector3 newPosition)
