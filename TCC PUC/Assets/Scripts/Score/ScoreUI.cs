@@ -27,18 +27,18 @@ public class ScoreUI : MonoBehaviour
 
     void AddListener()
     {
-        GameManager.Instance.Score.OnChange.AddListener(UpdateScore);
+        GameManager.Instance.Level.Score.OnChange.AddListener(UpdateScore);
     }
 
     void RemoveListener()
     {
-        GameManager.Instance.Score.OnChange.RemoveListener(UpdateScore);
+        GameManager.Instance.Level.Score.OnChange.RemoveListener(UpdateScore);
     }
 
 
 
     void UpdateScore()
     {
-        score.text = GameManager.Instance.Score.Current.ToString();
+        score.text = GameManager.Instance.Level.Score.Current.ToString();
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GameplayCanvas : MonoBehaviour
 {
-    [Header("Start")]
-    public GameObject startPanel;
+    [Header("Menu")]
+    public GameObject menuPanel;
 
     [Header("Gameplay")]
     public GameObject gameplayPanel;
@@ -37,7 +37,7 @@ public class GameplayCanvas : MonoBehaviour
 
     void AddListener()
     {
-        GameManager.Instance.Level.OnBeforeStart.AddListener(BeforeStartGame);
+        GameManager.Instance.Level.OnMenu.AddListener(MainMenu);
         GameManager.Instance.Level.OnStart.AddListener(StartGame);
         GameManager.Instance.Level.OnPause.AddListener(PauseGame);
         GameManager.Instance.Level.OnContinue.AddListener(ContinueGame);
@@ -46,7 +46,7 @@ public class GameplayCanvas : MonoBehaviour
 
     void RemoveListener()
     {
-        GameManager.Instance.Level.OnBeforeStart.RemoveListener(BeforeStartGame);
+        GameManager.Instance.Level.OnMenu.AddListener(MainMenu);
         GameManager.Instance.Level.OnStart.RemoveListener(StartGame);
         GameManager.Instance.Level.OnPause.RemoveListener(PauseGame);
         GameManager.Instance.Level.OnContinue.RemoveListener(ContinueGame);
@@ -55,10 +55,10 @@ public class GameplayCanvas : MonoBehaviour
 
     
 
-    void BeforeStartGame()
+    void MainMenu()
     {
         ClearUI();
-        startPanel.SetActive(true);
+        menuPanel.SetActive(true);
     }
 
     void StartGame()
@@ -100,13 +100,17 @@ public class GameplayCanvas : MonoBehaviour
 
     public void SettingsBack()
     {
-        if (GameManager.Instance.Level.State == LevelState.Playing)
+        if (GameManager.Instance.Level.State == LevelState.Paused)
         {
             PauseGame();
         }
-        else
+        else if (GameManager.Instance.Level.State == LevelState.Stoped)
         {
             GameOver();
+        }
+        else if (GameManager.Instance.Level.State == LevelState.Menu)
+        {
+            MainMenu();
         }
     }
 
@@ -114,7 +118,7 @@ public class GameplayCanvas : MonoBehaviour
 
     void ClearUI()
     {
-        startPanel.SetActive(false);
+        menuPanel.SetActive(false);
         gameplayPanel.SetActive(false);
         pausePanel.SetActive(false);
         settingsPanel.SetActive(false);

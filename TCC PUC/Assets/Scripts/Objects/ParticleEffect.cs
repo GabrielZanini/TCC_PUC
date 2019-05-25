@@ -8,9 +8,9 @@ public class ParticleEffect : MonoBehaviour
     public ParticleSystem particle;
     private float lifeTime = 0f;
     public float time = 0f;
+    public bool loop = false;
 
-    [SerializeField]
-    TimeBody timebody;
+    [SerializeField] TimeBody timebody;
     //ParticleSystem[] particles;
     //bool[] isRandom;
 
@@ -67,7 +67,7 @@ public class ParticleEffect : MonoBehaviour
 
     void CountTime()
     {
-        if (!TimeController.Instance.IsRewinding)
+        if (!timebody.controller.IsRewinding)
         {
             if (time < lifeTime)
             {
@@ -75,8 +75,15 @@ public class ParticleEffect : MonoBehaviour
             }
             else
             {
-                timebody.Despawn();
-                //timebody.DestroyObject();
+                if (loop)
+                {
+                    time = 0f;
+                }
+                else
+                {
+                    timebody.Despawn();
+                }
+                
             }
         }        
     }
@@ -84,14 +91,16 @@ public class ParticleEffect : MonoBehaviour
 
     void AddListeners()
     {
-        TimeController.Instance.OnStopRewind.AddListener(EnableParticle);
+        timebody.controller.OnStartRewind.AddListener(Pause);
+        timebody.controller.OnStopRewind.AddListener(EnableParticle);
         timebody.OnActivate.AddListener(EnableParticle);
         timebody.OnDisactivate.AddListener(EnableParticle);
     }
 
     void RemoveListeners()
     {
-        TimeController.Instance.OnStopRewind.RemoveListener(EnableParticle);
+        timebody.controller.OnStartRewind.RemoveListener(Pause);
+        timebody.controller.OnStopRewind.RemoveListener(EnableParticle);
         timebody.OnActivate.RemoveListener(EnableParticle);
         timebody.OnDisactivate.RemoveListener(EnableParticle);
     }
@@ -108,18 +117,27 @@ public class ParticleEffect : MonoBehaviour
     
     void EnableParticle()
     {
-        //Debug.Log(gameObject.name + " - EnableParticle - " + timebody.isActive.ToString());
-        
         if (timebody.isActive)
         {
             particle.Play(true);
         }
         else
         {
+            particle.Clear();
             particle.Stop(true);
         }
     }
-    
+
+    void Pause()
+    {
+        particle.Pause(true);
+    }
+
+    void Stop()
+    {
+        particle.Stop(true);
+    }
+
 
     public void Simulate(float t)
     {

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class TimeBody : MonoBehaviour
 {
+    public TimeController controller;
     public TimeBodyType bodyType = TimeBodyType.Bullet;
 
     public bool isActive = false;
@@ -29,7 +30,7 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public UnityEvent OnDisactivate;
 
     [HideInInspector] public StatusBase status;
-    [HideInInspector] public ScrollBackground scroll;
+    [HideInInspector] public ScrollTiles scroll;
     [HideInInspector] public ParticleEffect particle;
     [HideInInspector] public Bullet bullet;
     [HideInInspector] public AudioManager audio;
@@ -55,7 +56,7 @@ public class TimeBody : MonoBehaviour
     {
         if (bodyType != TimeBodyType.System)
         {
-            TimeController.Instance.AddTimebody(this);
+            controller.AddTimebody(this);
         }
         
         AddListener();
@@ -67,7 +68,7 @@ public class TimeBody : MonoBehaviour
 
     private void Update()
     {
-        if (TimeController.Instance.IsRewinding && smoothPosition && isActive)
+        if (controller.IsRewinding && smoothPosition && isActive)
         {
             previuos = PreviuosPoint();
             next = NextPoint();
@@ -105,7 +106,7 @@ public class TimeBody : MonoBehaviour
 
     public void DestroyObject()
     {
-        TimeController.Instance.RemoveTimebody(this);
+        controller.RemoveTimebody(this);
 
         if (pool != null)
         {
@@ -149,28 +150,28 @@ public class TimeBody : MonoBehaviour
 
     void AddListener()
     {
-        //TimeController.Instance.OnRewind.AddListener(Rewind);
-        //TimeController.Instance.OnRecord.AddListener(Record);
-        //TimeController.Instance.OnOverload.AddListener(ClearList);
+        //controller.OnRewind.AddListener(Rewind);
+        //controller.OnRecord.AddListener(Record);
+        //controller.OnOverload.AddListener(ClearList);
 
-        TimeController.Instance.OnStartRewind.AddListener(DisableScripts);
-        TimeController.Instance.OnStartRewind.AddListener(DisableCollider);
+        controller.OnStartRewind.AddListener(DisableScripts);
+        controller.OnStartRewind.AddListener(DisableCollider);
 
-        TimeController.Instance.OnStopRewind.AddListener(Activate);
+        controller.OnStopRewind.AddListener(Activate);
 
         GameManager.Instance.Level.OnRestart.AddListener(ClearList);
     }
 
     void RemoveListener()
     {
-        //TimeController.Instance.OnRewind.RemoveListener(Rewind);
-        //TimeController.Instance.OnRecord.RemoveListener(Record);
-        //TimeController.Instance.OnOverload.RemoveListener(ClearList);
+        //controller.OnRewind.RemoveListener(Rewind);
+        //controller.OnRecord.RemoveListener(Record);
+        //controller.OnOverload.RemoveListener(ClearList);
 
-        TimeController.Instance.OnStartRewind.RemoveListener(DisableScripts);
-        TimeController.Instance.OnStartRewind.RemoveListener(DisableCollider);
+        controller.OnStartRewind.RemoveListener(DisableScripts);
+        controller.OnStartRewind.RemoveListener(DisableCollider);
 
-        TimeController.Instance.OnStopRewind.RemoveListener(Activate);
+        controller.OnStopRewind.RemoveListener(Activate);
 
         GameManager.Instance.Level.OnRestart.RemoveListener(ClearList);
     }
@@ -271,7 +272,7 @@ public class TimeBody : MonoBehaviour
             return;
         }
 
-        if (pointsInTime.Count > TimeController.Instance.MaxPointsInTime)
+        if (pointsInTime.Count > controller.MaxPointsInTime)
         {
             auxPointInTime = pointsInTime[pointsInTime.Count - 1];
             
@@ -307,7 +308,7 @@ public class TimeBody : MonoBehaviour
             return;
         }
 
-        if (index < TimeController.Instance.MaxPointsInTime)
+        if (index < controller.MaxPointsInTime)
         {
             while (pointsInTime.Count <= index)
             {
@@ -368,7 +369,7 @@ public class TimeBody : MonoBehaviour
 
     void PoulateList()
     {
-        while (pointsInTime.Count < TimeController.Instance.CurrentPointInTime)
+        while (pointsInTime.Count < controller.CurrentPointInTime)
         {
             pointsInTime.Add(GetNewPointInTime(false));
         }
@@ -398,7 +399,7 @@ public class TimeBody : MonoBehaviour
         colliders = GetComponentsInChildren<Collider>();
 
         status = GetComponent<StatusBase>();
-        scroll = GetComponent<ScrollBackground>();
+        scroll = GetComponent<ScrollTiles>();
         particle = GetComponent<ParticleEffect>();
         bullet = GetComponent<Bullet>();
     }

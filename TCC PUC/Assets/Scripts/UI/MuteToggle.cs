@@ -10,10 +10,18 @@ public class MuteToggle : MonoBehaviour
 
 
 
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GetMute();
+        }        
+    }
+
     void Start()
     {
         AddListener();
-        UpdateMute();
+        GetMute();
     }
 
     private void OnDestroy()

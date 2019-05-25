@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    [Header("Manager")]
+    [SerializeField] PoolsManager manager;
+    public PoolsManager Manager {
+        get { return manager; }
+        private set { manager = value; }
+    }
+
+    [Header("Prefabs")]
     [SerializeField] List<GameObject> prefabs = new List<GameObject>();
 
     [Header("Settings")]
@@ -33,6 +41,15 @@ public class ObjectPool : MonoBehaviour
     }
 
 
+    private void Reset()
+    {
+        Manager = GetComponentInParent<PoolsManager>();
+    }
+
+    private void OnValidate()
+    {
+        Manager = GetComponentInParent<PoolsManager>();
+    }
 
     void Start()
     {
@@ -41,12 +58,14 @@ public class ObjectPool : MonoBehaviour
         DespawnAll();
         SetPool();
 
-        GameManager.Instance.Level.OnBeforeStart.AddListener(DespawnAll);
+        GameManager.Instance.Level.OnMenu.AddListener(DespawnAll);
+        GameManager.Instance.Level.OnStart.AddListener(DespawnAll);
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.Level.OnBeforeStart.AddListener(DespawnAll);
+        GameManager.Instance.Level.OnMenu.RemoveListener(DespawnAll);
+        GameManager.Instance.Level.OnStart.RemoveListener(DespawnAll);
     }
 
 
@@ -214,6 +233,7 @@ public class ObjectPool : MonoBehaviour
 
             var timebody = Instantiate(prefabs[index], transform).GetComponent<TimeBody>();
             timebody.pool = this;
+            timebody.controller = Manager.GameManager.TimeController;
 
             Despawn(timebody);
         }        

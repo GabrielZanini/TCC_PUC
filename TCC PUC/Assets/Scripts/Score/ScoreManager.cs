@@ -5,6 +5,15 @@ using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
+    [Header("Level")]
+    [SerializeField] LevelManager level;
+    public LevelManager Level {
+        get { return level; }
+        private set { level = value; }
+    }
+
+
+
     [SerializeField] int highest = 0;
     public int Highest {
         get { return highest; }

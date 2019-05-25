@@ -40,7 +40,7 @@ public class AsteroidManager : ObjectManager
     protected override void Death()
     {
         base.Death();
-        GameManager.Instance.Score.Add(points);
+        GameManager.Instance.Level.Score.Add(points);
     }
 
     void Count()

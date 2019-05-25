@@ -42,12 +42,14 @@ public class MoveShip : MonoBehaviour
 
     void AddListeners()
     {
-        GameManager.Instance.Level.OnBeforeStart.AddListener(StartShip);
+        GameManager.Instance.Level.OnMenu.AddListener(StartShip);
+        GameManager.Instance.Level.OnStart.AddListener(StartShip);
     }
 
     void RemoveListeners()
     {
-        GameManager.Instance.Level.OnBeforeStart.RemoveListener(StartShip);
+        GameManager.Instance.Level.OnMenu.RemoveListener(StartShip);
+        GameManager.Instance.Level.OnStart.RemoveListener(StartShip);
     }
 
 

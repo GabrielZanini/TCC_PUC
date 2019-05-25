@@ -25,18 +25,18 @@ public class ScoreHighestUI : MonoBehaviour
 
     void AddListener()
     {
-        GameManager.Instance.Score.OnNewHighest.AddListener(UpdateScore);
+        GameManager.Instance.Level.Score.OnNewHighest.AddListener(UpdateScore);
     }
 
     void RemoveListener()
     {
-        GameManager.Instance.Score.OnNewHighest.RemoveListener(UpdateScore);
+        GameManager.Instance.Level.Score.OnNewHighest.RemoveListener(UpdateScore);
     }
 
 
 
     void UpdateScore()
     {
-        score.text = GameManager.Instance.Score.Highest.ToString();
+        score.text = GameManager.Instance.Level.Score.Highest.ToString();
     }
 }

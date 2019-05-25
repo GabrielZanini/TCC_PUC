@@ -9,6 +9,14 @@ public class GameManager : MonoBehaviour
 
 
 
+    [Header("Controllers and Managers")]
+
+    [SerializeField] TimeController timeController;
+    public TimeController TimeController {
+        get { return timeController; }
+        private set { timeController = value; }
+    }
+
     [SerializeField] LevelManager level;
     public LevelManager Level {
         get { return level; }
@@ -33,12 +41,6 @@ public class GameManager : MonoBehaviour
         private set { player = value; }
     }
 
-    [SerializeField] ScoreManager score;
-    public ScoreManager Score {
-        get { return score; }
-        private set { score = value; }
-    }
-
 
 
     [Header("Settings")]
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
         set { useVibration = value; OnSetVibration(); }
     }
 
+    [Header("Object Layers")]
 
     public string playerLayer;
     public string playerBulletLayer;

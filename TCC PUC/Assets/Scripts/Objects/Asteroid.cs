@@ -24,6 +24,7 @@ public class Asteroid : MonoBehaviour
 
     LevelManager level;
 
+    
     private void Start()
     {
         level = GameManager.Instance.Level;
@@ -38,11 +39,14 @@ public class Asteroid : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.Level.State == LevelState.Playing  && !TimeController.Instance.IsRewinding)
-        {
-            Tranlate();
-            Rotate();
-        }        
+        //if (GameManager.Instance.Level.State == LevelState.Playing  && !timeController.IsRewinding)
+        //{
+        //    Tranlate();
+        //    Rotate();
+        //}
+
+        Tranlate();
+        Rotate();
     }
     
     void Tranlate()

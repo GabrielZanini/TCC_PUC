@@ -6,12 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(TimeBody))]
 public class Bullet : MonoBehaviour
 {
+    [Header("Timebody")]
     [SerializeField] TimeBody timeBody;
 
+    [Header("Settings")]
     public float speed = 20f;
     public float lifeTime = 2f;
     public int damage;
 
+    [Header("Render")]
     public SpriteRenderer inRender;
     public SpriteRenderer outRender;
 

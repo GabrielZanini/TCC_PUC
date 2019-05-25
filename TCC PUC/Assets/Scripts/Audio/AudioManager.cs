@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(TimeBody))]
 public class AudioManager : MonoBehaviour
 {
     [Header("Source")]
@@ -12,7 +11,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Settings")]
     public AudioType type = AudioType.Music;
-    public bool playAtStar = true;
+    public bool playAtStart = true;
     public bool loop = false;
     public bool stopOnRewind = true;
 
@@ -34,7 +33,11 @@ public class AudioManager : MonoBehaviour
         source = GetComponent<AudioSource>();
         source.playOnAwake = false;
         timebody = GetComponent<TimeBody>();
-        timebody.scriptsToDisable.Add(this);
+        
+        if (timebody != null)
+        {
+            timebody.scriptsToDisable.Add(this);
+        }
     }
 
     private void Awake()
@@ -48,10 +51,12 @@ public class AudioManager : MonoBehaviour
         
         AddListener();
         UpdateSource();
+        
 
-        if (playAtStar && timebody.isActive)
+        if (playAtStart)
         {
             Play();
+            
         }
         else
         {
@@ -90,14 +95,17 @@ public class AudioManager : MonoBehaviour
         GameManager.Instance.Audio.OnChangeVolume.AddListener(UpdateVolume);
         GameManager.Instance.Audio.OnMute.AddListener(UpdateMute);
 
-        timebody.OnSpawn.AddListener(Replay);
-        timebody.OnActivate.AddListener(Replay);
-
-        if (stopOnRewind)
+        if (timebody != null)
         {
-            TimeController.Instance.OnStartRewind.AddListener(Stop);
-            TimeController.Instance.OnStopRewind.AddListener(Play);
-        }
+            timebody.OnSpawn.AddListener(Replay);
+            timebody.OnActivate.AddListener(Replay);
+
+            if (stopOnRewind)
+            {
+                timebody.controller.OnStartRewind.AddListener(Stop);
+                timebody.controller.OnStopRewind.AddListener(Play);
+            }
+        }        
     }
 
     void RemoveListener()
@@ -105,14 +113,17 @@ public class AudioManager : MonoBehaviour
         GameManager.Instance.Audio.OnChangeVolume.RemoveListener(UpdateVolume);
         GameManager.Instance.Audio.OnMute.RemoveListener(UpdateMute);
 
-        timebody.OnSpawn.RemoveListener(Replay);
-        timebody.OnActivate.RemoveListener(Replay);
-        
-        if (stopOnRewind)
+        if (timebody != null)
         {
-            TimeController.Instance.OnStartRewind.RemoveListener(Stop);
-            TimeController.Instance.OnStopRewind.RemoveListener(Play);
-        }
+            timebody.OnSpawn.RemoveListener(Replay);
+            timebody.OnActivate.RemoveListener(Replay);
+
+            if (stopOnRewind)
+            {
+                timebody.controller.OnStartRewind.RemoveListener(Stop);
+                timebody.controller.OnStopRewind.RemoveListener(Play);
+            }
+        }        
     }
 
 

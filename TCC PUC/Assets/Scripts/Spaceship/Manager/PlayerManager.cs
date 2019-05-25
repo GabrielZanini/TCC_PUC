@@ -32,7 +32,7 @@ public class PlayerManager : ShipManager
         base.AddListeners();
         status.OnLoseHp.AddListener(Vibrate);
         GameManager.Instance.Level.OnStop.AddListener(shoot.ReleaseTriggers);
-        GameManager.Instance.Level.OnRestart.AddListener(Revive);
+        GameManager.Instance.Level.OnStart.AddListener(Revive);
         camerManager.OnChange.AddListener(SetMovementPlayer);
     }
 
@@ -41,7 +41,7 @@ public class PlayerManager : ShipManager
         base.RemoveListeners();
         status.OnLoseHp.RemoveListener(Vibrate);
         GameManager.Instance.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
-        GameManager.Instance.Level.OnRestart.RemoveListener(Revive);
+        GameManager.Instance.Level.OnStart.RemoveListener(Revive);
         camerManager.OnChange.RemoveListener(SetMovementPlayer);
     }
 

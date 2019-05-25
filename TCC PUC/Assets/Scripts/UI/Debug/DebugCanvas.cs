@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class DebugCanvas : MonoBehaviour
 {
+    [Header("Time Controller")]
+    public TimeController timeController;
+    
+    [Header("Hide")]
     public bool hideAtStart = true;
 
     [Header("Data")]
@@ -60,10 +64,10 @@ public class DebugCanvas : MonoBehaviour
         text += "Screen Orientation: " + Screen.orientation.ToString() + "\n";
 
         text += "\n";
-        text += "TimeBodys: " + TimeController.Instance.TimebodysCount + "\n";
-        text += "Max PITs: " + TimeController.Instance.MaxPointsInTime + "\n";
-        text += "Points in time: " + TimeController.Instance.PointsInTimeCount + "\n";
-        text += "Current PIT: " + TimeController.Instance.CurrentPointInTime + "\n";
+        text += "TimeBodys: " + timeController.TimebodysCount + "\n";
+        text += "Max PITs: " + timeController.MaxPointsInTime + "\n";
+        text += "Points in time: " + timeController.PointsInTimeCount + "\n";
+        text += "Current PIT: " + timeController.CurrentPointInTime + "\n";
 
         text += "\n";
         text += "Delta Time: " + Time.deltaTime + "\n";
@@ -169,7 +173,7 @@ public class DebugCanvas : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.Player.shoot.MoreBulletSpeed();
+            GameManager.Instance.Player.shoot.LessBulletSpeed();
         }
     }
 

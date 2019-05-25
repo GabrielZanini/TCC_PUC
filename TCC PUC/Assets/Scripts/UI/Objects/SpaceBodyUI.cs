@@ -40,14 +40,14 @@ public class SpaceBodyUI : MonoBehaviour
     void AddListeners()
     {
         status.OnChangeHp.AddListener(UpdateBar);
-        GameManager.Instance.Level.OnBeforeStart.AddListener(UpdateBar);
+        GameManager.Instance.Level.OnMenu.AddListener(UpdateBar);
         GameManager.Instance.Level.OnStart.AddListener(UpdateBar);
     }
 
     void RemoveListeners()
     {
         status.OnChangeHp.RemoveListener(UpdateBar);
-        GameManager.Instance.Level.OnBeforeStart.RemoveListener(UpdateBar);
+        GameManager.Instance.Level.OnMenu.RemoveListener(UpdateBar);
         GameManager.Instance.Level.OnStart.RemoveListener(UpdateBar);
     }
 
@@ -58,7 +58,7 @@ public class SpaceBodyUI : MonoBehaviour
         lifeBar.value = status.CurrentHp;
 
         bool hideMax = hideLifeAtMax && lifeBar.value == lifeBar.maxValue;
-        bool hideStart = hideBeforeStart && GameManager.Instance.Level.State == LevelState.BeforeStart;
+        bool hideStart = hideBeforeStart && GameManager.Instance.Level.State == LevelState.Menu;
 
         if (hideMax || hideStart)
         {

@@ -11,7 +11,12 @@ public class Backgrounds : MonoBehaviour
     [Header("Backgrond")]
     public List<ScrollBackground> backgronds = new List<ScrollBackground>();
 
-    public int currentId = 0;
+    [Header("Stars")]
+    public List<ScrollStarts> stars = new List<ScrollStarts>();
+
+    [Header("Selected")]
+    public int backgroundId = 0;
+    public int starsId = 0;
 
 
 
@@ -62,12 +67,19 @@ public class Backgrounds : MonoBehaviour
     void GetBackground()
     {
         var bg = GetComponentsInChildren<ScrollBackground>(true);
+        var sts = GetComponentsInChildren<ScrollStarts>(true);
 
         backgronds.Clear();
+        stars.Clear();
 
         for (int i = 0; i < bg.Length; i++)
         {
             backgronds.Add(bg[i]);
+        }
+
+        for (int i = 0; i < sts.Length; i++)
+        {
+            stars.Add(sts[i]);
         }
 
         SetCamera();
@@ -82,6 +94,11 @@ public class Backgrounds : MonoBehaviour
             {
                 backgronds[i].camerManager = camerManager;
             }
+
+            for (int i = 0; i < stars.Count; i++)
+            {
+                stars[i].camerManager = camerManager;
+            }
         }
     }
     
@@ -91,41 +108,84 @@ public class Backgrounds : MonoBehaviour
         {
             backgronds[i].gameObject.SetActive(false);
         }
+
+        for (int i = 0; i < stars.Count; i++)
+        {
+            stars[i].gameObject.SetActive(false);
+        }
     }
 
     void ActiveBackground()
     {
         DisableAll();
-        ValidateId();
-        backgronds[currentId].gameObject.SetActive(true);
+        ValidateBgId();
+        backgronds[backgroundId].gameObject.SetActive(true);
+        ActiveStars();
     }
 
-    void ValidateId()
+    void ActiveStars()
     {
-        if (currentId > 0)
+        if (!backgronds[backgroundId].hasStars)
         {
-            currentId = currentId % backgronds.Count;
+            ValidateStarsId();
+            stars[starsId].gameObject.SetActive(true);
+        }
+    }
+
+    void ValidateBgId()
+    {
+        if (backgroundId > 0)
+        {
+            backgroundId = backgroundId % backgronds.Count;
         }
         else
         {
-            while (currentId < 0 )
+            while (backgroundId < 0)
             {
-                currentId += backgronds.Count;
+                backgroundId += backgronds.Count;
+            }
+        }
+    }
+
+    void ValidateStarsId()
+    {
+        if (starsId > 0)
+        {
+            starsId = starsId % stars.Count;
+        }
+        else
+        {
+            while (starsId < 0)
+            {
+                starsId += stars.Count;
             }
         }
     }
 
 
 
-    public void Next()
+    public void NextBG()
     {
-        currentId += 1;
+        backgroundId += 1;
         ActiveBackground();
     }
 
-    public void Previous()
+    public void PreviousBG()
     {
-        currentId -= 1;
+        backgroundId -= 1;
+        ActiveBackground();
+    }
+
+
+    public void NextStars()
+    {
+        backgroundId += 1;
+        ActiveBackground();
+    }
+
+    public void PreviousStars()
+    {
+        backgroundId -= 1;
         ActiveBackground();
     }
 }

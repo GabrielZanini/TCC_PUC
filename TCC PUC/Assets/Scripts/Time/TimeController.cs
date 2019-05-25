@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class TimeController : MonoBehaviour
 {
-    public static TimeController Instance { get; private set; }
-
     private List<TimeBody> timebodys = new List<TimeBody>();
 
     [Header("Bools")]
@@ -90,15 +88,6 @@ public class TimeController : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
         MaxPointsInTime = (int)Mathf.Round(rewindTime / Time.fixedDeltaTime);
     }
 

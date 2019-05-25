@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PoolsManager : MonoBehaviour
 {
+    [Header("Game Manager")]
+    [SerializeField] GameManager gameManager;
+    public GameManager GameManager {
+        get { return gameManager; }
+        private set { gameManager = value; }
+    }
+
     [Header("Objects")]
     [SerializeField] ObjectPool asteroids;
     public ObjectPool Asteroids {
@@ -65,5 +72,19 @@ public class PoolsManager : MonoBehaviour
     public ObjectPool PowerUps {
         get { return powerUps; }
         private set { powerUps = value; }
+    }
+
+
+
+
+
+    private void Reset()
+    {
+        GameManager = GetComponentInParent<GameManager>();
+    }
+
+    private void OnValidate()
+    {
+        GameManager = GetComponentInParent<GameManager>();
     }
 }

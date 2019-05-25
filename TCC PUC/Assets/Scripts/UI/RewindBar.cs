@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class RewindBar : MonoBehaviour
 {
+    [Header("Time Controller")]
+    public TimeController timeController;
+
     public Slider fullBar;
     public Slider rewindBar;
 
@@ -17,7 +20,7 @@ public class RewindBar : MonoBehaviour
 
     void Start()
     {
-        fullBar.maxValue = TimeController.Instance.MaxPointsInTime;
+        fullBar.maxValue = timeController.MaxPointsInTime;
     }
 
     private void OnDisable()
@@ -54,16 +57,16 @@ public class RewindBar : MonoBehaviour
         
     void UpdateBars()
     {
-        fullBar.value = TimeController.Instance.PointsInTimeCount;
+        fullBar.value = timeController.PointsInTimeCount;
         rewindBar.maxValue = fullBar.value;
 
         if (button.Hold)
         {
-            TimeController.Instance.CurrentPointInTime = (int)rewindBar.value;
+            timeController.CurrentPointInTime = (int)rewindBar.value;
         }
         else
         {
-            rewindBar.value = TimeController.Instance.CurrentPointInTime;
+            rewindBar.value = timeController.CurrentPointInTime;
         }
     }
 

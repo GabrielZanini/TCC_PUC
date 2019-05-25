@@ -18,6 +18,6 @@ public class EnemyManager : ShipManager
     protected override void Death()
     {
         base.Death();
-        GameManager.Instance.Score.Add(points);
+        GameManager.Instance.Level.Score.Add(points);
     }
 }

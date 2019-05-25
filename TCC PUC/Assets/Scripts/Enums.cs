@@ -81,7 +81,7 @@ public enum AiType
 
 public enum LevelState
 {
-    BeforeStart,
+    Menu,
     Playing,
     Paused,
     Stoped,

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     [Header("Level State")]
-    [SerializeField] LevelState state = LevelState.BeforeStart;
+    [SerializeField] LevelState state = LevelState.Menu;
     public LevelState State {
         get { return state; }
         private set { state = value; }
@@ -26,7 +26,14 @@ public class LevelManager : MonoBehaviour
         private set { increasingDifficulty = value; }
     }
 
-    [HideInInspector] public UnityEvent OnBeforeStart;
+    [Header("Score")]
+    [SerializeField] ScoreManager score;
+    public ScoreManager Score {
+        get { return score; }
+        private set { score = value; }
+    }
+
+    [HideInInspector] public UnityEvent OnMenu;
     [HideInInspector] public UnityEvent OnStart;
     [HideInInspector] public UnityEvent OnPause;
     [HideInInspector] public UnityEvent OnContinue;
@@ -38,12 +45,12 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        BeforeStart();
+        Menu();
     }
 
     void Update()
     {
-        ReadInput();
+        //ReadInput();
         IncreaseDifficulty();
     }
 
@@ -51,7 +58,7 @@ public class LevelManager : MonoBehaviour
 
     void ReadInput()
     {
-        if (GameManager.Instance.IsMobile && state == LevelState.BeforeStart)
+        if (GameManager.Instance.IsMobile && state == LevelState.Menu)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -73,13 +80,13 @@ public class LevelManager : MonoBehaviour
         DifficultyModifire = startingDifficulty;
     }
 
-    void BeforeStart()
+    public void Menu()
     {
-        state = LevelState.BeforeStart;
-        OnBeforeStart.Invoke();
+        state = LevelState.Menu;
+        OnMenu.Invoke();
     }
     
-    void StartLevel()
+    public void StartLevel()
     {
         state = LevelState.Playing;
         RestarDifficulty();
@@ -108,8 +115,8 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
+        StartLevel();
         OnRestart.Invoke();
-        BeforeStart();
     }
     
     public void Stop()
