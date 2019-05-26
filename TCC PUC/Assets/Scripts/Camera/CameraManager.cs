@@ -6,6 +6,13 @@ using UnityEngine.Events;
 [ExecuteInEditMode]
 public class CameraManager : MonoBehaviour
 {
+    [Header("Level")]
+    [SerializeField] LevelManager level;
+    public LevelManager Level {
+        get { return level; }
+        private set { level = value; }
+    }
+
     [Header("Camera Object")]
     public Camera camera;
 
@@ -76,6 +83,11 @@ public class CameraManager : MonoBehaviour
         height = verticalSize * 2;
 
         camera.orthographicSize = verticalSize;
+
+        if (Level.State == LevelState.Playing || Level.State == LevelState.Paused)
+        {
+            Level.Restart();
+        }
 
         OnChange.Invoke();
     }

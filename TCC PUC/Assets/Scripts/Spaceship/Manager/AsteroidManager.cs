@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(Asteroid))]
 public class AsteroidManager : ObjectManager
 {
-    public Asteroid asteroid;
-
     [Header("Settings")]
     public int points = 10;
     public float lifeTime = 10f;
@@ -18,7 +15,6 @@ public class AsteroidManager : ObjectManager
     protected override void Reset()
     {
         base.Reset();
-        asteroid = GetComponent<Asteroid>();
     }
 
     private void OnEnable()

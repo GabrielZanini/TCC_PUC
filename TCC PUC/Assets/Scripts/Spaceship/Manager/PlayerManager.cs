@@ -12,6 +12,13 @@ public class PlayerManager : ShipManager
     [Header("Camera")]
     public CameraManager camerManager;
 
+    [Header("Coins")]
+    public int coins = 0;
+
+
+    [Header("Starting Status")]
+    public PlayerStatus defaultStaus;
+    public int oxlm;
 
     protected override void Reset()
     {
@@ -86,5 +93,16 @@ public class PlayerManager : ShipManager
     {
         status.CurrentHp = status.MaxHp;
         timebody.SetActive(true);
+        shoot.SetBullets(defaultStaus.bullets);
     }
+
+
+    // Coins
+
+    public void AddCoins(int coins)
+    {
+        this.coins += coins; 
+    }
+
+
 }

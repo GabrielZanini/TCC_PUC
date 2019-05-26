@@ -87,3 +87,13 @@ public enum LevelState
     Stoped,
     Finished,
 }
+
+
+public enum PowerUpType
+{
+    MoreBullets,
+    MoreDamage,
+    MoreShootingRate,
+    Shield,
+    Rockets,
+}

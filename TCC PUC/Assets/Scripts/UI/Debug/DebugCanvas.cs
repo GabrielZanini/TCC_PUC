@@ -121,11 +121,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBullets();
+            GameManager.Instance.Player.shoot.RemoveBullet();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBullets();
+            GameManager.Instance.Player.shoot.RemoveBullet();
         }
     }
 
@@ -133,11 +133,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreMuzzleAngle();
+            GameManager.Instance.Player.shoot.AddMuzzleAngle();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessMuzzleAngle();
+            GameManager.Instance.Player.shoot.RemoveMuzzleAngle();
         }
     }
     
@@ -145,11 +145,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBarrelAngle();
+            GameManager.Instance.Player.shoot.AddBarrelAngle();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBarrelAngle();
+            GameManager.Instance.Player.shoot.RemoveBarrelAngle();
         }
     }
 
@@ -157,11 +157,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBulletRate();
+            GameManager.Instance.Player.shoot.AddBulletRate();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBulletRate();
+            GameManager.Instance.Player.shoot.RemoveBulletRate();
         }
     }
     
@@ -169,11 +169,11 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.MoreBulletSpeed();
+            GameManager.Instance.Player.shoot.AddBulletSpeed();
         }
         else
         {
-            GameManager.Instance.Player.shoot.LessBulletSpeed();
+            GameManager.Instance.Player.shoot.RemoveBulletSpeed();
         }
     }
 

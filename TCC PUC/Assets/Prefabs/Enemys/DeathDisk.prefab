@@ -1467,8 +1467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7acce207d449e4fb110ba2056be38d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  angularSpeed: 180
+  speed: 2
+  angularSpeed: 90
   smoothness: 0.5
   startPosition: {x: 0, y: 0, z: 10}
 --- !u!114 &1565141133272527090
@@ -1636,7 +1636,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletRate
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -1815,7 +1815,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletRate
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -1994,7 +1994,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletRate
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -2208,7 +2208,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletRate
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}

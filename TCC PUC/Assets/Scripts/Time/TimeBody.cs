@@ -93,7 +93,7 @@ public class TimeBody : MonoBehaviour
 
     public void Despawn()
     {
-        if (pool != null && isActive)
+        if (pool != null)
         {
             pool.Despawn(this);
             OnDespawn.Invoke();

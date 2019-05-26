@@ -267,16 +267,23 @@ public class Gun : MonoBehaviour
 
     // External Control
 
-    public void MoreBullets()
+    public void SetBullets(int bullets)
+    {
+        MaxBarrels = bullets;
+        AjustBarrols();
+    }
+
+
+    public void AddBullet()
     {
         if (MaxBarrels < 10)
         {
             MaxBarrels += 1;
             AjustBarrols();
-        }        
+        }
     }
 
-    public void LessBullets()
+    public void RemoveBullet()
     {
         if (MaxBarrels > 1)
         {
@@ -284,49 +291,65 @@ public class Gun : MonoBehaviour
             AjustBarrols();
         }
     }
-    
-    public void MoreBarrelAngle()
+
+    public void AddDamage()
+    {
+        if (bulletdamage < 10)
+        {
+            bulletdamage += 1;
+        }
+    }
+
+    public void RemoveDamage()
+    {
+        if (bulletdamage > 1)
+        {
+            bulletdamage -= 1;
+        }
+    }
+
+    public void AddBarrelAngle()
     {
         BarrelAngle += 1;
         RotateBarrels();
         CalculateMuzzlesOffste();
     }
 
-    public void LessBarrelAngle()
+    public void RemoveBarrelAngle()
     {
         BarrelAngle -= 1;
         RotateBarrels();
         CalculateMuzzlesOffste();
     }
     
-    public void MoreMuzzleAngle()
+    public void AddMuzzleAngle()
     {
         MuzzleAngle += 1;
         CalculateMuzzlesOffste();
     }
 
-    public void LessMuzzleAngle()
+    public void RemoveMuzzleAngle()
     {
         MuzzleAngle -= 1;
         CalculateMuzzlesOffste();
     }
 
-    public void MoreBulletSpeed()
+    public void AddBulletSpeed()
     {
         bulletSpeed += 1;
     }
 
-    public void LessBulletSpeed()
+    public void RemoveBulletSpeed()
     {
         bulletSpeed -= 1;
     }
 
-    public void MoreBulletRate()
+    public void AddBulletRate()
     {
         bulletRate += 0.01f;
     }
 
-    public void LessBulletRate()
+    public void RemoveBulletRate()
     {
         if (bulletRate > 0.01f)
         {

@@ -192,9 +192,7 @@ public class ObjectPool : MonoBehaviour
     public void Despawn(TimeBody timebody)
     {
         timebody.SetActive(false);
-
-        activeObjects.Remove(timebody);
-        inactiveObjects.Add(timebody);
+        CheckLists(timebody);
     }
 
 

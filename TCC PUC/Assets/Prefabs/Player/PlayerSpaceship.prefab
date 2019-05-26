@@ -1078,6 +1078,17 @@ MonoBehaviour:
   marging: 1
   margingBottom: 5
   camerManager: {fileID: 0}
+  coins: 0
+  defaultStaus:
+    bullets: 1
+    damage: 1
+    shootingRate: 0.2
+    useShield: 0
+    shildTime: 5
+    rockets: 1
+    useRockets: 0
+    rocketsRate: 5
+  oxlm: 0
 --- !u!1 &3795141736809314659
 GameObject:
   m_ObjectHideFlags: 0

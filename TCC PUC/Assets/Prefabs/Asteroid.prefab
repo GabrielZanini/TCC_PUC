@@ -423,7 +423,8 @@ GameObject:
   - component: {fileID: 7152724393694647318}
   - component: {fileID: 7152724393694647314}
   - component: {fileID: 7152724393694647313}
-  - component: {fileID: 7152724393694647325}
+  - component: {fileID: 2998280089889385721}
+  - component: {fileID: 8128887729326469854}
   - component: {fileID: 498934554953354446}
   m_Layer: 10
   m_Name: Asteroid
@@ -489,17 +490,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04922517724bf054494f9d1cfea0223d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   bodyType: 4
   isActive: 0
   scriptsToDisable:
   - {fileID: 7152724393694647313}
-  - {fileID: 7152724393694647325}
+  - {fileID: 2998280089889385721}
   - {fileID: 498934554953354446}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
   smoothPosition: 0
   pool: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0, w: 0}
   OnSpawn:
     m_PersistentCalls:
       m_Calls: []
@@ -574,7 +578,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &7152724393694647325
+--- !u!114 &2998280089889385721
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -586,13 +590,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9119363a44058bf40ab7b21a79a9c4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 7152724392929676718}
-  minSpeed: 10
-  maxSpeed: 15
-  minRotation: -5
-  maxRotation: 5
+  minSpeed: 0
+  maxSpeed: 10
   minOffset: -0.03
   maxOffset: 0.03
+--- !u!114 &8128887729326469854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152724393694647324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1e4bd2b80f9ca34ab1889450d72cd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 7152724392929676718}
+  minRotation: -5
+  maxRotation: 5
 --- !u!114 &498934554953354446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,9 +623,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timebody: {fileID: 7152724393694647314}
   status: {fileID: 7152724393694647313}
-  asteroid: {fileID: 7152724393694647325}
   points: 10
-  lifeTime: 3
+  lifeTime: 10
 --- !u!1 &7260191389596961555
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,15 +802,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
---- !u!4 &7152724392929676718 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2,
-    type: 3}
-  m_PrefabInstance: {fileID: 7152724392930072366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7152724392930169230 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7152724392930072366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7152724392929676718 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2,
     type: 3}
   m_PrefabInstance: {fileID: 7152724392930072366}
   m_PrefabAsset: {fileID: 0}

@@ -96,83 +96,108 @@ public class ShootShip : MonoBehaviour
 
 
 
-    public void MoreBullets()
-    {
-        for (int i=0; i<guns.Count; i++)
-        {
-            guns[i].MoreBullets();
-        }
-    }
-
-    public void LessBullets()
+    public void SetBullets(int bullets)
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBullets();
+            guns[i].SetBullets(bullets);
         }
     }
 
-    public void MoreBarrelAngle()
+
+    public void AddBullet()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].MoreBarrelAngle();
+            guns[i].AddBullet();
         }
     }
 
-    public void LessBarrelAngle()
+    public void RemoveBullet()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBarrelAngle();
+            guns[i].RemoveBullet();
         }
     }
 
-    public void MoreMuzzleAngle()
+    public void AddDamage()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].MoreMuzzleAngle();
+            guns[i].AddDamage();
         }
     }
 
-    public void LessMuzzleAngle()
+    public void RemoveDamage()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessMuzzleAngle();
+            guns[i].RemoveDamage();
         }
     }
 
-    public void MoreBulletSpeed()
+    public void AddBarrelAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].MoreBulletSpeed();
+            guns[i].AddBarrelAngle();
         }
     }
 
-    public void LessBulletSpeed()
+    public void RemoveBarrelAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBulletSpeed();
+            guns[i].RemoveBarrelAngle();
         }
     }
 
-    public void MoreBulletRate()
+    public void AddMuzzleAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].MoreBulletRate();
+            guns[i].AddMuzzleAngle();
         }
     }
 
-    public void LessBulletRate()
+    public void RemoveMuzzleAngle()
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].LessBulletRate();
+            guns[i].RemoveMuzzleAngle();
+        }
+    }
+
+    public void AddBulletSpeed()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].AddBulletSpeed();
+        }
+    }
+
+    public void RemoveBulletSpeed()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].RemoveBulletSpeed();
+        }
+    }
+
+    public void AddBulletRate()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].AddBulletRate();
+        }
+    }
+
+    public void RemoveBulletRate()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].RemoveBulletRate();
         }
     }
 
