@@ -6,11 +6,7 @@ public class PowerUp : PickUp
 {
     public PowerUpType type = PowerUpType.MoreBullets;
 
-
-    private void OnEnable()
-    {
-        //type = (PowerUpType)Random.Range(0,1);
-    }
+    
 
 
     protected override void PlayerPickUp(PlayerManager player)
@@ -34,7 +30,7 @@ public class PowerUp : PickUp
         }
         else if (type == PowerUpType.Shield)
         {
-
+            player.shield.Activate();
         }
     }
 }

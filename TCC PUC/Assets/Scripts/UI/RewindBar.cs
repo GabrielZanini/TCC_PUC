@@ -12,18 +12,18 @@ public class RewindBar : MonoBehaviour
     public Slider rewindBar;
 
     public MobileButton button;
+    
 
-    private void OnEnable()
-    {
-        AddListener();
-    }
 
     void Start()
     {
         fullBar.maxValue = timeController.MaxPointsInTime;
+
+
+        AddListener();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         RemoveListener();
     }

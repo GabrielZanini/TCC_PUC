@@ -47,7 +47,7 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-    void ActivateGuns()
+    public void ActivateGuns()
     {
         for (int i = 0; i < guns.Count; i++)
         {
@@ -55,7 +55,7 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-    void DeactivateGuns()
+    public void DeactivateGuns()
     {
         for (int i = 0; i < guns.Count; i++)
         {
@@ -103,6 +103,32 @@ public class ShootShip : MonoBehaviour
             guns[i].SetBullets(bullets);
         }
     }
+
+    public void SetDamage(int damage)
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].SetDamage(damage);
+        }
+    }
+
+    public void SetRate(float rate)
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].SetRate(rate);
+        }
+    }
+
+    public void SetBulletColor(Color inColor, Color outColor)
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].SetBulletColor(inColor, outColor);
+        }
+    }
+
+
 
 
     public void AddBullet()

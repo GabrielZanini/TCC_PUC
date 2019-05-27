@@ -19,7 +19,7 @@ public class RandomRotateObject : MonoBehaviour
 
     void OnEnable()
     {
-        ResetRotation();
+        //ResetRotation();
     }
 
     void Update()

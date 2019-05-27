@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(StatusBase))]
 public class ObjectManager : MonoBehaviour
 {
+    [Header("Scripts")]
     public TimeBody timebody;
     public StatusBase status;
 
@@ -21,7 +22,12 @@ public class ObjectManager : MonoBehaviour
     {
         AddListeners();
     }
-    
+
+    protected virtual void Update()
+    {
+        
+    }
+
     protected virtual void OnDestroy()
     {
         RemoveListeners();

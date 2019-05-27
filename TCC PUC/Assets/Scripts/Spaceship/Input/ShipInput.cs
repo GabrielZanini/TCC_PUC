@@ -26,7 +26,8 @@ public class InputButtonKey
 {
     private List<string> buttons = new List<string>();
     private List<KeyCode> keys = new List<KeyCode>();
-    
+    private List<MobileButton> mobileButtons = new List<MobileButton>();
+
 
     public bool Down {
         get {
@@ -86,10 +87,21 @@ public class InputButtonKey
         keys.Remove(key);
     }
 
+    public void AddMobileButton(MobileButton mobileButton)
+    {
+        mobileButtons.Add(mobileButton);
+    }
+
+    public void RemoveMobileButton(MobileButton mobileButton)
+    {
+        mobileButtons.Remove(mobileButton);
+    }
+
     public void Clear()
     {
         buttons.Clear();
         keys.Clear();
+        mobileButtons.Clear();
     }
 
     public void SetFixValue(bool down, bool hold, bool up)
@@ -123,6 +135,11 @@ public class InputButtonKey
             if (Input.GetKeyDown(keys[i])) return true;
         }
 
+        for (int i = 0; i < mobileButtons.Count; i++)
+        {
+            if (mobileButtons[i].Down) return true;
+        }
+
         return false;
     }
 
@@ -141,6 +158,11 @@ public class InputButtonKey
         for (int i = 0; i < keys.Count; i++)
         {
             if (Input.GetKey(keys[i])) return true;
+        }
+        
+        for (int i = 0; i < mobileButtons.Count; i++)
+        {
+            if (mobileButtons[i].Hold) return true;
         }
 
         return false;
@@ -161,6 +183,11 @@ public class InputButtonKey
         for (int i = 0; i < keys.Count; i++)
         {
             if (Input.GetKeyUp(keys[i])) return true;
+        }
+
+        for (int i = 0; i < mobileButtons.Count; i++)
+        {
+            if (mobileButtons[i].Up) return true;
         }
 
         return false;

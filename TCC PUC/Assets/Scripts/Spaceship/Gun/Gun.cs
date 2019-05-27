@@ -273,6 +273,22 @@ public class Gun : MonoBehaviour
         AjustBarrols();
     }
 
+    public void SetDamage(int damage)
+    {
+        bulletdamage = damage;
+    }
+
+    public void SetRate(float rate)
+    {
+        bulletRate = rate;
+    }
+
+    public void SetBulletColor(Color inColor, Color outColor)
+    {
+        this.inColor = inColor;
+        this.outColor = outColor;
+    }
+
 
     public void AddBullet()
     {

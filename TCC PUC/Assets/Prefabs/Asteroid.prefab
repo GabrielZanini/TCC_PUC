@@ -497,6 +497,7 @@ MonoBehaviour:
   - {fileID: 7152724393694647313}
   - {fileID: 2998280089889385721}
   - {fileID: 498934554953354446}
+  - {fileID: 8128887729326469854}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
@@ -726,7 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_Layer

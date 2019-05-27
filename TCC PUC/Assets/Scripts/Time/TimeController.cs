@@ -38,7 +38,7 @@ public class TimeController : MonoBehaviour
     [Header("Control Buttons")]
     public string rewindButton = "Fire1";
     public string slowdownButton = "Fire2";
-    [SerializeField] MobileButton mobileRewindButton;
+    [SerializeField] List<MobileButton> mobileRewindButtons = new List<MobileButton>();
     [SerializeField] PlayerInput playerInput;
 
 
@@ -75,7 +75,6 @@ public class TimeController : MonoBehaviour
     }
     private bool isFirstSlowdown = true;
     private float stepTimer = 0f;
-    private float stepsCounter = 0f;
 
     public float overloadTime = 2f;
     [Range(0f, 1f)] public float slowdownScale = 0.5f;
@@ -84,6 +83,7 @@ public class TimeController : MonoBehaviour
     [SerializeField] float rewindCounter = 0f;
     [SerializeField] float recordCounter = 0f;
     [SerializeField] float overloadCounter = 0f;
+    [SerializeField] int stepsCounter = 0;
 
     [Header("TimeBodys")]
     private List<TimeBody> timebodys = new List<TimeBody>();
@@ -120,12 +120,12 @@ public class TimeController : MonoBehaviour
 
     void OnEnable()
     {
-        AddListener();
+
     }
 
     void Start()
     {
-        
+        AddListeners();
     }
 
     void Update()
@@ -134,17 +134,18 @@ public class TimeController : MonoBehaviour
         {
             CheckTime();
             GetInput();
+            TimeLoop();
         }
     }
 
     void FixedUpdate()
     {
-        TimeStep();   
+        //TimeStep();   
     }
 
     private void OnDisable()
     {
-        RemoveListener();
+        RemoveListeners();
     }
     
 
@@ -216,6 +217,19 @@ public class TimeController : MonoBehaviour
         }
     }
 
+    void TimeLoop()
+    {
+        if (stepTimer <= 0f)
+        {
+            stepTimer = timeStep;
+            TimeStep();
+        }
+        else
+        {
+            stepTimer -= Time.deltaTime;
+        }
+    }
+
     void TimeStep()
     {
         if (GameManager.Instance.Level.State == LevelState.Playing)
@@ -245,23 +259,29 @@ public class TimeController : MonoBehaviour
         CurrentPointInTime = pointsInTimeCount;
     }
 
-    void AddListener()
+    void AddListeners()
     {
-        mobileRewindButton.OnPress.AddListener(StartRewind);
-        mobileRewindButton.OnRelease.AddListener(StopRewind);
+        foreach (var mobileButton in mobileRewindButtons)
+        {
+            mobileButton.OnPress.AddListener(StartRewind);
+            mobileButton.OnRelease.AddListener(StopRewind);
+        }
 
         GameManager.Instance.Level.OnStart.AddListener(ClearList);
         GameManager.Instance.Level.OnStop.AddListener(ClearList);
         GameManager.Instance.Level.OnRestart.AddListener(ClearList);
     }
 
-    void RemoveListener()
+    void RemoveListeners()
     {
-        mobileRewindButton.OnPress.RemoveListener(StartRewind);
-        mobileRewindButton.OnRelease.RemoveListener(StopRewind);
+        foreach (var mobileButton in mobileRewindButtons)
+        {
+            mobileButton.OnPress.RemoveListener(StartRewind);
+            mobileButton.OnRelease.RemoveListener(StopRewind);
+        }
 
         GameManager.Instance.Level.OnStart.RemoveListener(ClearList);
-        GameManager.Instance.Level.OnStop.AddListener(ClearList);
+        GameManager.Instance.Level.OnStop.RemoveListener(ClearList);
         GameManager.Instance.Level.OnRestart.RemoveListener(ClearList);
     }
 

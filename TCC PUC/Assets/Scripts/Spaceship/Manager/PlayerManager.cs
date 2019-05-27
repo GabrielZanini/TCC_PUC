@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ShieldShip))]
 public class PlayerManager : ShipManager
 {
+    public ShieldShip shield;
+
     [Header("Player Settings")]
-    public float spawnMargingBottom = 10f;
-    public float marging = 1f;
-    public float margingBottom = 5f;
+    public Margin margin = new Margin();
+    public ShipStyle style;
 
     [Header("Camera")]
     public CameraManager camerManager;
@@ -18,20 +20,29 @@ public class PlayerManager : ShipManager
 
     [Header("Starting Status")]
     public PlayerStatus defaultStaus;
-    public int oxlm;
+    public PlayerStatus extraStatus;
+
+
 
     protected override void Reset()
     {
         base.Reset();
+        shield = GetComponent<ShieldShip>();
         type = ShipType.Player;
         playAfterStop = false;
     }
 
+    private void OnValidate()
+    {
+        SetStyle();
+    }
+
     protected override void Start()
-    {        
+    {
         base.Start();
         SetMovementPlayer();
     }
+
 
 
     protected override void AddListeners()
@@ -39,8 +50,11 @@ public class PlayerManager : ShipManager
         base.AddListeners();
         status.OnLoseHp.AddListener(Vibrate);
         GameManager.Instance.Level.OnStop.AddListener(shoot.ReleaseTriggers);
+        GameManager.Instance.Level.OnStop.AddListener(shield.Deactivate);
         GameManager.Instance.Level.OnStart.AddListener(Revive);
         camerManager.OnChange.AddListener(SetMovementPlayer);
+        //shield.OnActivate.AddListener(timebody.DisableCollider);
+        //shield.OnDeactivate.AddListener(timebody.EnableCollider);
     }
 
     protected override void RemoveListeners()
@@ -48,8 +62,11 @@ public class PlayerManager : ShipManager
         base.RemoveListeners();
         status.OnLoseHp.RemoveListener(Vibrate);
         GameManager.Instance.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
+        GameManager.Instance.Level.OnStop.RemoveListener(shield.Deactivate);
         GameManager.Instance.Level.OnStart.RemoveListener(Revive);
         camerManager.OnChange.RemoveListener(SetMovementPlayer);
+        //shield.OnActivate.RemoveListener(timebody.DisableCollider);
+        //shield.OnDeactivate.RemoveListener(timebody.EnableCollider);
     }
 
 
@@ -62,15 +79,15 @@ public class PlayerManager : ShipManager
 
     void SetMovementStart()
     {
-        movement.SetStartPosition(new Vector3(0f, 0f, 0f - camerManager.verticalSize + spawnMargingBottom));
+        movement.SetStartPosition(Vector3.zero);
     }
 
     void SetMovementLimits()
     {
-        Vector3 min = new Vector3(0 - camerManager.horizontalSize + marging, 0, 0 - camerManager.verticalSize + marging + margingBottom);
-        Vector3 max = new Vector3(camerManager.horizontalSize - marging, 0, camerManager.verticalSize - marging);
+        Vector3 min = new Vector3(0 - camerManager.horizontalSize, 0, 0 - camerManager.verticalSize);
+        Vector3 max = new Vector3(camerManager.horizontalSize, 0, camerManager.verticalSize);
 
-        movement.SetLimits(min, max);
+        movement.SetLimits(min, max, margin);
     }
 
 
@@ -93,7 +110,21 @@ public class PlayerManager : ShipManager
     {
         status.CurrentHp = status.MaxHp;
         timebody.SetActive(true);
-        shoot.SetBullets(defaultStaus.bullets);
+        SetStatus();
+    }
+
+    void SetStatus()
+    {
+        shoot.SetBullets(defaultStaus.bullets + extraStatus.bullets);
+    }
+
+    void SetStyle()
+    {
+        if (style != null)
+        {
+            shoot.SetBulletColor(style.inBulletColor, style.outBulletColor);
+            shield.SetMaterial(style.shieldMaterial);
+        }        
     }
 
 

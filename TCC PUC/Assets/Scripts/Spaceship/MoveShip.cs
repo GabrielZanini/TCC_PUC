@@ -17,6 +17,8 @@ public class MoveShip : MonoBehaviour
 
     Vector3 maxPosition;
     Vector3 minPosition;
+    Vector3 maxLocalPosition;
+    Vector3 minLocalPosition;
 
     Vector3 newShipPosition;
     
@@ -87,12 +89,10 @@ public class MoveShip : MonoBehaviour
 
     Vector3 CorrectNewLocalPosition(Vector3 newPosition)
     {
-        Vector3 worldPosition = transform.position + newPosition;
+        newPosition = Vector3.Max(newPosition, minLocalPosition);
+        newPosition = Vector3.Min(newPosition, maxLocalPosition);
 
-        newPosition = Vector3.Max(worldPosition, minPosition);
-        newPosition = Vector3.Min(worldPosition, maxPosition);
-
-        return worldPosition - transform.position;
+        return newPosition;
     }
 
     Vector3 CorrectNewPosition(Vector3 newPosition)
@@ -110,11 +110,14 @@ public class MoveShip : MonoBehaviour
     }
 
 
-    public void SetLimits(Vector3 min, Vector3 max)
+    public void SetLimits(Vector3 min, Vector3 max, Margin margin)
     {
         useLimits = true;
-        minPosition = min;
-        maxPosition = max;
+        minPosition = min + new Vector3(margin.all + margin.left, 0, margin.all + margin.bottom);
+        maxPosition = max - new Vector3(margin.all + margin.right, 0, margin.all + margin.top);
+
+        minLocalPosition = minPosition + (transform.position - transform.localPosition);
+        maxLocalPosition = maxPosition + (transform.position - transform.localPosition);
     }
 
     public void ClearLimits()

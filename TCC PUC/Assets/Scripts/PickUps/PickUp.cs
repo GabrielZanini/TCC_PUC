@@ -22,14 +22,11 @@ public abstract class PickUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("COlLOSION - ");
-        var player = other.gameObject.GetComponent<PlayerManager>();
+        var player = other.gameObject.GetComponentInParent<PlayerManager>();
 
         if (player != null)
         {
-            PlayerPickUp(player);
-
-            Debug.Log("Player");
+            PlayerPickUp(player);            
             timebody.Despawn();
         }
     }

@@ -75,8 +75,7 @@ public enum AiType
 {
     EnemyShip,
     Boss,
-    Rotate,
-    Snake,
+    DeathCross,
 }
 
 public enum LevelState

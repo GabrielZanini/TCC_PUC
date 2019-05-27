@@ -221,15 +221,15 @@ public class TimeBody : MonoBehaviour
 
     // Colliders
 
-    void EnableCollider()
+    public void EnableCollider()
     {
-        if (isActive)
+        if (isActive && !controller.IsRewinding)
         {
             SetColliderEnable(true);
         }        
     }
 
-    void DisableCollider()
+    public void DisableCollider()
     {
         SetColliderEnable(false);
     }
@@ -396,7 +396,7 @@ public class TimeBody : MonoBehaviour
 
     void GetComponents()
     {
-        colliders = GetComponentsInChildren<Collider>();
+        colliders = GetComponents<Collider>();
 
         status = GetComponent<StatusBase>();
         scroll = GetComponent<ScrollTiles>();

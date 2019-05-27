@@ -5,11 +5,12 @@ using UnityEngine;
 public class ShipAi : ShipInput
 {
     public AiType type = AiType.EnemyShip;
+    
 
 
     private void Start()
     {
-        if (type == AiType.Rotate)
+        if (type == AiType.DeathCross)
         {
             rotationAxis.SetFixValue(1);
             verticalAxis.SetFixValue(-1);
@@ -23,7 +24,6 @@ public class ShipAi : ShipInput
 
     private void Update()
     {
-        
-    }
 
+    }
 }

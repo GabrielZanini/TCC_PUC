@@ -1509,6 +1509,7 @@ MonoBehaviour:
   type: 1
   playAfterStop: 1
   points: 10
+  activateTime: 4
 --- !u!1 &1565141133389270282
 GameObject:
   m_ObjectHideFlags: 0

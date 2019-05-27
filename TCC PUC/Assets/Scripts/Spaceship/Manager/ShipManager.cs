@@ -15,6 +15,9 @@ public class ShipManager : ObjectManager
     public ShipType type = ShipType.Enemy;
     public bool playAfterStop = false;
 
+
+
+
     protected override void Reset()
     {
         base.Reset();
@@ -33,7 +36,7 @@ public class ShipManager : ObjectManager
     }
 
 
-    private void Update()
+    protected override void Update()
     {
         if ((GameManager.Instance.Level.State == LevelState.Playing) 
             || (GameManager.Instance.Level.State == LevelState.Stoped && playAfterStop))

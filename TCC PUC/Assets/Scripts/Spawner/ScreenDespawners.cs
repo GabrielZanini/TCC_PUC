@@ -15,11 +15,7 @@ public class ScreenDespawners : MonoBehaviour
     public Transform bottom;
 
     [Header("Margins")]
-    public int margin = 0;
-    public int topMargin = 0;
-    public int leftMargin = 0;
-    public int rightMargin = 0;
-    public int bottomMargin = 0;
+    public Margin margins;
 
 
 
@@ -65,16 +61,16 @@ public class ScreenDespawners : MonoBehaviour
 
     void SetPositionAndScale()
     {
-        float topY = camerManager.verticalSize + margin + topMargin;
-        float righX = camerManager.horizontalSize + margin + rightMargin;
-        float leftX = camerManager.horizontalSize + margin + leftMargin;
-        float bottomY = camerManager.verticalSize + margin + bottomMargin;
+        float topY = camerManager.verticalSize + margins.all + margins.top;
+        float righX = camerManager.horizontalSize + margins.all + margins.right;
+        float leftX = camerManager.horizontalSize + margins.all + margins.left;
+        float bottomY = camerManager.verticalSize + margins.all + margins.bottom;
 
-        float horizontalX = (rightMargin - leftMargin) / 2f;
-        float verticalY = (topMargin - bottomMargin) / 2f;
+        float horizontalX = (margins.right - margins.left) / 2f;
+        float verticalY = (margins.top - margins.bottom) / 2f;
 
-        float horizontalSize = camerManager.width + (margin * 2 + leftMargin + rightMargin);
-        float verticalSize = camerManager.height + (margin * 2 + topMargin + bottomMargin);
+        float horizontalSize = camerManager.width + (margins.all * 2 + margins.left + margins.right);
+        float verticalSize = camerManager.height + (margins.all * 2 + margins.top + margins.bottom);
 
         top.localPosition = new Vector3(horizontalX, topY, 0f);
         top.localScale = new Vector3(horizontalSize, 2f, 2f);
