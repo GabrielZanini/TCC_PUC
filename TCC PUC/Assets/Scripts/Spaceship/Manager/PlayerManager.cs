@@ -7,20 +7,18 @@ public class PlayerManager : ShipManager
 {
     public ShieldShip shield;
 
-    [Header("Player Settings")]
-    public Margin margin = new Margin();
-    public ShipStyle style;
-
     [Header("Camera")]
     public CameraManager camerManager;
 
-    [Header("Coins")]
-    public int coins = 0;
-
-
-    [Header("Starting Status")]
+    [Header("Player Settings")]
+    public Margin margin = new Margin();
+    public ShipStyle style;
+    public MeshRenderer render;
     public PlayerStatus defaultStaus;
     public PlayerStatus extraStatus;
+
+    [Header("Coins")]
+    public int coins = 0;
 
 
 
@@ -52,6 +50,7 @@ public class PlayerManager : ShipManager
         GameManager.Instance.Level.OnStop.AddListener(shoot.ReleaseTriggers);
         GameManager.Instance.Level.OnStop.AddListener(shield.Deactivate);
         GameManager.Instance.Level.OnStart.AddListener(Revive);
+        GameManager.Instance.Level.OnMenu.AddListener(Revive);
         camerManager.OnChange.AddListener(SetMovementPlayer);
         //shield.OnActivate.AddListener(timebody.DisableCollider);
         //shield.OnDeactivate.AddListener(timebody.EnableCollider);
@@ -64,6 +63,7 @@ public class PlayerManager : ShipManager
         GameManager.Instance.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
         GameManager.Instance.Level.OnStop.RemoveListener(shield.Deactivate);
         GameManager.Instance.Level.OnStart.RemoveListener(Revive);
+        GameManager.Instance.Level.OnMenu.RemoveListener(Revive);
         camerManager.OnChange.RemoveListener(SetMovementPlayer);
         //shield.OnActivate.RemoveListener(timebody.DisableCollider);
         //shield.OnDeactivate.RemoveListener(timebody.EnableCollider);
@@ -84,9 +84,9 @@ public class PlayerManager : ShipManager
 
     void SetMovementLimits()
     {
-        Vector3 min = new Vector3(0 - camerManager.horizontalSize, 0, 0 - camerManager.verticalSize);
-        Vector3 max = new Vector3(camerManager.horizontalSize, 0, camerManager.verticalSize);
-
+        Vector3 min = new Vector3(-camerManager.horizontalSize, -camerManager.verticalSize, 0);
+        Vector3 max = new Vector3(camerManager.horizontalSize, camerManager.verticalSize, 0);
+        
         movement.SetLimits(min, max, margin);
     }
 
@@ -118,10 +118,16 @@ public class PlayerManager : ShipManager
         shoot.SetBullets(defaultStaus.bullets + extraStatus.bullets);
     }
 
-    void SetStyle()
+    public void SetStyle(ShipStyle newStyle = null)
     {
+        if (newStyle != null)
+        {
+            style = newStyle;
+        }
+
         if (style != null)
         {
+            render.material = style.shipMaterial;
             shoot.SetBulletColor(style.inBulletColor, style.outBulletColor);
             shield.SetMaterial(style.shieldMaterial);
         }        

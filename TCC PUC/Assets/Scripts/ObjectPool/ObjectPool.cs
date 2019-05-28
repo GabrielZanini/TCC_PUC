@@ -51,21 +51,21 @@ public class ObjectPool : MonoBehaviour
         Manager = GetComponentInParent<PoolsManager>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         GetTimebodys();
         CreateMinimum();
         DespawnAll();
         SetPool();
 
-        GameManager.Instance.Level.OnMenu.AddListener(DespawnAll);
-        GameManager.Instance.Level.OnStart.AddListener(DespawnAll);
+        Manager.GameManager.Level.OnMenu.AddListener(DespawnAll);
+        Manager.GameManager.Level.OnStart.AddListener(DespawnAll);
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.Level.OnMenu.RemoveListener(DespawnAll);
-        GameManager.Instance.Level.OnStart.RemoveListener(DespawnAll);
+        Manager.GameManager.Level.OnMenu.RemoveListener(DespawnAll);
+        Manager.GameManager.Level.OnStart.RemoveListener(DespawnAll);
     }
 
 
@@ -121,7 +121,7 @@ public class ObjectPool : MonoBehaviour
         return timebody;
     }
         
-    public TimeBody SpwanRandom()
+    public TimeBody SpawnRandom(Vector3 position)
     {
         if (InactiveCount == 0)
         {
@@ -142,6 +142,7 @@ public class ObjectPool : MonoBehaviour
         activeObjects.Add(timebody);
 
         timebody.SetActive(true);
+        timebody.transform.position = position;
 
         return timebody;
     }
@@ -223,7 +224,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    private void CreateObject()
+    protected TimeBody CreateObject()
     {
         if (prefabs.Count > 0)
         {
@@ -234,6 +235,12 @@ public class ObjectPool : MonoBehaviour
             timebody.controller = Manager.GameManager.TimeController;
 
             Despawn(timebody);
-        }        
+
+            return timebody;
+        }  
+        else
+        {
+            return null;
+        }
     }
 }

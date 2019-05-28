@@ -33,7 +33,7 @@ public class FromTopToBottom : MonoBehaviour
     
     void Tranlate()
     {
-        transform.Translate(Vector3.back * speed * GameManager.Instance.Level.DifficultyModifire * Time.deltaTime + offset);        
+        transform.Translate(Vector3.down * speed * GameManager.Instance.Level.DifficultyModifire * Time.deltaTime + offset);        
     }
 }
 

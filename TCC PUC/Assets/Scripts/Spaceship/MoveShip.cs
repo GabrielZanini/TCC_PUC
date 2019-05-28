@@ -15,12 +15,12 @@ public class MoveShip : MonoBehaviour
     bool useLimits = false;
     bool useStartPosition = false;
 
-    Vector3 maxPosition;
     Vector3 minPosition;
     Vector3 maxLocalPosition;
     Vector3 minLocalPosition;
+    Vector3 maxPosition;
 
-    Vector3 newShipPosition;
+    public Vector3 newShipPosition;
     
 
     void Start()
@@ -63,7 +63,7 @@ public class MoveShip : MonoBehaviour
 
     public void MoveVertical(float vertical)
     {
-        newShipPosition = transform.localPosition + (Vector3.forward * vertical * speed * Time.deltaTime);
+        newShipPosition = transform.localPosition + (Vector3.up * vertical * speed * Time.deltaTime);
         MoveToLocalPosition(newShipPosition);
     }
 
@@ -106,15 +106,15 @@ public class MoveShip : MonoBehaviour
 
     public void Rotate(float rotation)
     {
-        transform.rotation = transform.rotation * Quaternion.Euler(0f, rotation * angularSpeed * Time.deltaTime, 0f);
+        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, rotation * angularSpeed * Time.deltaTime);
     }
 
 
     public void SetLimits(Vector3 min, Vector3 max, Margin margin)
     {
         useLimits = true;
-        minPosition = min + new Vector3(margin.all + margin.left, 0, margin.all + margin.bottom);
-        maxPosition = max - new Vector3(margin.all + margin.right, 0, margin.all + margin.top);
+        minPosition = min + new Vector3(margin.all + margin.left, margin.all + margin.bottom, 0);
+        maxPosition = max - new Vector3(margin.all + margin.right, margin.all + margin.top, 0);
 
         minLocalPosition = minPosition + (transform.position - transform.localPosition);
         maxLocalPosition = maxPosition + (transform.position - transform.localPosition);

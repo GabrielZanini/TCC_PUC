@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Green
   m_EditorClassIdentifier: 
   shipColor: {r: 0, g: 1, b: 0, a: 1}
+  shipMaterial: {fileID: 2100000, guid: 06ad9b0885ed104478a7bacd01c0297c, type: 2}
   inBulletColor: {r: 1, g: 1, b: 1, a: 1}
   outBulletColor: {r: 0, g: 1, b: 0, a: 1}
   shieldMaterial: {fileID: 2100000, guid: 1df87350aeef5794a8d0c36440283c50, type: 2}

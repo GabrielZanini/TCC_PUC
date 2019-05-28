@@ -68,8 +68,8 @@ public class PoolsManager : MonoBehaviour
         private set { coins = value; }
     }
 
-    [SerializeField] ObjectPool powerUps;
-    public ObjectPool PowerUps {
+    [SerializeField] PowerUpPool powerUps;
+    public PowerUpPool PowerUps {
         get { return powerUps; }
         private set { powerUps = value; }
     }

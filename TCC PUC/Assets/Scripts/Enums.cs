@@ -94,5 +94,6 @@ public enum PowerUpType
     MoreDamage,
     MoreShootingRate,
     Shield,
+    Heal,
     Rockets,
 }

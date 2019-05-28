@@ -37,6 +37,7 @@ public class AsteroidManager : ObjectManager
     {
         base.Death();
         GameManager.Instance.Level.Score.Add(points);
+        GameManager.Instance.Pools.PowerUps.TrySpawn(transform.position);
     }
 
     void Count()

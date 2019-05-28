@@ -63,15 +63,12 @@ public class StatusBase : MonoBehaviour
     public void Heal(int health)
     {
         if (health <= 0) return;
-                
-        if (CurrentHp + health > maxHp)
+
+        CurrentHp += health;
+
+        if (CurrentHp > maxHp)
         {
             CurrentHp = maxHp;
-            OnDeath.Invoke();
-        }
-        else
-        {
-            CurrentHp += health;
         }
 
         OnGainHp.Invoke();

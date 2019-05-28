@@ -7,6 +7,7 @@ public class ShieldShip : MonoBehaviour
 {
     [Header("GameObject")]
     public GameObject shieldObject;
+    public MeshRenderer render;
 
     [Header("Settings")]
     public float duration = 5f;
@@ -16,8 +17,6 @@ public class ShieldShip : MonoBehaviour
 
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDeactivate;
-
-    private MeshRenderer render;
     
 
 

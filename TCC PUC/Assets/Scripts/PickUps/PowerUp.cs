@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUp : PickUp
 {
     public PowerUpType type = PowerUpType.MoreBullets;
-
+    public SpriteRenderer render;
     
 
 
@@ -32,5 +32,15 @@ public class PowerUp : PickUp
         {
             player.shield.Activate();
         }
+        else if (type == PowerUpType.Heal)
+        {
+            player.status.Heal(20);
+        }
+    }
+
+
+    public void SetColor(Color color)
+    {
+        render.color = color;
     }
 }

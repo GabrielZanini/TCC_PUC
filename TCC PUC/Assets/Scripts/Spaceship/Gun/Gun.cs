@@ -32,19 +32,19 @@ public class Gun : MonoBehaviour
     [SerializeField] float muzzleAngle = 0f;
     public float MuzzleAngle {
         get { return muzzleAngle; }
-        set { muzzleAngle = value; CalculateMuzzlesOffste(); }
+        set { muzzleAngle = value; CalculateMuzzlesOffset(); }
     }
     [SerializeField] float muzzlesMaxAngle = 90f;
     public float MuzzlesMaxAngle {
         get { return muzzlesMaxAngle; }
-        set { muzzlesMaxAngle = value; CalculateMuzzlesOffste(); }
+        set { muzzlesMaxAngle = value; CalculateMuzzlesOffset(); }
     }
 
 
     [Header("Bullet Settings")]
     public BulletType bulletType = BulletType.Sphere;
     public ObjectPool bulletPool;
-    public int bulletdamage = 1;
+    public int bulletDamage = 1;
     public float bulletSpeed = 30f;
     [Range(0.01f, 1f)] public float bulletRate = 0.1f;
     public Color inColor = Color.white;
@@ -130,10 +130,11 @@ public class Gun : MonoBehaviour
             bulletTimebody.gameObject.layer = bulletLayer;
 
             bulletTimebody.bullet.speed = bulletSpeed;
-            bulletTimebody.bullet.damage = bulletdamage;
+            bulletTimebody.bullet.damage = bulletDamage;
 
             bulletTimebody.bullet.inRender.color = inColor;
             bulletTimebody.bullet.outRender.color = outColor;
+            bulletTimebody.bullet.SetScale(bulletDamage * 0.5f);
         }
 
         if (hasAudio)
@@ -153,7 +154,7 @@ public class Gun : MonoBehaviour
         EnableDisableBarrels();
         RotateBarrels();
         ResizeBarrel();
-        CalculateMuzzlesOffste();
+        CalculateMuzzlesOffset();
     }
 
     void GetBarrel()
@@ -218,11 +219,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void CalculateMuzzlesOffste()
+    void CalculateMuzzlesOffset()
     {
         float totalAngle = (MaxBarrels - 1) * muzzleAngle;
         float offsetAngles = muzzleAngle;
-        Quaternion forwardRotation = Quaternion.LookRotation(transform.forward);
+        Quaternion forwardRotation = Quaternion.LookRotation(transform.forward, transform.up);
 
         if (totalAngle > muzzlesMaxAngle)
         {
@@ -275,7 +276,7 @@ public class Gun : MonoBehaviour
 
     public void SetDamage(int damage)
     {
-        bulletdamage = damage;
+        bulletDamage = damage;
     }
 
     public void SetRate(float rate)
@@ -310,17 +311,17 @@ public class Gun : MonoBehaviour
 
     public void AddDamage()
     {
-        if (bulletdamage < 10)
+        if (bulletDamage < 10)
         {
-            bulletdamage += 1;
+            bulletDamage += 1;
         }
     }
 
     public void RemoveDamage()
     {
-        if (bulletdamage > 1)
+        if (bulletDamage > 1)
         {
-            bulletdamage -= 1;
+            bulletDamage -= 1;
         }
     }
 
@@ -328,26 +329,26 @@ public class Gun : MonoBehaviour
     {
         BarrelAngle += 1;
         RotateBarrels();
-        CalculateMuzzlesOffste();
+        CalculateMuzzlesOffset();
     }
 
     public void RemoveBarrelAngle()
     {
         BarrelAngle -= 1;
         RotateBarrels();
-        CalculateMuzzlesOffste();
+        CalculateMuzzlesOffset();
     }
     
     public void AddMuzzleAngle()
     {
         MuzzleAngle += 1;
-        CalculateMuzzlesOffste();
+        CalculateMuzzlesOffset();
     }
 
     public void RemoveMuzzleAngle()
     {
         MuzzleAngle -= 1;
-        CalculateMuzzlesOffste();
+        CalculateMuzzlesOffset();
     }
 
     public void AddBulletSpeed()

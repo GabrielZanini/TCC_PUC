@@ -121,7 +121,7 @@ public class DebugCanvas : MonoBehaviour
     {
         if (add)
         {
-            GameManager.Instance.Player.shoot.RemoveBullet();
+            GameManager.Instance.Player.shoot.AddBullet();
         }
         else
         {

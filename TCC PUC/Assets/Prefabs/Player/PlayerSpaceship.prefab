@@ -264,17 +264,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312847582}
-  m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 0.0020000006, y: 0.002, z: 0.0020000006}
   m_Children:
   - {fileID: 1093606810}
   m_Father: {fileID: 1254244384906122169}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: -0.5}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1312847585
@@ -752,7 +752,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -807,7 +807,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3129181688296902309}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -816,7 +816,7 @@ Transform:
   - {fileID: 5073818463508286021}
   m_Father: {fileID: 1254244384906122169}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &3234200816637188330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1044,7 @@ MonoBehaviour:
   angularSpeed: 180
   smoothness: 0.5
   startPosition: {x: 0, y: 0, z: 0}
+  newShipPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &547857050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1072,6 +1073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldObject: {fileID: 9219420109943974613}
+  render: {fileID: 493027981703925343}
   duration: 5
   isActive: 0
   shieldTimer: 0
@@ -1105,18 +1107,18 @@ MonoBehaviour:
   type: 0
   playAfterStop: 0
   shield: {fileID: 2213381668407682046}
+  camerManager: {fileID: 0}
   margin:
     all: 1
     top: 0
     left: 0
     right: 1
     bottom: 0
-  style: {fileID: 11400000, guid: 3b6153e5730137e4cb0a80f38bbffc2a, type: 2}
-  camerManager: {fileID: 0}
-  coins: 0
+  style: {fileID: 11400000, guid: 17c7777eed70d6d47911e2d362da4f1f, type: 2}
+  render: {fileID: 5073818463506516133}
   defaultStaus:
     bullets: 2
-    damage: 1
+    damage: 2
     shootingRate: 0.2
     useShield: 0
     shildTime: 5
@@ -1132,6 +1134,7 @@ MonoBehaviour:
     rockets: 0
     useRockets: 0
     rocketsRate: 0
+  coins: 0
 --- !u!1 &3795141736809314659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,7 +1178,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1220,7 +1223,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1265,7 +1268,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1310,7 +1313,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1385,7 +1388,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1430,7 +1433,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1475,7 +1478,7 @@ GameObject:
   m_Layer: 13
   m_Name: Barrel(Clone)
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -1667,13 +1670,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9219420109943974613}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 1254244384906122169}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7184597695637673000
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1699,7 +1702,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 255e8230c55c0bd498e8a9edaef81b5a, type: 2}
+  - {fileID: 2100000, guid: 785d74d0d8f3f584a9e74e002e4aea85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1802,12 +1805,18 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d88506ba150b70349aedd5e166b7fecb, type: 2}
+      objectReference: {fileID: 2100000, guid: 450916f129d9ecb43bb9c3bf91b05663, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
 --- !u!4 &5073818463508286021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d74cea25ec7949f4db34e435862486d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5073818463508418757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5073818463506516133 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: d74cea25ec7949f4db34e435862486d9,
     type: 3}
   m_PrefabInstance: {fileID: 5073818463508418757}
   m_PrefabAsset: {fileID: 0}
@@ -1898,11 +1907,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
-    - target: {fileID: 6229773002205190106, guid: 830032f2b02b8e84db2a9f332f7eff75,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: barrels.Array.size
@@ -1965,13 +1969,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
-      propertyPath: bulletRate
-      value: 0.2
+      propertyPath: bulletDamage
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
-      propertyPath: outColor.r
-      value: 1
+      propertyPath: bulletRate
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -1996,22 +2000,22 @@ PrefabInstance:
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0000003898583
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000027140597
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -2021,7 +2025,7 @@ PrefabInstance:
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 1688809399390003698, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -2033,6 +2037,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2435577174460081894, guid: 830032f2b02b8e84db2a9f332f7eff75,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: 5352053797304189814, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2047,6 +2057,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612741947247976905, guid: 830032f2b02b8e84db2a9f332f7eff75,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 7511317138416672390, guid: 830032f2b02b8e84db2a9f332f7eff75,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000008940697
       objectReference: {fileID: 0}
     - target: {fileID: 7511317138416672390, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}

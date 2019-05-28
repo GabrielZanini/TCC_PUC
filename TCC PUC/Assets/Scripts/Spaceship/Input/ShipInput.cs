@@ -9,7 +9,7 @@ public class ShipInput : MonoBehaviour
     public bool autoShoot = true;
 
     // Movement
-    [HideInInspector] public Vector3 newPosition;
+    public Vector3 newPosition;
     [HideInInspector] public Touch touch;
 
     // Axes

@@ -69,7 +69,6 @@ public class EnemyManager : ShipManager
     {
         base.Death();
         GameManager.Instance.Level.Score.Add(points);
-
-        
+        GameManager.Instance.Pools.PowerUps.TrySpawn(transform.position);        
     }
 }

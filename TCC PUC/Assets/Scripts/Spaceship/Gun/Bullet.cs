@@ -15,8 +15,13 @@ public class Bullet : MonoBehaviour
     public int damage;
 
     [Header("Render")]
+    public Transform Graphics; 
     public SpriteRenderer inRender;
     public SpriteRenderer outRender;
+    public bool scaleX;
+    public bool scaleY;
+    public bool scaleZ;
+
 
     float despawnCounter = 0f;
 
@@ -63,5 +68,27 @@ public class Bullet : MonoBehaviour
     void ResetCounter()
     {
         despawnCounter = lifeTime;
+    }
+
+    public void SetScale(float scale)
+    {
+        Vector3 newScale = Vector3.one;
+
+        if (scaleX)
+        {
+            newScale.x = scale;
+        }
+
+        if (scaleY)
+        {
+            newScale.y = scale;
+        }
+
+        if (scaleZ)
+        {
+            newScale.z = scale;
+        }
+
+        Graphics.localScale = newScale;
     }
 }

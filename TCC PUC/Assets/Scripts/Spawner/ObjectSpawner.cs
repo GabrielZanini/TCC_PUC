@@ -63,7 +63,7 @@ public class ObjectSpawner : MonoBehaviour
 
     void SetSpawner()
     {
-        transform.position = new Vector3(0f, 0f, camerManager.verticalSize + 1);
+        transform.position = new Vector3(0f, camerManager.verticalSize + 1, 0f);
         transform.localScale = new Vector3(camerManager.horizontalSize - 2 * margin, 1f, 1f);
     }
 

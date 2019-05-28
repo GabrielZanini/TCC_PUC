@@ -268,6 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timebody: {fileID: 7949109078202691041}
   type: 3
+  render: {fileID: 7949109078403682527}
 --- !u!1 &7949109078403682497
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,13 +293,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7949109078403682497}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7949109077619561678}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7949109078403682527
 SpriteRenderer:
   m_ObjectHideFlags: 0

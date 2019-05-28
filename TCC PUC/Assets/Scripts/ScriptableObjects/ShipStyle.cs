@@ -6,6 +6,7 @@ public class ShipStyle : ScriptableObject
 {
     [Header("Ship")]
     public Color shipColor = Color.blue;
+    public Material shipMaterial;
 
     [Header("Bullets")]
     public Color inBulletColor = Color.white;
