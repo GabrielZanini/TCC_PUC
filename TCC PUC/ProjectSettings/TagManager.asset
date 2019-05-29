@@ -24,7 +24,7 @@ TagManager:
   - EnemyShip
   - EnemyProjectile
   - Shield
-  - 
+  - PickUpCollector
   - 
   - 
   - 

@@ -36,11 +36,18 @@ public class PowerUp : PickUp
         {
             player.status.Heal(20);
         }
+
+        pool.RemovePowerUpByType(type);
     }
 
 
     public void SetColor(Color color)
     {
         render.color = color;
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        render.sprite = sprite;
     }
 }

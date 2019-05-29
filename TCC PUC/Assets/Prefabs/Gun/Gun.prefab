@@ -142,6 +142,7 @@ MonoBehaviour:
   isLocked: 0
   isTriggerPulled: 0
   audio: {fileID: 0}
+  scaleWithDificulty: 1
 --- !u!1 &8612741947247976905
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,9 @@ public class FromTopToBottom : MonoBehaviour
     public float minOffset = -0.03f;
     public float maxOffset = 0.03f;
 
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
+
     Vector3 offset = Vector3.zero;
     float speed;
     
@@ -24,6 +27,11 @@ public class FromTopToBottom : MonoBehaviour
     {   
         speed = Random.Range(minSpeed, maxSpeed);
         offset.x = Random.Range(minOffset, maxOffset);
+
+        if (scaleWithDificulty)
+        {
+            speed *= GameManager.Instance.Level.DifficultyModifire;
+        }
     }
 
     protected virtual void Update()

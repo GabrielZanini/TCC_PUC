@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class MoveShip : MonoBehaviour
 {
+    [Header("Status")]
     public float speed = 1f;
     public float angularSpeed = 180f;
     public float smoothness = 0.5f;
-
     
+    [Header("Positions")]
     public Vector3 startPosition;
+    public Vector3 newShipPosition;
 
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
 
     bool useLimits = false;
     bool useStartPosition = false;
@@ -20,8 +24,8 @@ public class MoveShip : MonoBehaviour
     Vector3 minLocalPosition;
     Vector3 maxPosition;
 
-    public Vector3 newShipPosition;
-    
+    Vector3 movement;
+    Quaternion angularMovement;
 
     void Start()
     {
@@ -57,13 +61,27 @@ public class MoveShip : MonoBehaviour
 
     public void MoveHorizontal(float horizontal)
     {
-        newShipPosition = transform.localPosition + (Vector3.right * horizontal * speed * Time.deltaTime);
+        movement = Vector3.right * horizontal * speed * Time.deltaTime;
+
+        if (scaleWithDificulty)
+        {
+            movement *= GameManager.Instance.Level.DifficultyModifire; 
+        }
+
+        newShipPosition = transform.localPosition + movement;
         MoveToLocalPosition(newShipPosition);
     }
 
     public void MoveVertical(float vertical)
     {
-        newShipPosition = transform.localPosition + (Vector3.up * vertical * speed * Time.deltaTime);
+        movement = Vector3.up * vertical * speed * Time.deltaTime;
+
+        if (scaleWithDificulty)
+        {
+            movement *= GameManager.Instance.Level.DifficultyModifire;
+        }
+
+        newShipPosition = transform.localPosition + movement;
         MoveToLocalPosition(newShipPosition);
     }
 
@@ -106,7 +124,17 @@ public class MoveShip : MonoBehaviour
 
     public void Rotate(float rotation)
     {
-        transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, rotation * angularSpeed * Time.deltaTime);
+
+        if (scaleWithDificulty)
+        {
+            angularMovement = Quaternion.Euler(0f, 0f, rotation * angularSpeed * Time.deltaTime * GameManager.Instance.Level.DifficultyModifire);
+        }
+        else
+        {
+            angularMovement = Quaternion.Euler(0f, 0f, rotation * angularSpeed * Time.deltaTime);
+        }
+
+        transform.rotation = transform.rotation * angularMovement;
     }
 
 

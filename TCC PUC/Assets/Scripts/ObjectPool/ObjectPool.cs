@@ -58,11 +58,21 @@ public class ObjectPool : MonoBehaviour
         DespawnAll();
         SetPool();
 
+        AddListeners();
+    }
+
+    private void OnDestroy()
+    {
+        RemoveListeners();
+    }
+
+    protected virtual void AddListeners()
+    {
         Manager.GameManager.Level.OnMenu.AddListener(DespawnAll);
         Manager.GameManager.Level.OnStart.AddListener(DespawnAll);
     }
 
-    private void OnDestroy()
+    protected virtual void RemoveListeners()
     {
         Manager.GameManager.Level.OnMenu.RemoveListener(DespawnAll);
         Manager.GameManager.Level.OnStart.RemoveListener(DespawnAll);

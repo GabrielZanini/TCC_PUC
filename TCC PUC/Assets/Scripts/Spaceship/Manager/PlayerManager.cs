@@ -14,13 +14,15 @@ public class PlayerManager : ShipManager
     public Margin margin = new Margin();
     public ShipStyle style;
     public MeshRenderer render;
+    public float timeBeforeDeath = 1f;
+    public Material dyingMaterial;
     public PlayerStatus defaultStaus;
     public PlayerStatus extraStatus;
 
     [Header("Coins")]
     public int coins = 0;
 
-
+    private bool ishandlingDeath = false;
 
     protected override void Reset()
     {
@@ -94,8 +96,64 @@ public class PlayerManager : ShipManager
 
     protected override void Death()
     {
-        base.Death();
-        GameManager.Instance.Level.Stop();
+        if (!ishandlingDeath)
+            StartCoroutine(TimeBeforeDeath());       
+    }
+
+    IEnumerator TimeBeforeDeath()
+    {
+        ishandlingDeath = true;
+
+        Material[] normalMaterials = render.materials;
+        Material[] dyingmaterials = new Material[normalMaterials.Length + 1];
+
+        for (int i=0; i< normalMaterials.Length; i++)
+        {
+            dyingmaterials[i] = normalMaterials[i];
+        }
+
+        dyingmaterials[normalMaterials.Length] = dyingMaterial;
+        input.enabled = false;
+        timebody.DisableCollider();
+
+        float timer = timeBeforeDeath;
+
+        while (timer > 0)
+        {
+            if (!timebody.controller.IsRewinding || GameManager.Instance.Level.State != LevelState.Playing)
+            {
+                timer -= Time.deltaTime;
+
+                if (!status.IsDead)
+                {
+                    break;
+                }
+            }
+
+            if (status.IsDead)
+            {
+                render.materials = dyingmaterials;
+            }
+            else
+            {
+                render.materials = normalMaterials;
+            }
+            
+            yield return null;
+        }
+
+        render.materials = normalMaterials;
+        input.enabled = true;
+        timebody.EnableCollider();
+
+        if (status.IsDead)
+        {
+            base.Death();
+            render.materials = normalMaterials;
+            GameManager.Instance.Level.Stop();
+        }
+
+        ishandlingDeath = false;
     }
 
     void Vibrate()
@@ -116,6 +174,9 @@ public class PlayerManager : ShipManager
     void SetStatus()
     {
         shoot.SetBullets(defaultStaus.bullets + extraStatus.bullets);
+        shoot.SetDamage(defaultStaus.damage + extraStatus.damage);
+        shoot.SetRate(defaultStaus.shootingRate + extraStatus.shootingRate);
+        shield.duration = defaultStaus.shildTime + extraStatus.shildTime;
     }
 
     public void SetStyle(ShipStyle newStyle = null)

@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class ShootShip : MonoBehaviour
 {
+    [Header("Guns")]
     public List<Gun> guns = new List<Gun>();
+    
+    [Header("Status")]
     public bool triggersPulled = false;
+    
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
 
 
     private void Reset()
     {
         GetGuns();
     }
-    
+
+    private void OnValidate()
+    {
+        GetGuns();
+    }
+
     private void Awake()
     {        
         ActivateGuns();
@@ -20,17 +31,12 @@ public class ShootShip : MonoBehaviour
 
     private void OnEnable()
     {
-        ActivateGuns();
+        //ActivateGuns();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         DeactivateGuns();
-    }
-
-    private void OnValidate()
-    {
-        GetGuns();
     }
 
 
@@ -45,6 +51,8 @@ public class ShootShip : MonoBehaviour
         {
             guns.Add(g[i]);
         }
+
+        SetScaleWithDifficulty();
     }
 
     public void ActivateGuns()
@@ -95,6 +103,14 @@ public class ShootShip : MonoBehaviour
     }
 
 
+
+    public void SetScaleWithDifficulty()
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].scaleWithDificulty = scaleWithDificulty;
+        }
+    }
 
     public void SetBullets(int bullets)
     {

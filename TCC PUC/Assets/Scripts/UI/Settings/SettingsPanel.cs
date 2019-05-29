@@ -5,16 +5,28 @@ using UnityEngine.UI;
 
 public class SettingsPanel : MonoBehaviour
 {
+    [Header("Volume")]
     public Slider music;
     public Slider sfx;
     public Slider voice;
 
+    [Header("Time Bar")]
+    public Toggle right;
+    public Toggle left;
+    public Toggle bottom;
+
+    [Header("Vibration")]
     public Toggle vibraterion;
+
+    [Header("Canvas")]
+    public GameplayPanel gameplayPanel;
+
 
 
     private void Start()
     {
         GetVolume();
+        GetBarPosition();
         GetVibration();
     }
 
@@ -50,5 +62,40 @@ public class SettingsPanel : MonoBehaviour
     void GetVibration()
     {
         vibraterion.isOn = GameManager.Instance.UseVibration;
+    }
+
+
+
+    void GetBarPosition()
+    {
+        if (gameplayPanel.Position == Direction.Right)
+        {
+            right.isOn = true;
+        }
+        else if (gameplayPanel.Position == Direction.Left)
+        {
+            left.isOn = true;
+        }
+        else if (gameplayPanel.Position == Direction.Down)
+        {
+            bottom.isOn = true;
+        }
+    }
+
+
+    public void ChangeSliderPosition()
+    {
+        if (right.isOn)
+        {
+            gameplayPanel.SetSlideRight();
+        }
+        else if(left.isOn)
+        {
+            gameplayPanel.SetSlideLeft();
+        }
+        else if(bottom.isOn)
+        {
+            gameplayPanel.SetSlideBottom();
+        }
     }
 }

@@ -549,6 +549,7 @@ MonoBehaviour:
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 1
+  scaleWithDificulty: 1
   OnGainHp:
     m_PersistentCalls:
       m_Calls: []
@@ -591,10 +592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9119363a44058bf40ab7b21a79a9c4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 0
-  maxSpeed: 10
-  minOffset: -0.03
-  maxOffset: 0.03
+  minSpeed: 4
+  maxSpeed: 6
+  minOffset: -0.02
+  maxOffset: 0.02
 --- !u!114 &8128887729326469854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,8 +609,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 7152724392929676718}
-  minRotation: -5
-  maxRotation: 5
+  minRotation: -60
+  maxRotation: 60
 --- !u!114 &498934554953354446
 MonoBehaviour:
   m_ObjectHideFlags: 0

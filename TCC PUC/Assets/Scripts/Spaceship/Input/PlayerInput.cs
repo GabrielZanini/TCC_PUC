@@ -30,14 +30,19 @@ public class PlayerInput : ShipInput
         horizontalAxis.AddAxis(horizontalAxisName);
     }
 
+    private void OnEnable()
+    {
+        if (autoShoot)
+        {
+            shootButton.SetFixValue(true, false, false);
+        }
+    }
+
     private void Start()
     {
         AddListeners();
 
-        if (autoShoot)
-        {
-            shootButton.SetFixValue(true, false, false);
-        }        
+               
     }
 
     private void Update()
@@ -53,6 +58,14 @@ public class PlayerInput : ShipInput
         {
             ClearTouch();
         }
+    }
+
+    private void OnDisable()
+    {
+        autoMovement = false;
+        //shootButton.ClearFixValue();
+        shootButton.SetFixValue(false, false, true);
+        ClearTouch();
     }
 
     private void OnDestroy()

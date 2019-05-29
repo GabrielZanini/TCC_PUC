@@ -62,6 +62,9 @@ public class Gun : MonoBehaviour
     [SerializeField] AudioManager audio;
     bool hasAudio = false;
 
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
+
     // AUx variables
     private float timer = 0f;
     TimeBody bulletTimebody;
@@ -110,7 +113,15 @@ public class Gun : MonoBehaviour
         {
             if (timer <= 0f)
             {
-                timer = bulletRate;
+                if (scaleWithDificulty)
+                {
+                    timer = bulletRate / GameManager.Instance.Level.DifficultyModifire;
+                }
+                else
+                {
+                    timer = bulletRate;
+                }
+                
                 Shoot();
             }
             else
@@ -129,8 +140,16 @@ public class Gun : MonoBehaviour
 
             bulletTimebody.gameObject.layer = bulletLayer;
 
-            bulletTimebody.bullet.speed = bulletSpeed;
-            bulletTimebody.bullet.damage = bulletDamage;
+            if (scaleWithDificulty)
+            {
+                bulletTimebody.bullet.speed = bulletSpeed * GameManager.Instance.Level.DifficultyModifire;
+                bulletTimebody.bullet.damage = Mathf.RoundToInt(bulletDamage * GameManager.Instance.Level.DifficultyModifire);
+            }
+            else
+            {
+                bulletTimebody.bullet.speed = bulletSpeed;
+                bulletTimebody.bullet.damage = bulletDamage;
+            }            
 
             bulletTimebody.bullet.inRender.color = inColor;
             bulletTimebody.bullet.outRender.color = outColor;
@@ -363,14 +382,14 @@ public class Gun : MonoBehaviour
 
     public void AddBulletRate()
     {
-        bulletRate += 0.01f;
+        bulletRate += 0.02f;
     }
 
     public void RemoveBulletRate()
     {
         if (bulletRate > 0.01f)
         {
-            bulletRate -= 0.01f;
+            bulletRate -= 0.02f;
         }        
     }
 }

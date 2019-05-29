@@ -60,7 +60,7 @@ public class EnemyManager : ShipManager
 
     void StartEnemy()
     {
-        StartCoroutine(DeactivateEnemy());
+        //StartCoroutine(DeactivateEnemy());
     }
     
 

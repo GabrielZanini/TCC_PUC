@@ -22,6 +22,10 @@ public class StatusBase : MonoBehaviour
         }
     }
 
+    public bool IsDead {
+        get { return CurrentHp <= 0; }
+    }
+
     [Header("Speed")]
     public float speed = 1f;
     public float angularSpeed = 180f;
@@ -29,6 +33,9 @@ public class StatusBase : MonoBehaviour
 
     [Header("FX")]
     public EffectType deathEffect = EffectType.SmallExplosion;
+
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
 
     [HideInInspector]public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
@@ -54,7 +61,14 @@ public class StatusBase : MonoBehaviour
 
     private void InicializeHealth()
     {
-        CurrentHp = MaxHp;
+        if (scaleWithDificulty)
+        {
+            CurrentHp = Mathf.RoundToInt(MaxHp * GameManager.Instance.Level.DifficultyModifire);
+        }
+        else
+        {
+            CurrentHp = MaxHp;
+        }
     }
 
 

@@ -250,10 +250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9119363a44058bf40ab7b21a79a9c4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 2
-  maxSpeed: 3
-  minOffset: 0
-  maxOffset: 0
+  minSpeed: 4
+  maxSpeed: 6
+  minOffset: -0.01
+  maxOffset: 0.01
+  scaleWithDificulty: 0
 --- !u!114 &3369146155375865725
 MonoBehaviour:
   m_ObjectHideFlags: 0

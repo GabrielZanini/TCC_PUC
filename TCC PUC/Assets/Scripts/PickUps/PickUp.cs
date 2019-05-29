@@ -7,15 +7,25 @@ using UnityEngine;
 public abstract class PickUp : MonoBehaviour
 {
     public TimeBody timebody;
-
+    protected PowerUpPool pool;
 
 
     private void Reset()
     {
         timebody = GetComponent<TimeBody>();
+
+        if (timebody.pool != null)
+        {
+            pool = (PowerUpPool)timebody.pool;
+        }
     }
 
     private void OnValidate()
+    {
+        Reset();
+    }
+
+    private void Start()
     {
         Reset();
     }

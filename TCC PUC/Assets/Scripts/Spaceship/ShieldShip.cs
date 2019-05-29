@@ -12,7 +12,7 @@ public class ShieldShip : MonoBehaviour
     [Header("Settings")]
     public float duration = 5f;
     public bool isActive = false;
-    public float shieldTimer = 0f;
+    public float timer = 0f;
 
 
     [HideInInspector] public UnityEvent OnActivate;
@@ -32,13 +32,13 @@ public class ShieldShip : MonoBehaviour
     { 
         if (isActive) 
         {
-            if (shieldTimer <= 0f)
+            if (timer <= 0f)
             {
                 Deactivate();
             }
             else
             {
-                shieldTimer -= Time.deltaTime;
+                timer -= Time.deltaTime;
             }
         }
     }
@@ -46,7 +46,7 @@ public class ShieldShip : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        shieldTimer = duration;
+        timer = duration;
         shieldObject.SetActive(true);
         OnActivate.Invoke();
     }

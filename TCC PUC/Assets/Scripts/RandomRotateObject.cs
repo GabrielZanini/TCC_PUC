@@ -36,6 +36,6 @@ public class RandomRotateObject : MonoBehaviour
 
     void Rotate()
     {
-        mesh.Rotate(rotation);
+        mesh.Rotate(rotation * Time.deltaTime);
     }
 }

@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class KeepRotation : MonoBehaviour
 {
+    public bool defaultZero = false;
 
     Quaternion rotation;
+    
 
     void Start()
     {
-        rotation = transform.rotation;
+        if (defaultZero)
+        {
+            rotation = Quaternion.identity;
+        }
+        else
+        {
+            rotation = transform.rotation;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.rotation = rotation;

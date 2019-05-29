@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameplayCanvas : MonoBehaviour
+public class GameCanvas : MonoBehaviour
 {
     [Header("Menu")]
     public GameObject menuPanel;
