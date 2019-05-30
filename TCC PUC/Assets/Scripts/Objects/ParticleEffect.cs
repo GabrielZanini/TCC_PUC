@@ -67,7 +67,7 @@ public class ParticleEffect : MonoBehaviour
 
     void CountTime()
     {
-        if (!timebody.controller.IsRewinding)
+        if (!timebody.Controller.IsRewinding)
         {
             if (time < lifeTime)
             {
@@ -91,16 +91,16 @@ public class ParticleEffect : MonoBehaviour
 
     void AddListeners()
     {
-        timebody.controller.OnStartRewind.AddListener(Pause);
-        timebody.controller.OnStopRewind.AddListener(EnableParticle);
+        timebody.Controller.OnStartRewind.AddListener(Pause);
+        timebody.Controller.OnStopRewind.AddListener(EnableParticle);
         timebody.OnActivate.AddListener(EnableParticle);
         timebody.OnDisactivate.AddListener(EnableParticle);
     }
 
     void RemoveListeners()
     {
-        timebody.controller.OnStartRewind.RemoveListener(Pause);
-        timebody.controller.OnStopRewind.RemoveListener(EnableParticle);
+        timebody.Controller.OnStartRewind.RemoveListener(Pause);
+        timebody.Controller.OnStopRewind.RemoveListener(EnableParticle);
         timebody.OnActivate.RemoveListener(EnableParticle);
         timebody.OnDisactivate.RemoveListener(EnableParticle);
     }

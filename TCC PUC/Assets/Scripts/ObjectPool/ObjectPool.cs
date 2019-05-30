@@ -242,7 +242,7 @@ public class ObjectPool : MonoBehaviour
 
             var timebody = Instantiate(prefabs[index], transform).GetComponent<TimeBody>();
             timebody.pool = this;
-            timebody.controller = Manager.GameManager.TimeController;
+            timebody.SetController(Manager.GameManager.TimeController);
 
             Despawn(timebody);
 

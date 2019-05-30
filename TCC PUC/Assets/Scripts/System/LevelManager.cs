@@ -5,6 +5,13 @@ using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("GameManager")]
+    [SerializeField] GameManager gameManager;
+    public GameManager GameManager {
+        get { return gameManager; }
+        private set { gameManager = value; }
+    }
+
     [Header("Level State")]
     [SerializeField] LevelState state = LevelState.Menu;
     public LevelState State {

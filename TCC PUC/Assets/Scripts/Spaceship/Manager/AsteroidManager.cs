@@ -29,7 +29,7 @@ public class AsteroidManager : ObjectManager
 
     private void Update()
     {
-        Count();
+        DespawnCount();
     }
 
 
@@ -40,7 +40,7 @@ public class AsteroidManager : ObjectManager
         GameManager.Instance.Pools.PowerUps.TrySpawn(transform.position);
     }
 
-    void Count()
+    void DespawnCount()
     {
         if (despawnCounter <= 0f)
         {

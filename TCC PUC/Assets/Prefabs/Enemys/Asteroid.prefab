@@ -423,9 +423,11 @@ GameObject:
   - component: {fileID: 7152724393694647318}
   - component: {fileID: 7152724393694647314}
   - component: {fileID: 7152724393694647313}
-  - component: {fileID: 2998280089889385721}
   - component: {fileID: 8128887729326469854}
-  - component: {fileID: 498934554953354446}
+  - component: {fileID: 238054309634658162}
+  - component: {fileID: 5353277633022863432}
+  - component: {fileID: 1879478015339634339}
+  - component: {fileID: 1504503411166508637}
   m_Layer: 10
   m_Name: Asteroid
   m_TagString: Untagged
@@ -495,9 +497,11 @@ MonoBehaviour:
   isActive: 0
   scriptsToDisable:
   - {fileID: 7152724393694647313}
-  - {fileID: 2998280089889385721}
-  - {fileID: 498934554953354446}
+  - {fileID: 238054309634658162}
+  - {fileID: 5353277633022863432}
   - {fileID: 8128887729326469854}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1879478015339634339}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
@@ -543,9 +547,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76299cbcceec0c48b478079483d66ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 10
+  maxHp: 20
   currentHp: 0
-  speed: 1
+  speed: 10
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 1
@@ -580,22 +584,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &2998280089889385721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7152724393694647324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9119363a44058bf40ab7b21a79a9c4d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpeed: 4
-  maxSpeed: 6
-  minOffset: -0.02
-  maxOffset: 0.02
 --- !u!114 &8128887729326469854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,7 +599,7 @@ MonoBehaviour:
   mesh: {fileID: 7152724392929676718}
   minRotation: -60
   maxRotation: 60
---- !u!114 &498934554953354446
+--- !u!114 &238054309634658162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -620,13 +608,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 7152724393694647324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcaedd66ca0aab64abc4adbfa8c7b2bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 006ba274f1de537428344e40110b8c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instantMovement: 0
+  autoShoot: 0
+  newPosition: {x: 0, y: 0, z: 0}
+  type: 0
+  camera: {fileID: 0}
+  randomModifierHorizontal: 0
+  randomModifierVertical: 0.3
+--- !u!114 &5353277633022863432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152724393694647324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7acce207d449e4fb110ba2056be38d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  angularSpeed: 180
+  smoothness: 0.5
+  startPosition: {x: 0, y: 0, z: 0}
+  newShipPosition: {x: 0, y: 0, z: 0}
+  scaleWithDificulty: 1
+--- !u!114 &1879478015339634339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152724393694647324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dece6f5ded38114c95340278d5aa75b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guns: []
+  triggersPulled: 0
+  scaleWithDificulty: 0
+--- !u!114 &1504503411166508637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152724393694647324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbf52e50afe8ca4e836ce4118ac4afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timebody: {fileID: 7152724393694647314}
   status: {fileID: 7152724393694647313}
+  movement: {fileID: 5353277633022863432}
+  input: {fileID: 238054309634658162}
+  shoot: {fileID: 1879478015339634339}
+  type: 1
+  playAfterStop: 1
   points: 10
+  activateTime: 0
   lifeTime: 10
+  targetPlayer: 0
 --- !u!1 &7260191389596961555
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,15 +851,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
---- !u!1 &7152724392930169230 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2,
-    type: 3}
-  m_PrefabInstance: {fileID: 7152724392930072366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7152724392929676718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2,
+    type: 3}
+  m_PrefabInstance: {fileID: 7152724392930072366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7152724392930169230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2,
     type: 3}
   m_PrefabInstance: {fileID: 7152724392930072366}
   m_PrefabAsset: {fileID: 0}

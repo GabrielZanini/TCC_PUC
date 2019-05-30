@@ -62,7 +62,7 @@ public class ShipManager : ObjectManager
 
     void Movement()
     {
-        if (input.autoMovement)
+        if (input.instantMovement)
         {
             movement.MoveToPosition(input.newPosition);
         }

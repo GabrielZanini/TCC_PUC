@@ -144,14 +144,21 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-
-
-
-    public void AddBullet()
+    public void SetTarget(Transform t)
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].AddBullet();
+            guns[i].SetTarget(t);
+        }
+    }
+
+
+
+    public void AddBullet(int bullets = 1)
+    {
+        for (int i = 0; i < guns.Count; i++)
+        {
+            guns[i].AddBullet(bullets);
         }
     }
 
@@ -163,11 +170,11 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-    public void AddDamage()
+    public void AddDamage(int damage = 1)
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].AddDamage();
+            guns[i].AddDamage(damage);
         }
     }
 
@@ -227,19 +234,19 @@ public class ShootShip : MonoBehaviour
         }
     }
 
-    public void AddBulletRate()
+    public void AddBulletRate(float rate = 0.02f)
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].AddBulletRate();
+            guns[i].AddBulletRate(rate);
         }
     }
 
-    public void RemoveBulletRate()
+    public void RemoveBulletRate(float rate = 0.02f)
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].RemoveBulletRate();
+            guns[i].RemoveBulletRate(rate);
         }
     }
 

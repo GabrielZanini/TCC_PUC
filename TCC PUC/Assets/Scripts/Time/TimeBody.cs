@@ -5,7 +5,12 @@ using UnityEngine.Events;
 
 public class TimeBody : MonoBehaviour
 {
-    public TimeController controller;
+    [SerializeField] TimeController controller;
+    public TimeController Controller {
+        get { return controller; }
+        private set { controller = value; }
+    }
+
     public TimeBodyType bodyType = TimeBodyType.Bullet;
 
     public bool isActive = false;
@@ -45,7 +50,8 @@ public class TimeBody : MonoBehaviour
     PointInTime auxPointInTime;
     PointInTime previuos;
     PointInTime next;
-
+    
+    
 
     void Awake()
     {
@@ -404,6 +410,11 @@ public class TimeBody : MonoBehaviour
         bullet = GetComponent<Bullet>();
     }
 
+    public void SetController(TimeController controller)
+    {
+        Controller = controller;
+    }
+
     public void SetActive(bool active)
     {
         //Debug.Log(gameObject.name + " - TimeBody.SetActive - Active: " + active.ToString());
@@ -463,8 +474,7 @@ public class TimeBody : MonoBehaviour
 
         return auxPointInTime;
     }
-
-
+    
     private PointInTime GetNewPointInTime(bool active)
     {
         auxPointInTime = GetNewPointInTime();
@@ -473,8 +483,7 @@ public class TimeBody : MonoBehaviour
 
         return auxPointInTime;
     }
-
-
+    
     private PointInTime ReUsePointInTime()
     {
         PointInTime pointInTime = hiddenPointsInTime[0];

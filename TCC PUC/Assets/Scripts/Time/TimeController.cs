@@ -147,7 +147,37 @@ public class TimeController : MonoBehaviour
     {
         RemoveListeners();
     }
-    
+
+
+    void AddListeners()
+    {
+        foreach (var mobileButton in mobileRewindButtons)
+        {
+            mobileButton.OnPress.AddListener(StartRewind);
+            mobileButton.OnRelease.AddListener(StopRewind);
+        }
+
+        GameManager.Level.OnMenu.AddListener(StopSlowdown);
+        GameManager.Level.OnStart.AddListener(ClearList);
+        GameManager.Level.OnStop.AddListener(ClearList);
+        GameManager.Level.OnStop.AddListener(StopSlowdown);
+        GameManager.Level.OnRestart.AddListener(ClearList);
+    }
+
+    void RemoveListeners()
+    {
+        foreach (var mobileButton in mobileRewindButtons)
+        {
+            mobileButton.OnPress.RemoveListener(StartRewind);
+            mobileButton.OnRelease.RemoveListener(StopRewind);
+        }
+
+        GameManager.Level.OnMenu.RemoveListener(StopSlowdown);
+        GameManager.Level.OnStart.RemoveListener(ClearList);
+        GameManager.Level.OnStop.RemoveListener(ClearList);
+        GameManager.Level.OnStop.RemoveListener(StopSlowdown);
+        GameManager.Level.OnRestart.RemoveListener(ClearList);
+    }
 
 
     void CheckTime()
@@ -257,32 +287,6 @@ public class TimeController : MonoBehaviour
         PointsInTimeCount = timebodys[0].pointsInTime.Count;
         LastPointInTime = CurrentPointInTime;
         CurrentPointInTime = pointsInTimeCount;
-    }
-
-    void AddListeners()
-    {
-        foreach (var mobileButton in mobileRewindButtons)
-        {
-            mobileButton.OnPress.AddListener(StartRewind);
-            mobileButton.OnRelease.AddListener(StopRewind);
-        }
-
-        GameManager.Instance.Level.OnStart.AddListener(ClearList);
-        GameManager.Instance.Level.OnStop.AddListener(ClearList);
-        GameManager.Instance.Level.OnRestart.AddListener(ClearList);
-    }
-
-    void RemoveListeners()
-    {
-        foreach (var mobileButton in mobileRewindButtons)
-        {
-            mobileButton.OnPress.RemoveListener(StartRewind);
-            mobileButton.OnRelease.RemoveListener(StopRewind);
-        }
-
-        GameManager.Instance.Level.OnStart.RemoveListener(ClearList);
-        GameManager.Instance.Level.OnStop.RemoveListener(ClearList);
-        GameManager.Instance.Level.OnRestart.RemoveListener(ClearList);
     }
 
 

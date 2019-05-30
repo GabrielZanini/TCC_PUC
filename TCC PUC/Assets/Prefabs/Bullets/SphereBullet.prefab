@@ -211,9 +211,9 @@ MonoBehaviour:
   Graphics: {fileID: 5969090849926597575}
   inRender: {fileID: 7968636152196949486}
   outRender: {fileID: 820245046079550520}
-  scaleX: 0
+  scaleX: 1
   scaleY: 0
-  scaleZ: 0
+  scaleZ: 1
 --- !u!1 &6150010395005329521
 GameObject:
   m_ObjectHideFlags: 0

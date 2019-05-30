@@ -6,23 +6,29 @@ public class PowerUp : PickUp
 {
     public PowerUpType type = PowerUpType.MoreBullets;
     public SpriteRenderer render;
-    
+
+
+
+    public int bultet = 1;
+    public int damage = 2;
+    public float rate = 0.2f;
+    public int heal = 25;
 
 
     protected override void PlayerPickUp(PlayerManager player)
     {
         if (type == PowerUpType.MoreBullets)
         {
-            player.shoot.AddBullet();
+            player.shoot.AddBullet(bultet);
         }
         else if (type == PowerUpType.MoreDamage)
         {
-            player.shoot.AddDamage();
+            player.shoot.AddDamage(damage);
 
         }
         else if (type == PowerUpType.MoreShootingRate)
         {
-            player.shoot.RemoveBulletRate();
+            player.shoot.RemoveBulletRate(rate);
         }
         else if (type == PowerUpType.Rockets)
         {
@@ -34,7 +40,7 @@ public class PowerUp : PickUp
         }
         else if (type == PowerUpType.Heal)
         {
-            player.status.Heal(20);
+            player.status.Heal(heal);
         }
 
         pool.RemovePowerUpByType(type);

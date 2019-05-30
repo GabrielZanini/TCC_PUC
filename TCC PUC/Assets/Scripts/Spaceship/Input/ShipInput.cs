@@ -5,11 +5,11 @@ using UnityEngine;
 public class ShipInput : MonoBehaviour
 {
     [Header("Settings")]
-    public bool autoMovement = true;
+    public bool instantMovement = true;
     public bool autoShoot = true;
 
     // Movement
-    public Vector3 newPosition;
+    [HideInInspector] public Vector3 newPosition;
     [HideInInspector] public Touch touch;
 
     // Axes

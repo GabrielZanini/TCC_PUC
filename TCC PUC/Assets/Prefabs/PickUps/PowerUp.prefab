@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 4
-  maxSpeed: 6
+  maxSpeed: 5
   minOffset: -0.01
   maxOffset: 0.01
   scaleWithDificulty: 0

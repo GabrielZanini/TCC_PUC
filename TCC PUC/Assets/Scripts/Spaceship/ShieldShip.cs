@@ -6,8 +6,7 @@ using UnityEngine.Events;
 public class ShieldShip : MonoBehaviour
 {
     [Header("GameObject")]
-    public GameObject shieldObject;
-    public MeshRenderer render;
+    public Shield shield;
 
     [Header("Settings")]
     public float duration = 5f;
@@ -17,15 +16,17 @@ public class ShieldShip : MonoBehaviour
 
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDeactivate;
-    
 
+
+
+    private void Reset()
+    {
+        shield = GetComponentInChildren<Shield>(true);
+    }
 
     private void OnValidate()
     {
-        if (shieldObject != null)
-        {
-            render = shieldObject.GetComponent<MeshRenderer>();
-        }
+        Reset();
     }
 
     void Update()
@@ -47,19 +48,22 @@ public class ShieldShip : MonoBehaviour
     {
         isActive = true;
         timer = duration;
-        shieldObject.SetActive(true);
+        shield.gameObject.SetActive(true);
         OnActivate.Invoke();
     }
 
     public void Deactivate()
     {
         isActive = false;
-        shieldObject.SetActive(false);
+        shield.gameObject.SetActive(false);
         OnDeactivate.Invoke();
     }
 
     public void SetMaterial(Material material)
     {
-        render.material = material;
+        if (shield != null)
+        {
+            shield.SetMaterial(material);
+        }
     }
 }

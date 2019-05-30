@@ -61,7 +61,7 @@ public class StatusBase : MonoBehaviour
 
     private void InicializeHealth()
     {
-        if (scaleWithDificulty)
+        if (scaleWithDificulty && GameManager.Instance != null)
         {
             CurrentHp = Mathf.RoundToInt(MaxHp * GameManager.Instance.Level.DifficultyModifire);
         }

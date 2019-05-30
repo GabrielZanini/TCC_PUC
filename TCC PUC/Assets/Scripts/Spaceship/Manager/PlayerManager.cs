@@ -7,8 +7,15 @@ public class PlayerManager : ShipManager
 {
     public ShieldShip shield;
 
+    [Header("GameManager")]
+    [SerializeField] GameManager gameManager;
+    public GameManager GameManager {
+        get { return gameManager; }
+        private set { gameManager = value; }
+    }
+
     [Header("Camera")]
-    public CameraManager camerManager;
+    public CameraManager camera;
 
     [Header("Player Settings")]
     public Margin margin = new Margin();
@@ -49,11 +56,12 @@ public class PlayerManager : ShipManager
     {
         base.AddListeners();
         status.OnLoseHp.AddListener(Vibrate);
-        GameManager.Instance.Level.OnStop.AddListener(shoot.ReleaseTriggers);
-        GameManager.Instance.Level.OnStop.AddListener(shield.Deactivate);
-        GameManager.Instance.Level.OnStart.AddListener(Revive);
-        GameManager.Instance.Level.OnMenu.AddListener(Revive);
-        camerManager.OnChange.AddListener(SetMovementPlayer);
+        GameManager.Level.OnStop.AddListener(shoot.ReleaseTriggers);
+        GameManager.Level.OnStop.AddListener(shield.Deactivate);
+        GameManager.Level.OnStart.AddListener(Revive);
+        GameManager.Level.OnMenu.AddListener(Revive);
+        GameManager.Level.OnMenu.AddListener(shield.Deactivate);
+        camera.OnChange.AddListener(SetMovementPlayer);
         //shield.OnActivate.AddListener(timebody.DisableCollider);
         //shield.OnDeactivate.AddListener(timebody.EnableCollider);
     }
@@ -62,11 +70,12 @@ public class PlayerManager : ShipManager
     {
         base.RemoveListeners();
         status.OnLoseHp.RemoveListener(Vibrate);
-        GameManager.Instance.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
-        GameManager.Instance.Level.OnStop.RemoveListener(shield.Deactivate);
-        GameManager.Instance.Level.OnStart.RemoveListener(Revive);
-        GameManager.Instance.Level.OnMenu.RemoveListener(Revive);
-        camerManager.OnChange.RemoveListener(SetMovementPlayer);
+        GameManager.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
+        GameManager.Level.OnStop.RemoveListener(shield.Deactivate);
+        GameManager.Level.OnStart.RemoveListener(Revive);
+        GameManager.Level.OnMenu.RemoveListener(Revive);
+        GameManager.Level.OnMenu.RemoveListener(shield.Deactivate);
+        camera.OnChange.RemoveListener(SetMovementPlayer);
         //shield.OnActivate.RemoveListener(timebody.DisableCollider);
         //shield.OnDeactivate.RemoveListener(timebody.EnableCollider);
     }
@@ -86,8 +95,8 @@ public class PlayerManager : ShipManager
 
     void SetMovementLimits()
     {
-        Vector3 min = new Vector3(-camerManager.horizontalSize, -camerManager.verticalSize, 0);
-        Vector3 max = new Vector3(camerManager.horizontalSize, camerManager.verticalSize, 0);
+        Vector3 min = new Vector3(-camera.horizontalSize, -camera.verticalSize, 0);
+        Vector3 max = new Vector3(camera.horizontalSize, camera.verticalSize, 0);
         
         movement.SetLimits(min, max, margin);
     }
@@ -120,7 +129,7 @@ public class PlayerManager : ShipManager
 
         while (timer > 0)
         {
-            if (!timebody.controller.IsRewinding || GameManager.Instance.Level.State != LevelState.Playing)
+            if (!timebody.Controller.IsRewinding || GameManager.Instance.Level.State != LevelState.Playing)
             {
                 timer -= Time.deltaTime;
 

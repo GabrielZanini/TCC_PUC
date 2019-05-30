@@ -34,6 +34,8 @@ public class Bullet : MonoBehaviour
     void Awake()
     {
         timeBody.OnActivate.AddListener(ResetCounter);
+        timeBody.OnSpawn.AddListener(ResetCounter);
+        timeBody.OnDespawn.AddListener(ResetCounter);
     }
 
     void Start()
@@ -44,6 +46,8 @@ public class Bullet : MonoBehaviour
     void OnDestroy()
     {
         timeBody.OnActivate.RemoveListener(ResetCounter);
+        timeBody.OnSpawn.RemoveListener(ResetCounter);
+        timeBody.OnDespawn.RemoveListener(ResetCounter);
     }
 
     void Update()
@@ -60,6 +64,25 @@ public class Bullet : MonoBehaviour
             otherStatus.TakeDamage(damage);
 
             GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
+
+            timeBody.Despawn();
+        }
+        else
+        {
+            var otherShield = other.gameObject.GetComponent<Shield>();
+
+            if (otherShield != null)
+            {
+                if (otherShield.absorb)
+                {
+                    // ABSORB BULLETS
+                }
+
+                if (otherShield.reflect)
+                {
+                    // REFLECT BULLETS
+                }
+            }
         }
 
         timeBody.Despawn();

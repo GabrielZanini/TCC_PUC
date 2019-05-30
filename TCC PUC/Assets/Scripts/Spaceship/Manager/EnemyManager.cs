@@ -2,23 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ShipAi))]
 public class EnemyManager : ShipManager
 {
     [Header("Enemy Settings")]
     public int points = 10;
     public float activateTime = 4f;
+    public float lifeTime = 10f;
+    float despawnCounter = 0f;
+    public bool targetPlayer = false;
 
 
     protected override void Reset()
     {
         base.Reset();
+
         type = ShipType.Enemy;
         playAfterStop = true;
     }
 
     private void OnEnable()
     {
-        StartEnemy();
+        //StartEnemy();
     }
 
     protected override void Start()
@@ -30,6 +35,7 @@ public class EnemyManager : ShipManager
     protected override void Update()
     {
         base.Update();
+        DespawnCount();
     }
 
 
@@ -60,9 +66,29 @@ public class EnemyManager : ShipManager
 
     void StartEnemy()
     {
+        despawnCounter = lifeTime;
+
+        if (targetPlayer)
+        {
+            shoot.SetTarget(timebody.Controller.GameManager.Player.transform);
+        }
+
         //StartCoroutine(DeactivateEnemy());
     }
-    
+
+
+    void DespawnCount()
+    {
+        if (despawnCounter <= 0f)
+        {
+            timebody.Despawn();
+        }
+        else
+        {
+            despawnCounter -= Time.deltaTime;
+        }
+    }
+
 
 
     protected override void Death()

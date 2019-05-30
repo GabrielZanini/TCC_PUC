@@ -73,9 +73,10 @@ public enum ShipType
 
 public enum AiType
 {
-    EnemyShip,
-    Boss,
+    Asteroid,
     DeathCross,
+    SpaceCanon,
+    Boss,
 }
 
 public enum LevelState

@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class ScrollBackground : ScrollTiles
 {
+    [Header("Background Settings")]
     public bool hasStars = true;
 }

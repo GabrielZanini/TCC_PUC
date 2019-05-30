@@ -13,10 +13,16 @@ public class ScrollTiles : MonoBehaviour
     public float counter = 0f;
     public bool goBack = false;
 
+    [Header("Difficulty")]
+    public bool scaleWithDificulty = true;
+    public float smoothScale = 0.5f;
+
 
     private Vector3 startPosition;
     private float tilesScale;
     private float newPosition;
+    private float sSpeed;
+    private LevelManager level;
 
     [SerializeField] TimeBody timebody;
 
@@ -87,6 +93,7 @@ public class ScrollTiles : MonoBehaviour
         MoveToBottom();
 
         startPosition = transform.localPosition;
+        level = camerManager.Level;
     }
 
 
@@ -98,16 +105,18 @@ public class ScrollTiles : MonoBehaviour
 
     private void Scroll()
     {
-        if (timebody.controller.IsRewinding)
+        counter += Time.deltaTime;
+
+        if (scaleWithDificulty)
         {
-            counter -= Time.deltaTime;
+            sSpeed = scrollSpeed * level.DifficultyModifire * smoothScale;
         }
         else
         {
-            counter += Time.deltaTime;
+            sSpeed = scrollSpeed;
         }
 
-        newPosition = Mathf.Repeat(counter * scrollSpeed, tilesScale);
+        newPosition = Mathf.Repeat(counter * sSpeed, tilesScale);
         transform.localPosition = startPosition - Vector3.up * newPosition;
     }
 

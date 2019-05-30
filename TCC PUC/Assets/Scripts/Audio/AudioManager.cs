@@ -102,8 +102,8 @@ public class AudioManager : MonoBehaviour
 
             if (stopOnRewind)
             {
-                timebody.controller.OnStartRewind.AddListener(Stop);
-                timebody.controller.OnStopRewind.AddListener(Play);
+                timebody.Controller.OnStartRewind.AddListener(Stop);
+                timebody.Controller.OnStopRewind.AddListener(Play);
             }
         }        
     }
@@ -120,8 +120,8 @@ public class AudioManager : MonoBehaviour
 
             if (stopOnRewind)
             {
-                timebody.controller.OnStartRewind.RemoveListener(Stop);
-                timebody.controller.OnStopRewind.RemoveListener(Play);
+                timebody.Controller.OnStartRewind.RemoveListener(Stop);
+                timebody.Controller.OnStopRewind.RemoveListener(Play);
             }
         }        
     }

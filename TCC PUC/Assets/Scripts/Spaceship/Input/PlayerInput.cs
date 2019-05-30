@@ -48,9 +48,9 @@ public class PlayerInput : ShipInput
     private void Update()
     {
         //autoShoot = GameManager.Instance.Level.IsPlaying && GameManager.Instance.IsMobile;
-        autoMovement = HasTouch;
+        instantMovement = HasTouch;
 
-        if (autoMovement)
+        if (instantMovement)
         {
             MoveTouch();
         }
@@ -62,7 +62,7 @@ public class PlayerInput : ShipInput
 
     private void OnDisable()
     {
-        autoMovement = false;
+        instantMovement = false;
         //shootButton.ClearFixValue();
         shootButton.SetFixValue(false, false, true);
         ClearTouch();

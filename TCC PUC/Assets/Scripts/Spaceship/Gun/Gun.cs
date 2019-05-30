@@ -45,12 +45,21 @@ public class Gun : MonoBehaviour
     public BulletType bulletType = BulletType.Sphere;
     public ObjectPool bulletPool;
     public int bulletDamage = 1;
+    public bool resizeWithDamage = true;
+    public float resizeAmount = 0.5f;
     public float bulletSpeed = 30f;
-    [Range(0.01f, 1f)] public float bulletRate = 0.1f;
+    [Range(0.01f, 3f)] public float bulletRate = 0.1f;
     public Color inColor = Color.white;
     public Color outColor = Color.blue;
     public string layerName;
     int bulletLayer = 0;
+    int startingDamage = 0;
+
+
+    [Header("Target")]
+    public Transform target;
+    public bool followTarget = false;
+    public float speed = 1f;
 
 
     [Header("Control")]
@@ -90,6 +99,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        LookAtTarget();
         CheckForShoot();
     }
 
@@ -106,6 +116,15 @@ public class Gun : MonoBehaviour
     {
         isTriggerPulled = false;
     }
+
+
+    void LookAtTarget()
+    {
+        if (followTarget)
+        {
+            transform.LookAt(target, transform.up);
+        }
+    } 
 
     void CheckForShoot()
     {
@@ -153,7 +172,15 @@ public class Gun : MonoBehaviour
 
             bulletTimebody.bullet.inRender.color = inColor;
             bulletTimebody.bullet.outRender.color = outColor;
-            bulletTimebody.bullet.SetScale(bulletDamage * 0.5f);
+
+            if (resizeWithDamage)
+            {
+                bulletTimebody.bullet.SetScale(1 + (bulletDamage - startingDamage) * resizeAmount);
+            }            
+            else
+            {
+                bulletTimebody.bullet.SetScale(1);
+            }
         }
 
         if (hasAudio)
@@ -296,6 +323,7 @@ public class Gun : MonoBehaviour
     public void SetDamage(int damage)
     {
         bulletDamage = damage;
+        startingDamage = damage;
     }
 
     public void SetRate(float rate)
@@ -309,12 +337,17 @@ public class Gun : MonoBehaviour
         this.outColor = outColor;
     }
 
+    public void SetTarget(Transform t)
+    {
+        target = t;
+    }
 
-    public void AddBullet()
+
+    public void AddBullet(int bullets = 1)
     {
         if (MaxBarrels < 10)
         {
-            MaxBarrels += 1;
+            MaxBarrels += bullets;
             AjustBarrols();
         }
     }
@@ -328,11 +361,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void AddDamage()
+    public void AddDamage(int damage = 1)
     {
-        if (bulletDamage < 10)
+        if (bulletDamage < 20)
         {
-            bulletDamage += 1;
+            bulletDamage += damage;
         }
     }
 
@@ -380,16 +413,16 @@ public class Gun : MonoBehaviour
         bulletSpeed -= 1;
     }
 
-    public void AddBulletRate()
+    public void AddBulletRate(float rate = 0.02f)
     {
-        bulletRate += 0.02f;
+        bulletRate += rate;
     }
 
-    public void RemoveBulletRate()
+    public void RemoveBulletRate(float rate = 0.02f)
     {
-        if (bulletRate > 0.01f)
+        if (bulletRate > rate)
         {
-            bulletRate -= 0.02f;
+            bulletRate -= rate;
         }        
     }
 }

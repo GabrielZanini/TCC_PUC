@@ -5,6 +5,13 @@ using UnityEngine.Events;
 
 public class AudioController : MonoBehaviour
 {
+    [Header("GameManager")]
+    [SerializeField] GameManager gameManager;
+    public GameManager GameManager {
+        get { return gameManager; }
+        private set { gameManager = value; }
+    }
+
     [Header("Volume")]
     [Range(0f, 1f)]
     [SerializeField] float musicVolume = 1f;
