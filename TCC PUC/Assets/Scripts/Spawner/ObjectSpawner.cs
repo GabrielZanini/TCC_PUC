@@ -16,18 +16,33 @@ public class ObjectSpawner : MonoBehaviour
 
     [Header("Number of Objects")]
     public int numberOfObjects = 1;
-           
+    [Range(1, 5)] public int minObject = 1;
+    [Range(1, 5)] public int maxObject = 3;
+
     List<int> spawnIds = new List<int>();
     List<int> usedIds = new List<int>();
 
     protected float spawnCounter = 0f;
 
-    
+
+
+
+    private void OnValidate()
+    {
+        if (minObject > maxObject)
+        {
+            maxObject = minObject;
+        }
+
+        SetSpawner();
+        ResetObjectCount();
+        CreateIdList();
+    }
 
     private void Awake()
     {
-        AjustSpawnPoints();
-        CreateIdList();
+        SetSpawner();
+        ResetObjectCount();
         AddListeners();
     }
 
@@ -63,8 +78,11 @@ public class ObjectSpawner : MonoBehaviour
 
     void SetSpawner()
     {
-        transform.position = new Vector3(0f, camerManager.verticalSize + 1, 0f);
-        transform.localScale = new Vector3(camerManager.horizontalSize - 2 * margin, 1f, 1f);
+        if (camerManager != null)
+        {
+            transform.position = new Vector3(0f, camerManager.verticalSize + 1, 0f);
+            transform.localScale = new Vector3(camerManager.horizontalSize - 2 * margin, 1f, 1f);
+        }
     }
 
 
@@ -74,14 +92,16 @@ public class ObjectSpawner : MonoBehaviour
         {
             pool.Spawn(spawnPoints[i].position);
         }
+
+        ResetObjectCount();
     }
     
     public void SpawnAt(int index)
     {
-        if (index < spawnPoints.Count)
+        if (index < numberOfObjects)
         {
             pool.Spawn(spawnPoints[index].position);
-        }        
+        }
     }
 
     public void SpawnRandom()
@@ -121,11 +141,44 @@ public class ObjectSpawner : MonoBehaviour
 
     void AjustSpawnPoints()
     {
-        float distance = 2f / (spawnPoints.Count - 1f);
+        //float distance = 2f / (spawnPoints.Count - 1f);
+
+        //for (int i = 0; i < spawnPoints.Count; i++)
+        //{
+        //    spawnPoints[i].localPosition = new Vector3(-1 + (i * distance), 0f, 0f);
+        //}
 
         for (int i = 0; i < spawnPoints.Count; i++)
         {
-            spawnPoints[i].localPosition = new Vector3(-1 + (i * distance), 0f, 0f);
+            if (i < numberOfObjects)
+            {
+                spawnPoints[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                spawnPoints[i].gameObject.SetActive(false);
+            }
         }
+        
+        if (numberOfObjects > 1)
+        {
+            float distance = 2f / (numberOfObjects - 1f);
+
+            for (int i = 0; i < numberOfObjects; i++)
+            {
+                spawnPoints[i].localPosition = new Vector3(-1 + (i * distance), 0f, 0f);
+            }
+        }
+        else
+        {
+            spawnPoints[0].localPosition = Vector3.zero;
+        }
+        
+    }
+
+    private void ResetObjectCount()
+    {
+        numberOfObjects = Random.Range(minObject, maxObject + 1);
+        AjustSpawnPoints();
     }
 }

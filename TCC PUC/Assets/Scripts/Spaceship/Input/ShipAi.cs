@@ -6,10 +6,29 @@ public class ShipAi : ShipInput
 {
     [Header("AI Setting")]
     public AiType type = AiType.Asteroid;
-    public CameraManager camera;
-    [Range(0f, 1f)] public float randomModifierHorizontal = 0f;
-    [Range(0f, 1f)] public float randomModifierVertical = 0f;
+    [Space]
+    [Range(-1f, 1f)] public float minHorizontal = 0f;
+    [Range(-1f, 1f)] public float maxHorizontal = 0f;
+    [Space]
+    [Range(-1f, 1f)] public float minVertical = 0f;
+    [Range(-1f, 1f)] public float maxVertical = 0f;
+    [Space]
+    [Range(-1f, 1f)] public float minRotation = 0f;
+    [Range(-1f, 1f)] public float maxRotation = 0f;
 
+
+    private void OnValidate()
+    {
+        if (minHorizontal > maxHorizontal)
+        {
+            maxHorizontal = minHorizontal;
+        }
+
+        if (minVertical > maxVertical)
+        {
+            minVertical = maxVertical;
+        }
+    }
 
     private void OnEnable()
     {
@@ -26,21 +45,31 @@ public class ShipAi : ShipInput
 
     void SetMovement()
     {
-        if (type == AiType.Asteroid)
-        {
-            horizontalAxis.SetFixValue(Random.Range(-randomModifierHorizontal, randomModifierHorizontal));
-            verticalAxis.SetFixValue(-1);
-        }
-        else if (type == AiType.DeathCross)
-        {
-            rotationAxis.SetFixValue(1);
-            verticalAxis.SetFixValue(-1);
-        }
-        else if (type == AiType.SpaceCanon)
-        {
-            verticalAxis.SetFixValue(-1);
-        }
+        Move();
+        Rotate();
     }
+
+    private void Move()
+    {
+        MoveHorizontal();
+        MoveVertical();
+    }
+
+    private void MoveHorizontal()
+    {
+        horizontalAxis.SetFixValue(Random.Range(minHorizontal, maxHorizontal));
+    }
+
+    private void MoveVertical()
+    {
+        verticalAxis.SetFixValue(Random.Range(minVertical, maxHorizontal));
+    }
+
+    private void Rotate()
+    {
+        rotationAxis.SetFixValue(Random.Range(minRotation, maxRotation));
+    }
+
 
     void SetCombat()
     {
@@ -49,4 +78,6 @@ public class ShipAi : ShipInput
             shootButton.SetFixValue(true, false, false);
         }
     }
+
+
 }

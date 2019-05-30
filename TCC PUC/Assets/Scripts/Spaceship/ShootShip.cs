@@ -31,7 +31,12 @@ public class ShootShip : MonoBehaviour
 
     private void OnEnable()
     {
-        //ActivateGuns();
+        ActivateGuns();
+    }
+
+    private void OnDisable()
+    {
+        DeactivateGuns();
     }
 
     private void OnDestroy()

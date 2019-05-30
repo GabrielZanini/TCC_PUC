@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathDiskSpawner : ObjectSpawner
+public class DelaySpawner : ObjectSpawner
 {
+    [Header("Delay")]
+    public float startDelay = 3f;
     public float spawnDelay = 3f;
 
     protected override void Start()
     {
         base.Start();
-        spawnCounter = spawnDelay;
+        spawnCounter = startDelay;
     }
 
     private void Update()

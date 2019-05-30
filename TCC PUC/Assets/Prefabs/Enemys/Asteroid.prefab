@@ -549,7 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   currentHp: 0
-  speed: 10
+  speed: 20
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 1
@@ -615,9 +615,12 @@ MonoBehaviour:
   autoShoot: 0
   newPosition: {x: 0, y: 0, z: 0}
   type: 0
-  camera: {fileID: 0}
-  randomModifierHorizontal: 0
-  randomModifierVertical: 0.3
+  minHorizontal: -0.1
+  maxHorizontal: 0.1
+  minVertical: -1
+  maxVertical: -0.8
+  minRotation: 0
+  maxRotation: 0
 --- !u!114 &5353277633022863432
 MonoBehaviour:
   m_ObjectHideFlags: 0
