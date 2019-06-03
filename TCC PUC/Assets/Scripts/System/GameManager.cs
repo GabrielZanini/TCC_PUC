@@ -109,7 +109,11 @@ public class GameManager : MonoBehaviour
     {
         if (UseVibration)
         {
+#if UNITY_ANDROID
             Handheld.Vibrate();
+#else
+
+#endif
         }
 
         Save(); 

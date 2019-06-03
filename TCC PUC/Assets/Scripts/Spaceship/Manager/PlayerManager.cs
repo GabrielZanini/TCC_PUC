@@ -169,7 +169,11 @@ public class PlayerManager : ShipManager
     {
         if (GameManager.Instance.UseVibration)
         {
+#if UNITY_ANDROID
             Handheld.Vibrate();
+#else
+
+#endif
         }
     }
 

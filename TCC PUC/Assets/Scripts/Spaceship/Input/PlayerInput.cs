@@ -95,7 +95,7 @@ public class PlayerInput : ShipInput
 
     private void MoveTouch()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         TouchEditor();
 #elif UNITY_ANDROID
         TouchMobile();

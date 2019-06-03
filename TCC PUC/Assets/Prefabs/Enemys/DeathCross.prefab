@@ -1281,7 +1281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   currentHp: 0
-  speed: 16
+  speed: 15
   angularSpeed: 15
   smoothness: 0.5
   deathEffect: 2
@@ -1648,7 +1648,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -1909,7 +1909,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -2237,7 +2237,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
@@ -2498,7 +2498,7 @@ PrefabInstance:
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
       propertyPath: bulletSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3793500452648052237, guid: 830032f2b02b8e84db2a9f332f7eff75,
         type: 3}
