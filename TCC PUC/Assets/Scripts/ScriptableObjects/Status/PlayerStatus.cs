@@ -2,13 +2,9 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class PlayerStatus
+[CreateAssetMenu(fileName = "New Player Status", menuName = "Spaceship/Status/Player")]
+public class PlayerStatus : ShipStatus
 {
-    [Header("Bullets")]
-    public int bullets = 1;
-    public int damage = 1;
-    public float shootingRate = 0.2f;
 
     [Header("Shiels")]
     public bool useShield = false;
@@ -22,11 +18,9 @@ public class PlayerStatus
 
 
 
-    public void Clear()
+    public override void Clear()
     {
-        bullets = 0;
-        damage = 0;
-        shootingRate = 0;
+        base.Clear();
 
         useShield = false;
         shildTime = 0f;

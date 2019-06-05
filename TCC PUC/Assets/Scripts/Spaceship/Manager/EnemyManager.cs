@@ -12,6 +12,8 @@ public class EnemyManager : ShipManager
     float despawnCounter = 0f;
     public bool targetPlayer = false;
 
+    public EnemyStatus defaultEnemyStatus;
+
 
     protected override void Reset()
     {
@@ -19,6 +21,11 @@ public class EnemyManager : ShipManager
 
         type = ShipType.Enemy;
         playAfterStop = true;
+
+        if (defaultEnemyStatus != null)
+        {
+            defaultShipStatus = defaultEnemyStatus;
+        }
     }
 
     private void OnEnable()

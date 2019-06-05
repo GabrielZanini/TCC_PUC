@@ -12,15 +12,18 @@ public class ShipManager : ObjectManager
     public ShipInput input;
     public ShootShip shoot;
 
-    public ShipType type = ShipType.Enemy;
+    [HideInInspector] public ShipType type = ShipType.Enemy;
     public bool playAfterStop = false;
 
+
+    protected ShipStatus defaultShipStatus;
 
 
 
     protected override void Reset()
     {
         base.Reset();
+
         input = GetComponent<ShipInput>();
         movement = GetComponent<MoveShip>();
         shoot = GetComponent<ShootShip>();

@@ -946,6 +946,12 @@ MonoBehaviour:
   - {fileID: 6925002696348766379}
   - {fileID: 547857050}
   - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
   objectsToDisable:
   - {fileID: 3129181688296902309}
   - {fileID: 1312847582}
@@ -1138,24 +1144,8 @@ MonoBehaviour:
   render: {fileID: 5073818463506516133}
   timeBeforeDeath: 1
   dyingMaterial: {fileID: 2100000, guid: 7aaef86eb5eb3f9429ad27ca71541134, type: 2}
-  defaultStaus:
-    bullets: 2
-    damage: 5
-    shootingRate: 0.2
-    useShield: 0
-    shildTime: 5
-    rockets: 1
-    useRockets: 0
-    rocketsRate: 5
-  extraStatus:
-    bullets: 0
-    damage: 0
-    shootingRate: 0
-    useShield: 0
-    shildTime: 0
-    rockets: 0
-    useRockets: 0
-    rocketsRate: 0
+  defaultPlayerStatus: {fileID: 0}
+  extraStatus: {fileID: 0}
   coins: 0
 --- !u!1 &3795141736809314659
 GameObject:

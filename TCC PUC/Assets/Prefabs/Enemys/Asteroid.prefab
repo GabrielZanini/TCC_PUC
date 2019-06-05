@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 5353277633022863432}
   - component: {fileID: 1879478015339634339}
   - component: {fileID: 1504503411166508637}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Asteroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,6 +502,10 @@ MonoBehaviour:
   - {fileID: 8128887729326469854}
   - {fileID: 1504503411166508637}
   - {fileID: 1879478015339634339}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
@@ -618,7 +622,7 @@ MonoBehaviour:
   minHorizontal: -0.1
   maxHorizontal: 0.1
   minVertical: -1
-  maxVertical: -0.8
+  maxVertical: -0.9
   minRotation: 0
   maxRotation: 0
 --- !u!114 &5353277633022863432
@@ -677,6 +681,7 @@ MonoBehaviour:
   activateTime: 0
   lifeTime: 10
   targetPlayer: 0
+  defaultEnemyStatus: {fileID: 11400000, guid: 5a2f8182982592246a434560f9b002e6, type: 2}
 --- !u!1 &7260191389596961555
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,12 +782,12 @@ PrefabInstance:
       value: Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Layer
-      value: 10
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -841,17 +846,13 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9fc560fb6c36cc5439471998b3622721, type: 2}
-    - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_CastShadows
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9fc560fb6c36cc5439471998b3622721, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
 --- !u!4 &7152724392929676718 stripped

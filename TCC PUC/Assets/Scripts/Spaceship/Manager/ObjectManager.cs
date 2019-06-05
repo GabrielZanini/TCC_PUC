@@ -17,7 +17,12 @@ public class ObjectManager : MonoBehaviour
         timebody.scriptsToDisable.Add(this);
         status = GetComponent<StatusBase>();
     }
-    
+
+    protected virtual void OnValidate()
+    {
+        Reset();
+    }
+
     protected virtual void Start()
     {
         AddListeners();

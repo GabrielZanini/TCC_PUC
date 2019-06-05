@@ -23,7 +23,9 @@ public class PlayerManager : ShipManager
     public MeshRenderer render;
     public float timeBeforeDeath = 1f;
     public Material dyingMaterial;
-    public PlayerStatus defaultStaus;
+
+    [Space]
+    public PlayerStatus defaultPlayerStatus;
     public PlayerStatus extraStatus;
 
     [Header("Coins")]
@@ -37,13 +39,19 @@ public class PlayerManager : ShipManager
         shield = GetComponent<ShieldShip>();
         type = ShipType.Player;
         playAfterStop = false;
+
+        if (defaultPlayerStatus != null)
+        {
+            defaultShipStatus = defaultPlayerStatus;
+        }
     }
 
-    private void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
         SetStyle();
     }
-
+    
     protected override void Start()
     {
         base.Start();
@@ -186,10 +194,10 @@ public class PlayerManager : ShipManager
 
     void SetStatus()
     {
-        shoot.SetBullets(defaultStaus.bullets + extraStatus.bullets);
-        shoot.SetDamage(defaultStaus.damage + extraStatus.damage);
-        shoot.SetRate(defaultStaus.shootingRate + extraStatus.shootingRate);
-        shield.duration = defaultStaus.shildTime + extraStatus.shildTime;
+        shoot.SetBullets(defaultPlayerStatus.bullets + extraStatus.bullets);
+        shoot.SetDamage(defaultPlayerStatus.damage + extraStatus.damage);
+        shoot.SetRate(defaultPlayerStatus.shootingRate + extraStatus.shootingRate);
+        shield.duration = defaultPlayerStatus.shildTime + extraStatus.shildTime;
     }
 
     public void SetStyle(ShipStyle newStyle = null)

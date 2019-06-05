@@ -832,6 +832,15 @@ MonoBehaviour:
   - {fileID: 6827476016683172124}
   - {fileID: 6827476016683172127}
   - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
   objectsToDisable:
   - {fileID: 6827476015345399495}
   - {fileID: 627276653371049954}
@@ -994,6 +1003,7 @@ MonoBehaviour:
   activateTime: 0
   lifeTime: 10
   targetPlayer: 1
+  defaultEnemyStatus: {fileID: 11400000, guid: d7726cc3a42a8c04789b4051f14b8746, type: 2}
 --- !u!1 &7597305773750638969
 GameObject:
   m_ObjectHideFlags: 0
