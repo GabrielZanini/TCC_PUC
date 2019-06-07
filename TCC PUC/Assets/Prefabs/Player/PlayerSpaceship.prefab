@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3885e7f9b1ed4b8b67505ca3c51fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: {fileID: 8291628941404942032}
+  health: {fileID: 8291628941404942032}
   lifeBar: {fileID: 1093606811}
   hideLifeAtMax: 0
   hideBeforeStart: 1
@@ -952,6 +952,15 @@ MonoBehaviour:
   - {fileID: 7990060464562977410}
   - {fileID: 7990060464562977410}
   - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
+  - {fileID: 7990060464562977410}
   objectsToDisable:
   - {fileID: 3129181688296902309}
   - {fileID: 1312847582}
@@ -979,7 +988,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  status: {fileID: 0}
+  heath: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
   bullet: {fileID: 0}
@@ -1017,9 +1026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   currentHp: 0
-  speed: 20
-  angularSpeed: 180
-  smoothness: 0.5
   deathEffect: 0
   scaleWithDificulty: 0
   OnGainHp:
@@ -1125,12 +1131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timebody: {fileID: 5023579175131762022}
-  status: {fileID: 8291628941404942032}
+  health: {fileID: 8291628941404942032}
   movement: {fileID: 6925002696348766379}
   input: {fileID: 3090274017238769261}
   shoot: {fileID: 547857050}
   type: 0
-  playAfterStop: 0
   shield: {fileID: 2213381668407682046}
   gameManager: {fileID: 0}
   camera: {fileID: 0}
@@ -1144,8 +1149,8 @@ MonoBehaviour:
   render: {fileID: 5073818463506516133}
   timeBeforeDeath: 1
   dyingMaterial: {fileID: 2100000, guid: 7aaef86eb5eb3f9429ad27ca71541134, type: 2}
-  defaultPlayerStatus: {fileID: 0}
-  extraStatus: {fileID: 0}
+  playerStatus: {fileID: 11400000, guid: b61c7f70ff2ccfa4e99df8a9311e1f29, type: 2}
+  extraStatus: {fileID: 11400000, guid: 188527eda228e664199df6c398945dca, type: 2}
   coins: 0
 --- !u!1 &3795141736809314659
 GameObject:
@@ -2259,6 +2264,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000,
         type: 0}
+    - target: {fileID: 6587836790229571773, guid: 830032f2b02b8e84db2a9f332f7eff75,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 830032f2b02b8e84db2a9f332f7eff75, type: 3}
 --- !u!1 &608651072382375638 stripped

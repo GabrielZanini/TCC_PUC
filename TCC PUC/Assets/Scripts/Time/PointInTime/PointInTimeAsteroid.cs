@@ -13,7 +13,7 @@ public class PointInTimeAsteroid : PointInTime
 
         if (isActive)
         {
-            timebody.status.CurrentHp = hp;
+            timebody.heath.CurrentHp = hp;
         }       
     }
 
@@ -23,7 +23,7 @@ public class PointInTimeAsteroid : PointInTime
 
         if (isActive)
         {
-            hp = timebody.status.CurrentHp;
+            hp = timebody.heath.CurrentHp;
         }        
     }
 }

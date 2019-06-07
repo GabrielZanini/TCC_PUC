@@ -23,7 +23,6 @@ public class DebugCanvas : MonoBehaviour
     public Text bullets;
 
     [Header("Player")]
-    public StatusBase statusPlayer;
     public ShootShip shootPlayer;
 
     string text = "";

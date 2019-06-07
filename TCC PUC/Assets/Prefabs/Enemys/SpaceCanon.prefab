@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3885e7f9b1ed4b8b67505ca3c51fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: {fileID: 6827476016683172125}
+  health: {fileID: 6827476016683172125}
   lifeBar: {fileID: 4619154409656076214}
   hideLifeAtMax: 1
   hideBeforeStart: 1
@@ -841,6 +841,32 @@ MonoBehaviour:
   - {fileID: 6827476016683172126}
   - {fileID: 6827476016683172126}
   - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
+  - {fileID: 6827476016683172126}
   objectsToDisable:
   - {fileID: 6827476015345399495}
   - {fileID: 627276653371049954}
@@ -869,7 +895,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  status: {fileID: 0}
+  heath: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
   bullet: {fileID: 0}
@@ -911,9 +937,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   currentHp: 0
-  speed: 10
-  angularSpeed: 180
-  smoothness: 0.5
   deathEffect: 2
   scaleWithDificulty: 1
   OnGainHp:
@@ -993,17 +1016,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timebody: {fileID: 6827476016683172123}
-  status: {fileID: 6827476016683172125}
+  health: {fileID: 6827476016683172125}
   movement: {fileID: 6827476016683172124}
   input: {fileID: 6827476016683172122}
   shoot: {fileID: 6827476016683172127}
   type: 1
-  playAfterStop: 1
-  points: 10
-  activateTime: 0
-  lifeTime: 10
-  targetPlayer: 1
-  defaultEnemyStatus: {fileID: 11400000, guid: d7726cc3a42a8c04789b4051f14b8746, type: 2}
+  enemyStatus: {fileID: 11400000, guid: d7726cc3a42a8c04789b4051f14b8746, type: 2}
 --- !u!1 &7597305773750638969
 GameObject:
   m_ObjectHideFlags: 0

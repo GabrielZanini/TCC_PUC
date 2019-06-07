@@ -57,11 +57,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var otherStatus = other.gameObject.GetComponent<StatusBase>();
+        var otherHealth = other.gameObject.GetComponent<HeathShip>();
         
-        if (otherStatus != null)
+        if (otherHealth != null)
         {
-            otherStatus.TakeDamage(damage);
+            otherHealth.TakeDamage(damage);
 
             GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
 

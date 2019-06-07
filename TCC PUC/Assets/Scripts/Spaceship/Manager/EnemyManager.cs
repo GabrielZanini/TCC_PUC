@@ -6,13 +6,10 @@ using UnityEngine;
 public class EnemyManager : ShipManager
 {
     [Header("Enemy Settings")]
-    public int points = 10;
-    public float activateTime = 4f;
-    public float lifeTime = 10f;
-    float despawnCounter = 0f;
-    public bool targetPlayer = false;
 
-    public EnemyStatus defaultEnemyStatus;
+    float despawnCounter = 0f;
+
+    public EnemyStatus enemyStatus;
 
 
     protected override void Reset()
@@ -20,13 +17,13 @@ public class EnemyManager : ShipManager
         base.Reset();
 
         type = ShipType.Enemy;
-        playAfterStop = true;
 
-        if (defaultEnemyStatus != null)
+        if (enemyStatus != null)
         {
-            defaultShipStatus = defaultEnemyStatus;
+            shipStatus = enemyStatus;
         }
     }
+
 
     private void OnEnable()
     {
@@ -65,7 +62,7 @@ public class EnemyManager : ShipManager
         timebody.DisableCollider();
         shoot.DeactivateGuns();
 
-        yield return new WaitForSeconds(activateTime); 
+        yield return new WaitForSeconds(enemyStatus.activateTime); 
 
         timebody.EnableCollider();
         shoot.ActivateGuns();
@@ -73,9 +70,9 @@ public class EnemyManager : ShipManager
 
     void StartEnemy()
     {
-        despawnCounter = lifeTime;
+        despawnCounter = enemyStatus.lifeTime;
 
-        if (targetPlayer)
+        if (enemyStatus.targetPlayer)
         {
             shoot.SetTarget(timebody.Controller.GameManager.Player.transform);
         }
@@ -101,7 +98,7 @@ public class EnemyManager : ShipManager
     protected override void Death()
     {
         base.Death();
-        GameManager.Instance.Level.Score.Add(points);
+        GameManager.Instance.Level.Score.Add(enemyStatus.points);
         GameManager.Instance.Pools.PowerUps.TrySpawn(transform.position);        
     }
 }

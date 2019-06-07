@@ -25,24 +25,23 @@ public class PlayerManager : ShipManager
     public Material dyingMaterial;
 
     [Space]
-    public PlayerStatus defaultPlayerStatus;
+    public PlayerStatus playerStatus;
     public PlayerStatus extraStatus;
 
     [Header("Coins")]
     public int coins = 0;
 
-    private bool ishandlingDeath = false;
+    private bool isHandlingDeath = false;
 
     protected override void Reset()
     {
         base.Reset();
         shield = GetComponent<ShieldShip>();
         type = ShipType.Player;
-        playAfterStop = false;
 
-        if (defaultPlayerStatus != null)
+        if (playerStatus != null)
         {
-            defaultShipStatus = defaultPlayerStatus;
+            shipStatus = playerStatus;
         }
     }
 
@@ -63,7 +62,7 @@ public class PlayerManager : ShipManager
     protected override void AddListeners()
     {
         base.AddListeners();
-        status.OnLoseHp.AddListener(Vibrate);
+        health.OnLoseHp.AddListener(Vibrate);
         GameManager.Level.OnStop.AddListener(shoot.ReleaseTriggers);
         GameManager.Level.OnStop.AddListener(shield.Deactivate);
         GameManager.Level.OnStart.AddListener(Revive);
@@ -77,7 +76,7 @@ public class PlayerManager : ShipManager
     protected override void RemoveListeners()
     {
         base.RemoveListeners();
-        status.OnLoseHp.RemoveListener(Vibrate);
+        health.OnLoseHp.RemoveListener(Vibrate);
         GameManager.Level.OnStop.RemoveListener(shoot.ReleaseTriggers);
         GameManager.Level.OnStop.RemoveListener(shield.Deactivate);
         GameManager.Level.OnStart.RemoveListener(Revive);
@@ -113,13 +112,13 @@ public class PlayerManager : ShipManager
 
     protected override void Death()
     {
-        if (!ishandlingDeath)
+        if (!isHandlingDeath)
             StartCoroutine(TimeBeforeDeath());       
     }
 
     IEnumerator TimeBeforeDeath()
     {
-        ishandlingDeath = true;
+        isHandlingDeath = true;
 
         Material[] normalMaterials = render.materials;
         Material[] dyingmaterials = new Material[normalMaterials.Length + 1];
@@ -141,13 +140,13 @@ public class PlayerManager : ShipManager
             {
                 timer -= Time.deltaTime;
 
-                if (!status.IsDead)
+                if (!health.IsDead)
                 {
                     break;
                 }
             }
 
-            if (status.IsDead)
+            if (health.IsDead)
             {
                 render.materials = dyingmaterials;
             }
@@ -163,14 +162,14 @@ public class PlayerManager : ShipManager
         input.enabled = true;
         timebody.EnableCollider();
 
-        if (status.IsDead)
+        if (health.IsDead)
         {
             base.Death();
             render.materials = normalMaterials;
             GameManager.Instance.Level.Stop();
         }
 
-        ishandlingDeath = false;
+        isHandlingDeath = false;
     }
 
     void Vibrate()
@@ -187,17 +186,17 @@ public class PlayerManager : ShipManager
 
     void Revive()
     {
-        status.CurrentHp = status.MaxHp;
+        health.CurrentHp = health.MaxHp;
         timebody.SetActive(true);
         SetStatus();
     }
 
     void SetStatus()
     {
-        shoot.SetBullets(defaultPlayerStatus.bullets + extraStatus.bullets);
-        shoot.SetDamage(defaultPlayerStatus.damage + extraStatus.damage);
-        shoot.SetRate(defaultPlayerStatus.shootingRate + extraStatus.shootingRate);
-        shield.duration = defaultPlayerStatus.shildTime + extraStatus.shildTime;
+        shoot.SetBullets(playerStatus.bullets + extraStatus.bullets);
+        shoot.SetDamage(playerStatus.damage + extraStatus.damage);
+        shoot.SetRate(playerStatus.shootingRate + extraStatus.shootingRate);
+        shield.duration = playerStatus.shildTime + extraStatus.shildTime;
     }
 
     public void SetStyle(ShipStyle newStyle = null)

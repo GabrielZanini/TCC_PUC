@@ -420,7 +420,9 @@ public class Gun : MonoBehaviour
 
     public void RemoveBulletRate(float rate = 0.02f)
     {
-        if (bulletRate > rate)
+        Debug.Log("RemoveBulletRate - rate: " + rate);
+
+        if (bulletRate > 0.1f)
         {
             bulletRate -= rate;
         }        

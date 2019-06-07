@@ -9,7 +9,9 @@ public abstract class ShipStatus : ScriptableObject
     public bool playAfterStop = true;
 
     [Header("Difficulty")]
-    public bool scaleWithDificulty = true;
+    public bool scaleHealth = true;
+    public bool scaleMovement = true;
+    public bool scaleCombat = true;
 
     [Header("Health")]
     public int hp = 10;

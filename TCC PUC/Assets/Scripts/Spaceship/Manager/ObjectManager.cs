@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TimeBody))]
-[RequireComponent(typeof(StatusBase))]
+[RequireComponent(typeof(HeathShip))]
 public class ObjectManager : MonoBehaviour
 {
     [Header("Scripts")]
     public TimeBody timebody;
-    public StatusBase status;
+    public HeathShip health;
 
 
     protected virtual void Reset()
     {
         timebody = GetComponent<TimeBody>();
         timebody.scriptsToDisable.Add(this);
-        status = GetComponent<StatusBase>();
+        health = GetComponent<HeathShip>();
     }
 
     protected virtual void OnValidate()
@@ -25,6 +25,7 @@ public class ObjectManager : MonoBehaviour
 
     protected virtual void Start()
     {
+        Reset();
         AddListeners();
     }
 
@@ -44,12 +45,12 @@ public class ObjectManager : MonoBehaviour
 
     protected virtual void AddListeners()
     {
-        status.OnDeath.AddListener(Death);
+        health.OnDeath.AddListener(Death);
     }
 
     protected virtual void RemoveListeners()
     {
-        status.OnDeath.RemoveListener(Death);
+        health.OnDeath.RemoveListener(Death);
     }
 
 
@@ -58,13 +59,13 @@ public class ObjectManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var otherStatus = other.gameObject.GetComponent<StatusBase>();
+        var otherHealth = other.gameObject.GetComponent<HeathShip>();
 
-        if (otherStatus != null)
+        if (otherHealth != null)
         {
-            int otherHp = otherStatus.CurrentHp;
-            otherStatus.TakeDamage(status.CurrentHp);
-            status.TakeDamage(otherHp);
+            int otherHp = otherHealth.CurrentHp;
+            otherHealth.TakeDamage(health.CurrentHp);
+            health.TakeDamage(otherHp);
         }
     }
 
@@ -79,19 +80,19 @@ public class ObjectManager : MonoBehaviour
 
     public void SpawnEffect()
     {
-        if (status.deathEffect == EffectType.BigExplosion)
+        if (health.deathEffect == EffectType.BigExplosion)
         {
             GameManager.Instance.Pools.BigExplosion.Spawn(transform.position);
         }
-        else if (status.deathEffect == EffectType.DustExplosion)
+        else if (health.deathEffect == EffectType.DustExplosion)
         {
             GameManager.Instance.Pools.DustExplosion.Spawn(transform.position);
         }
-        else if (status.deathEffect == EffectType.SmallExplosion)
+        else if (health.deathEffect == EffectType.SmallExplosion)
         {
             GameManager.Instance.Pools.SmallExplosion.Spawn(transform.position);
         }
-        else if (status.deathEffect == EffectType.TinyExplosion)
+        else if (health.deathEffect == EffectType.TinyExplosion)
         {
             GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
         }

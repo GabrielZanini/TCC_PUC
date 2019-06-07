@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f3885e7f9b1ed4b8b67505ca3c51fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  status: {fileID: 7152724393694647313}
+  health: {fileID: 7152724393694647313}
   lifeBar: {fileID: 5637435416997946659}
   hideLifeAtMax: 1
   hideBeforeStart: 0
@@ -506,6 +506,13 @@ MonoBehaviour:
   - {fileID: 1504503411166508637}
   - {fileID: 1504503411166508637}
   - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
@@ -533,7 +540,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  status: {fileID: 0}
+  heath: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
   bullet: {fileID: 0}
@@ -553,9 +560,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   currentHp: 0
-  speed: 20
-  angularSpeed: 180
-  smoothness: 0.5
   deathEffect: 1
   scaleWithDificulty: 1
   OnGainHp:
@@ -671,17 +675,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timebody: {fileID: 7152724393694647314}
-  status: {fileID: 7152724393694647313}
+  health: {fileID: 7152724393694647313}
   movement: {fileID: 5353277633022863432}
   input: {fileID: 238054309634658162}
   shoot: {fileID: 1879478015339634339}
   type: 1
   playAfterStop: 1
-  points: 10
-  activateTime: 0
-  lifeTime: 10
-  targetPlayer: 0
-  defaultEnemyStatus: {fileID: 11400000, guid: 5a2f8182982592246a434560f9b002e6, type: 2}
+  enemyStatus: {fileID: 11400000, guid: 5a2f8182982592246a434560f9b002e6, type: 2}
 --- !u!1 &7260191389596961555
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,18 +777,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7152724393694647312}
     m_Modifications:
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Name
-      value: Mesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -844,6 +832,18 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_ReceiveShadows

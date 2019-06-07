@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpaceBodyUI : MonoBehaviour
 {
-    [SerializeField] StatusBase status;
+    [SerializeField] HeathShip health;
     [SerializeField] Slider lifeBar;
 
     public bool hideLifeAtMax = true;
@@ -14,7 +14,7 @@ public class SpaceBodyUI : MonoBehaviour
 
     void Start()
     {
-        lifeBar.maxValue = status.MaxHp;
+        lifeBar.maxValue = health.MaxHp;
 
         AddListeners();
 
@@ -39,14 +39,14 @@ public class SpaceBodyUI : MonoBehaviour
 
     void AddListeners()
     {
-        status.OnChangeHp.AddListener(UpdateBar);
+        health.OnChangeHp.AddListener(UpdateBar);
         GameManager.Instance.Level.OnMenu.AddListener(UpdateBar);
         GameManager.Instance.Level.OnStart.AddListener(UpdateBar);
     }
 
     void RemoveListeners()
     {
-        status.OnChangeHp.RemoveListener(UpdateBar);
+        health.OnChangeHp.RemoveListener(UpdateBar);
         GameManager.Instance.Level.OnMenu.RemoveListener(UpdateBar);
         GameManager.Instance.Level.OnStart.RemoveListener(UpdateBar);
     }
@@ -55,7 +55,7 @@ public class SpaceBodyUI : MonoBehaviour
 
     void UpdateBar()
     {
-        lifeBar.value = status.CurrentHp;
+        lifeBar.value = health.CurrentHp;
 
         bool hideMax = hideLifeAtMax && lifeBar.value == lifeBar.maxValue;
         bool hideStart = hideBeforeStart && GameManager.Instance.Level.State == LevelState.Menu;

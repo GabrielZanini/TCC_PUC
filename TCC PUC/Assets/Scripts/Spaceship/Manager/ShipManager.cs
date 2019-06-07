@@ -13,10 +13,8 @@ public class ShipManager : ObjectManager
     public ShootShip shoot;
 
     [HideInInspector] public ShipType type = ShipType.Enemy;
-    public bool playAfterStop = false;
 
-
-    protected ShipStatus defaultShipStatus;
+    protected ShipStatus shipStatus;
 
 
 
@@ -34,15 +32,16 @@ public class ShipManager : ObjectManager
         base.Start();
 
         Setlayer();
+        SetHealth();
         SetMovement();
-        //SetCombat();
+        SetCombat();
     }
 
 
     protected override void Update()
     {
         if ((GameManager.Instance.Level.State == LevelState.Playing) 
-            || (GameManager.Instance.Level.State == LevelState.Stoped && playAfterStop))
+            || (GameManager.Instance.Level.State == LevelState.Stoped && shipStatus.playAfterStop))
         {
             Combat();
             Movement();
@@ -100,19 +99,27 @@ public class ShipManager : ObjectManager
         shoot.SetBulletsLayer(bulletLayer);
     }
 
-    void SetMovement()
+    protected virtual void SetHealth()
     {
-        movement.speed = status.speed;
-        movement.angularSpeed = status.angularSpeed;
-        movement.smoothness = status.smoothness;
+        health.MaxHp = shipStatus.hp;
+        health.scaleWithDificulty = shipStatus.scaleHealth;
     }
 
-    void SetCombat()
+    protected virtual void SetMovement()
     {
-        if (input.autoShoot)
-        {
-            shoot.PullTriggers();
-        }
+        movement.speed = shipStatus.speed;
+        movement.angularSpeed = shipStatus.angularSpeed;
+        movement.smoothness = shipStatus.smoothness;
+        movement.scaleWithDificulty = shipStatus.scaleMovement;
+    }
+
+    protected virtual void SetCombat()
+    {
+        shoot.SetBullets(shipStatus.bullets);
+        shoot.SetDamage(shipStatus.damage);
+        shoot.SetRate(shipStatus.shootingRate);
+        shoot.scaleWithDificulty = shipStatus.scaleCombat;
+        shoot.SetScaleWithDifficulty();
     }
 
 }

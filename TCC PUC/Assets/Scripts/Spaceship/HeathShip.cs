@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class StatusBase : MonoBehaviour
+public class HeathShip : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private int maxHp = 10;
@@ -25,11 +25,7 @@ public class StatusBase : MonoBehaviour
     public bool IsDead {
         get { return CurrentHp <= 0; }
     }
-
-    [Header("Speed")]
-    public float speed = 1f;
-    public float angularSpeed = 180f;
-    public float smoothness = 0.5f;
+    
 
     [Header("FX")]
     public EffectType deathEffect = EffectType.SmallExplosion;
@@ -109,26 +105,5 @@ public class StatusBase : MonoBehaviour
     {
         OnDeath.Invoke();
     }
-    
-
-    // Speed
-
-    public void AddSpeed(float moreSpeed)
-    {
-        if (moreSpeed == 0) return;
-
-        speed += moreSpeed;
         
-        if (moreSpeed > 0)
-        {
-            OnLoseSpeed.Invoke();
-        }
-        else
-        {
-            OnGainSpeed.Invoke();
-        }
-    }
-
-
-    
 }

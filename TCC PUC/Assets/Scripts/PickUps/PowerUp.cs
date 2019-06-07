@@ -11,7 +11,7 @@ public class PowerUp : PickUp
 
     public int bultet = 1;
     public int damage = 2;
-    public float rate = 0.2f;
+    public float rate = 0.02f;
     public int heal = 25;
 
 
@@ -40,7 +40,7 @@ public class PowerUp : PickUp
         }
         else if (type == PowerUpType.Heal)
         {
-            player.status.Heal(heal);
+            player.health.Heal(heal);
         }
 
         pool.RemovePowerUpByType(type);

@@ -34,7 +34,7 @@ public class TimeBody : MonoBehaviour
     [HideInInspector] public UnityEvent OnActivate;
     [HideInInspector] public UnityEvent OnDisactivate;
 
-    [HideInInspector] public StatusBase status;
+    [HideInInspector] public HeathShip heath;
     [HideInInspector] public ScrollTiles scroll;
     [HideInInspector] public ParticleEffect particle;
     [HideInInspector] public Bullet bullet;
@@ -404,7 +404,7 @@ public class TimeBody : MonoBehaviour
     {
         colliders = GetComponents<Collider>();
 
-        status = GetComponent<StatusBase>();
+        heath = GetComponent<HeathShip>();
         scroll = GetComponent<ScrollTiles>();
         particle = GetComponent<ParticleEffect>();
         bullet = GetComponent<Bullet>();

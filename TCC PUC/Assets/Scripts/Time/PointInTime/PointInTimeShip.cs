@@ -15,7 +15,7 @@ public class PointInTimeShip : PointInTime
         if (isActive)
         {
             timebody.transform.rotation = rotation;
-            timebody.status.CurrentHp = hp;
+            timebody.heath.CurrentHp = hp;
         }        
     }
 
@@ -26,7 +26,7 @@ public class PointInTimeShip : PointInTime
         if (isActive)
         {
             rotation = timebody.transform.rotation;
-            hp = timebody.status.CurrentHp;
+            hp = timebody.heath.CurrentHp;
         }        
     }
 }
