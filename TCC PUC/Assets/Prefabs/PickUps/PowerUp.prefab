@@ -232,7 +232,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  status: {fileID: 0}
+  heath: {fileID: 0}
   scroll: {fileID: 0}
   particle: {fileID: 0}
   bullet: {fileID: 0}
@@ -272,7 +272,7 @@ MonoBehaviour:
   render: {fileID: 7949109078403682527}
   bultet: 1
   damage: 2
-  rate: 0.01
+  rate: 0.05
   heal: 25
 --- !u!1 &7949109078403682497
 GameObject:

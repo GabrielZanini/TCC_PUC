@@ -22,8 +22,8 @@ MonoBehaviour:
   smoothness: 0.5
   deathEffect: 2
   bullets: 1
-  damage: 1
-  shootingRate: 1
+  damage: 10
+  shootingRate: 1.2
   points: 10
   activateTime: 2
   lifeTime: 10

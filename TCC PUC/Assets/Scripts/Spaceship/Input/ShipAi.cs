@@ -16,6 +16,10 @@ public class ShipAi : ShipInput
     [Range(-1f, 1f)] public float minRotation = 0f;
     [Range(-1f, 1f)] public float maxRotation = 0f;
 
+    [Header("Current")]
+    public float horizontal = 0f;
+    public float vertical = 0f;
+    public float rotation = 0f;
 
     private void OnValidate()
     {
@@ -58,16 +62,19 @@ public class ShipAi : ShipInput
     private void MoveHorizontal()
     {
         horizontalAxis.SetFixValue(Random.Range(minHorizontal, maxHorizontal));
+        horizontal = horizontalAxis.Raw;
     }
 
     private void MoveVertical()
     {
-        verticalAxis.SetFixValue(Random.Range(minVertical, maxHorizontal));
+        verticalAxis.SetFixValue(Random.Range(minVertical, maxVertical));
+        vertical = verticalAxis.Raw;
     }
 
     private void Rotate()
     {
         rotationAxis.SetFixValue(Random.Range(minRotation, maxRotation));
+        rotation = rotationAxis.Raw;
     }
 
 

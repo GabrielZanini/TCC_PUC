@@ -23,7 +23,7 @@ MonoBehaviour:
   deathEffect: 0
   bullets: 2
   damage: 5
-  shootingRate: 0.2
+  shootingRate: 0.25
   useShield: 0
   shildTime: 5
   rockets: 1

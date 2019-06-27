@@ -46,6 +46,7 @@ public class Gun : MonoBehaviour
     public ObjectPool bulletPool;
     public int bulletDamage = 1;
     public bool resizeWithDamage = true;
+    public bool resizeWithDamageChange = false;
     public float resizeAmount = 0.5f;
     public float bulletSpeed = 30f;
     [Range(0.01f, 3f)] public float bulletRate = 0.1f;
@@ -175,7 +176,14 @@ public class Gun : MonoBehaviour
 
             if (resizeWithDamage)
             {
-                bulletTimebody.bullet.SetScale(1 + (bulletDamage - startingDamage) * resizeAmount);
+                if (resizeWithDamageChange)
+                {
+                    bulletTimebody.bullet.SetScale(1 + (bulletDamage - startingDamage) * resizeAmount);
+                }
+                else
+                {
+                    bulletTimebody.bullet.SetScale(bulletDamage * resizeAmount);
+                }                
             }            
             else
             {
@@ -343,6 +351,7 @@ public class Gun : MonoBehaviour
     }
 
 
+
     public void AddBullet(int bullets = 1)
     {
         if (MaxBarrels < 10)
@@ -420,7 +429,7 @@ public class Gun : MonoBehaviour
 
     public void RemoveBulletRate(float rate = 0.02f)
     {
-        Debug.Log("RemoveBulletRate - rate: " + rate);
+        //Debug.Log("RemoveBulletRate - rate: " + rate);
 
         if (bulletRate > 0.1f)
         {

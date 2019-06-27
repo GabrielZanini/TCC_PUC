@@ -513,6 +513,8 @@ MonoBehaviour:
   - {fileID: 1504503411166508637}
   - {fileID: 1504503411166508637}
   - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
+  - {fileID: 1504503411166508637}
   objectsToDisable:
   - {fileID: 7152724392930169230}
   - {fileID: 3267210431350674036}
@@ -626,9 +628,12 @@ MonoBehaviour:
   minHorizontal: -0.1
   maxHorizontal: 0.1
   minVertical: -1
-  maxVertical: -0.9
+  maxVertical: -0.7
   minRotation: 0
   maxRotation: 0
+  horizontal: 0
+  vertical: 0
+  rotation: 0
 --- !u!114 &5353277633022863432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +685,6 @@ MonoBehaviour:
   input: {fileID: 238054309634658162}
   shoot: {fileID: 1879478015339634339}
   type: 1
-  playAfterStop: 1
   enemyStatus: {fileID: 11400000, guid: 5a2f8182982592246a434560f9b002e6, type: 2}
 --- !u!1 &7260191389596961555
 GameObject:
@@ -777,6 +781,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7152724393694647312}
     m_Modifications:
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -832,18 +848,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Name
-      value: Mesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 30c89b10762045f48ac257fc2d02dea2, type: 3}
       propertyPath: m_ReceiveShadows

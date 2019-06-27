@@ -136,6 +136,7 @@ MonoBehaviour:
   bulletPool: {fileID: 0}
   bulletDamage: 1
   resizeWithDamage: 1
+  resizeWithDamageChange: 0
   resizeAmount: 0.5
   bulletSpeed: 30
   bulletRate: 1
