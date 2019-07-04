@@ -11,6 +11,7 @@ public class ScrollTiles : MonoBehaviour
     [Header("Settings")]
     public float scrollSpeed;
     public float counter = 0f;
+    public float tileSize = 1f;
     public bool goBack = false;
 
     [Header("Difficulty")]
@@ -60,7 +61,10 @@ public class ScrollTiles : MonoBehaviour
 
     void Update()
     {
-        Scroll();
+        if (!GameManager.Instance.TimeController.IsRewinding)
+        {
+            Scroll();
+        }
     }
 
     void OnDestroy()
@@ -116,7 +120,7 @@ public class ScrollTiles : MonoBehaviour
             sSpeed = scrollSpeed;
         }
 
-        newPosition = Mathf.Repeat(counter * sSpeed, tilesScale);
+        newPosition = Mathf.Repeat(counter * sSpeed, tilesScale * tileSize);
         transform.localPosition = startPosition - Vector3.up * newPosition;
     }
 

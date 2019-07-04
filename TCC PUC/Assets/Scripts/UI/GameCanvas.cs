@@ -17,6 +17,9 @@ public class GameCanvas : MonoBehaviour
     [Header("Settings")]
     public GameObject settingsPanel;
 
+    [Header("Store")]
+    public GameObject storePanel;
+
     [Header("Gameover")]
     public GameObject gameoverPanel;
 
@@ -98,6 +101,13 @@ public class GameCanvas : MonoBehaviour
         settingsPanel.SetActive(true);
     }
 
+    public void StoreGame()
+    {
+        ClearUI();
+        storePanel.SetActive(true);
+    }
+
+
     public void SettingsBack()
     {
         if (GameManager.Instance.Level.State == LevelState.Paused)
@@ -122,6 +132,7 @@ public class GameCanvas : MonoBehaviour
         gameplayPanel.SetActive(false);
         pausePanel.SetActive(false);
         settingsPanel.SetActive(false);
+        storePanel.SetActive(false);
         gameoverPanel.SetActive(false);
         scoresPanel.SetActive(false);
     }

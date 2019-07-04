@@ -40,6 +40,7 @@ public enum EffectType
     DustExplosion,
     SmallExplosion,
     TinyExplosion,
+    GigaExplosion,
 }
 
 public enum AudioType

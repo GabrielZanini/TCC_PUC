@@ -145,7 +145,10 @@ public class ShootShip : MonoBehaviour
     {
         for (int i = 0; i < guns.Count; i++)
         {
-            guns[i].SetBulletColor(inColor, outColor);
+            if (guns[i] != null)
+            {
+                guns[i].SetBulletColor(inColor, outColor);
+            }            
         }
     }
 

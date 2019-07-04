@@ -60,6 +60,12 @@ public class PoolsManager : MonoBehaviour
         private set { tinyExplosion = value; }
     }
 
+    [SerializeField] ObjectPool gigaExplosion;
+    public ObjectPool GigaExplosion {
+        get { return gigaExplosion; }
+        private set { gigaExplosion = value; }
+    }
+
 
     [Header("PickUps")]
     [SerializeField] ObjectPool coins;

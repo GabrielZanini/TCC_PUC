@@ -101,6 +101,10 @@ public class ObjectManager : MonoBehaviour
         {
             GameManager.Instance.Pools.TinyExplosion.Spawn(transform.position);
         }
+        else if (health.deathEffect == EffectType.GigaExplosion)
+        {
+            GameManager.Instance.Pools.GigaExplosion.Spawn(transform.position);
+        }
         else
         {
 
