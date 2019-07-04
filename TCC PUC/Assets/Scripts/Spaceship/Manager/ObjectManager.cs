@@ -14,7 +14,12 @@ public class ObjectManager : MonoBehaviour
     protected virtual void Reset()
     {
         timebody = GetComponent<TimeBody>();
-        timebody.scriptsToDisable.Add(this);
+
+        if (!timebody.scriptsToDisable.Contains(this))
+        {
+            timebody.scriptsToDisable.Add(this);
+        }
+
         health = GetComponent<HeathShip>();
     }
 
