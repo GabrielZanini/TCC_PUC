@@ -55,6 +55,7 @@ public class PlayerManager : ShipManager
     {
         base.Start();
         SetMovementPlayer();
+        Load();
     }
 
 
@@ -219,8 +220,30 @@ public class PlayerManager : ShipManager
 
     public void AddCoins(int coins)
     {
-        this.coins += coins; 
+        this.coins += coins;
+        Save();
     }
 
+
+
+
+
+
+    void Save()
+    {
+        PlayerPrefs.SetInt("Coins", coins);
+    }
+
+    void Load()
+    {
+        if (PlayerPrefs.HasKey("Coins"))
+        {
+            coins = PlayerPrefs.GetInt("Coins");
+        }
+        else
+        {
+            coins = 0;
+        }
+    }
 
 }

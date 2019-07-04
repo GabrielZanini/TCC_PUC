@@ -21,6 +21,12 @@ public class ShipAi : ShipInput
     public float vertical = 0f;
     public float rotation = 0f;
 
+    [Header("Current")]
+    public ShootShip shoot;
+
+    private bool goLeft;
+
+
     private void OnValidate()
     {
         if (minHorizontal > maxHorizontal)
@@ -40,9 +46,12 @@ public class ShipAi : ShipInput
         SetCombat();
     }
 
-    private void Start()
+    private void Update()
     {
-        
+        if (type == AiType.Boss)
+        {
+            BossBehavior();
+        }
     }
 
     
@@ -86,5 +95,45 @@ public class ShipAi : ShipInput
         }
     }
 
+
+
+    void BossBehavior()
+    {      
+
+        if (transform.position.y > 12)
+        {
+            verticalAxis.SetFixValue(-1);
+            autoShoot = false;
+        } 
+        else
+        {
+            verticalAxis.SetFixValue(0);
+            autoShoot = true;
+            shoot.PullTriggers();
+
+            if (goLeft)
+            {
+                if (transform.position.x <= -5f)
+                {
+                    goLeft = false;
+                }
+                else
+                {
+                    horizontalAxis.SetFixValue(-1);
+                }
+            }
+            else
+            {
+                if (transform.position.x >= 5f)
+                {
+                    goLeft = true;
+                }
+                else
+                {
+                    horizontalAxis.SetFixValue(1);
+                }
+            }
+        }
+    }
 
 }

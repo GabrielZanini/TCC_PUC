@@ -17,7 +17,7 @@ MonoBehaviour:
   scaleMovement: 0
   scaleCombat: 0
   hp: 100
-  speed: 20
+  speed: 30
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 0

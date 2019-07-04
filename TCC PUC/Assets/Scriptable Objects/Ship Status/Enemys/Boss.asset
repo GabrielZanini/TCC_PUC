@@ -16,8 +16,8 @@ MonoBehaviour:
   scaleHealth: 1
   scaleMovement: 1
   scaleCombat: 1
-  hp: 200
-  speed: 10
+  hp: 10000
+  speed: 2
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 2

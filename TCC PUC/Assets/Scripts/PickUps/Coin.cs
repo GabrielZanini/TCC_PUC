@@ -11,3 +11,4 @@ public class Coin : PickUp
         player.AddCoins(coins);
     }
 }
+
