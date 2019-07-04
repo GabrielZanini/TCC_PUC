@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     public bool playAtStart = true;
     public bool loop = false;
     public bool stopOnRewind = true;
+    public bool playOnDespawn = false;
 
     [SerializeField] bool mute = false;
 
@@ -51,12 +52,12 @@ public class AudioManager : MonoBehaviour
         
         AddListener();
         UpdateSource();
-        
+
 
         if (playAtStart)
         {
             Play();
-            
+
         }
         else
         {
@@ -66,7 +67,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (clip.length > counter)
+        if (clip.length > counter && timebody != null)
         {
             counter += Time.deltaTime;
         }
@@ -105,6 +106,11 @@ public class AudioManager : MonoBehaviour
                 timebody.Controller.OnStartRewind.AddListener(Stop);
                 timebody.Controller.OnStopRewind.AddListener(Play);
             }
+
+            if (playOnDespawn)
+            {
+                timebody.OnDespawn.AddListener(Play);
+            }
         }        
     }
 
@@ -122,6 +128,11 @@ public class AudioManager : MonoBehaviour
             {
                 timebody.Controller.OnStartRewind.RemoveListener(Stop);
                 timebody.Controller.OnStopRewind.RemoveListener(Play);
+            }
+
+            if (playOnDespawn)
+            {
+                timebody.OnDespawn.RemoveListener(Play);
             }
         }        
     }

@@ -73,15 +73,15 @@ public class ScreenDespawners : MonoBehaviour
         float verticalSize = camerManager.height + (margins.all * 2 + margins.top + margins.bottom);
 
         top.localPosition = new Vector3(horizontalX, topY, 0f);
-        top.localScale = new Vector3(horizontalSize, 2f, 2f);
+        top.localScale = new Vector3(horizontalSize, 2f, 100f);
 
         right.localPosition = new Vector3(righX, verticalY, 0);
-        right.localScale = new Vector3(2f, verticalSize, 2f);
+        right.localScale = new Vector3(2f, verticalSize, 100f);
 
         left.localPosition = new Vector3(-leftX, verticalY, 0);
-        left.localScale = new Vector3(2f,verticalSize, 2f);
+        left.localScale = new Vector3(2f,verticalSize, 100f);
 
         bottom.localPosition = new Vector3(horizontalX, -bottomY, 0);
-        bottom.localScale = new Vector3(horizontalSize, 2f, 2f);
+        bottom.localScale = new Vector3(horizontalSize, 2f, 100f);
     }
 }

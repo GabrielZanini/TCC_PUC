@@ -6,10 +6,10 @@ public class ShootShip : MonoBehaviour
 {
     [Header("Guns")]
     public List<Gun> guns = new List<Gun>();
-    
+
     [Header("Status")]
     public bool triggersPulled = false;
-    
+
     [Header("Difficulty")]
     public bool scaleWithDificulty = true;
 

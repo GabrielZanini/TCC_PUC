@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 [RequireComponent(typeof(TimeBody))]
 public abstract class PickUp : MonoBehaviour
@@ -9,12 +9,13 @@ public abstract class PickUp : MonoBehaviour
     public TimeBody timebody;
     protected PowerUpPool pool;
 
+    public UnityEvent OnPicked;
 
     private void Reset()
     {
         timebody = GetComponent<TimeBody>();
 
-        if (timebody.pool != null)
+        if (timebody.pool != null && gameObject.name == "PowerUp(Clone)")
         {
             pool = (PowerUpPool)timebody.pool;
         }
@@ -36,7 +37,8 @@ public abstract class PickUp : MonoBehaviour
 
         if (player != null)
         {
-            PlayerPickUp(player);            
+            PlayerPickUp(player);
+            OnPicked.Invoke();
             timebody.Despawn();
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Coin : PickUp
 {
-    int coins = 1;
+    public int coins = 1;
 
     protected override void PlayerPickUp(PlayerManager player)
     {

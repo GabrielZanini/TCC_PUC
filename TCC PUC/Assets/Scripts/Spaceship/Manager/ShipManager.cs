@@ -12,6 +12,10 @@ public class ShipManager : ObjectManager
     public ShipInput input;
     public ShootShip shoot;
 
+    [Header("Settings")]
+    public bool useStyleOnGuns = true;
+    [Space]
+
     [HideInInspector] public ShipType type = ShipType.Enemy;
 
     protected ShipStatus shipStatus;
@@ -115,11 +119,14 @@ public class ShipManager : ObjectManager
 
     protected virtual void SetCombat()
     {
-        shoot.SetBullets(shipStatus.bullets);
-        shoot.SetDamage(shipStatus.damage);
-        shoot.SetRate(shipStatus.shootingRate);
-        shoot.scaleWithDificulty = shipStatus.scaleCombat;
-        shoot.SetScaleWithDifficulty();
+        if (useStyleOnGuns)
+        {
+            shoot.SetBullets(shipStatus.bullets);
+            shoot.SetDamage(shipStatus.damage);
+            shoot.SetRate(shipStatus.shootingRate);
+            shoot.scaleWithDificulty = shipStatus.scaleCombat;
+            shoot.SetScaleWithDifficulty();
+        }        
     }
 
 }

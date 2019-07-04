@@ -11,7 +11,12 @@ ModelImporter:
     4300000: Box001
     7400000: Take 001
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: 020208bce96b803499b37b017db3ce20, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
