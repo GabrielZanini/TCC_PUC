@@ -33,7 +33,7 @@ public class HeathShip : MonoBehaviour
     [Header("Difficulty")]
     public bool scaleWithDificulty = true;
 
-    [HideInInspector]public UnityEvent OnGainHp;
+    [HideInInspector] public UnityEvent OnGainHp;
     [HideInInspector] public UnityEvent OnLoseHp;
     [HideInInspector] public UnityEvent OnChangeHp;
     [HideInInspector] public UnityEvent OnDeath;
@@ -55,7 +55,7 @@ public class HeathShip : MonoBehaviour
     }
 
 
-    private void InicializeHealth()
+    public void InicializeHealth()
     {
         if (scaleWithDificulty && GameManager.Instance != null)
         {

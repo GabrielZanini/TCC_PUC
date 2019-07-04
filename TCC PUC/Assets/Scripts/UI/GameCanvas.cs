@@ -26,6 +26,9 @@ public class GameCanvas : MonoBehaviour
     [Header("Scores")]
     public GameObject scoresPanel;
 
+    [Header("Victory")]
+    public GameObject victoryPanel;
+
 
     private void OnEnable()
     {
@@ -107,6 +110,12 @@ public class GameCanvas : MonoBehaviour
         storePanel.SetActive(true);
     }
 
+    public void VictoryGame()
+    {
+        ClearUI();
+        victoryPanel.SetActive(true);
+    }
+
 
     public void SettingsBack()
     {
@@ -126,7 +135,7 @@ public class GameCanvas : MonoBehaviour
 
 
 
-    void ClearUI()
+    public void ClearUI()
     {
         menuPanel.SetActive(false);
         gameplayPanel.SetActive(false);
@@ -135,6 +144,7 @@ public class GameCanvas : MonoBehaviour
         storePanel.SetActive(false);
         gameoverPanel.SetActive(false);
         scoresPanel.SetActive(false);
+        victoryPanel.SetActive(false);
     }
 
 
