@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        //Screen.SetResolution(576, 1024, false);
+        Screen.SetResolution(576, 1024, false);
         GetCamera();
         ResizeCamera();
     }
