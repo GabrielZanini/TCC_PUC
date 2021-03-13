@@ -6599,10 +6599,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: spaceship 7 with texture
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4030f460731baaf478b0b3a23c606d6f, type: 2}
     - target: {fileID: 400000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.334
@@ -6659,6 +6655,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.3413467
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4030f460731baaf478b0b3a23c606d6f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d74cea25ec7949f4db34e435862486d9, type: 3}
 --- !u!4 &5073818463508286021 stripped

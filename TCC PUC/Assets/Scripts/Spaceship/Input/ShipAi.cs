@@ -25,7 +25,7 @@ public class ShipAi : ShipInput
     public ShootShip shoot;
 
     private bool goLeft;
-
+    private Collider colliderTrigger;
 
     private void OnValidate()
     {
@@ -38,6 +38,12 @@ public class ShipAi : ShipInput
         {
             minVertical = maxVertical;
         }
+    }
+
+    private void Awake()
+    {
+        OnValidate();
+        colliderTrigger = GetComponent<Collider>();
     }
 
     private void OnEnable()
@@ -104,12 +110,14 @@ public class ShipAi : ShipInput
         {
             verticalAxis.SetFixValue(-1);
             autoShoot = false;
+            colliderTrigger.enabled = false;
         } 
         else
         {
             verticalAxis.SetFixValue(0);
             autoShoot = true;
             shoot.PullTriggers();
+            colliderTrigger.enabled = true;
 
             if (goLeft)
             {
