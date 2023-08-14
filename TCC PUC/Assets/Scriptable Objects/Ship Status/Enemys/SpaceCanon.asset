@@ -16,7 +16,7 @@ MonoBehaviour:
   scaleHealth: 1
   scaleMovement: 1
   scaleCombat: 1
-  hp: 20
+  hp: 30
   speed: 10
   angularSpeed: 180
   smoothness: 0.5

@@ -43,7 +43,7 @@ public class TimeController : MonoBehaviour
 
 
     [Header("Time Parameters")]
-    [SerializeField][Range(1, 60)] int stepsPerSecond = 30;
+    [SerializeField][Range(0, 60)] int stepsPerSecond = 30;
     public int StepsPerSecond {
         get { return stepsPerSecond; }
         private set { stepsPerSecond = value; }
@@ -109,8 +109,11 @@ public class TimeController : MonoBehaviour
 
     private void OnValidate()
     {
-        timeStep = 1f / StepsPerSecond;
-        MaxPointsInTime = (int) Mathf.Round(rewindTime / timeStep);
+        if (StepsPerSecond > 0)
+        {
+            timeStep = 1f / StepsPerSecond;
+            MaxPointsInTime = (int)Mathf.Round(rewindTime / timeStep);
+        }        
     }
 
     void Awake()
@@ -130,7 +133,7 @@ public class TimeController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.Level.State == LevelState.Playing)
+        if (GameManager.Instance.Level.State == LevelState.Playing && StepsPerSecond > 0)
         {
             CheckTime();
             GetInput();

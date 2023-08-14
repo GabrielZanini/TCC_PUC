@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
         private set { score = value; }
     }
 
-    [HideInInspector] public UnityEvent OnMenu;
+    public UnityEvent OnMenu;
     [HideInInspector] public UnityEvent OnStart;
     [HideInInspector] public UnityEvent OnPause;
     [HideInInspector] public UnityEvent OnContinue;

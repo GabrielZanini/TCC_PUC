@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: DeathCross
   m_EditorClassIdentifier: 
   playAfterStop: 1
-  scaleWithDificulty: 1
-  hp: 20
+  scaleHealth: 1
+  scaleMovement: 1
+  scaleCombat: 1
+  hp: 30
   speed: 15
   angularSpeed: 15
   smoothness: 0.5

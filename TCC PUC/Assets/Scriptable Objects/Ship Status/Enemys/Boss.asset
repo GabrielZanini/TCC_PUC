@@ -16,14 +16,14 @@ MonoBehaviour:
   scaleHealth: 0
   scaleMovement: 0
   scaleCombat: 0
-  hp: 2000
-  speed: 2
+  hp: 10000
+  speed: 10
   angularSpeed: 180
   smoothness: 0.5
   deathEffect: 2
   bullets: 1
   damage: 10
-  shootingRate: 1.2
+  shootingRate: 1.1
   points: 10
   activateTime: 2
   lifeTime: 300.03

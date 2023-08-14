@@ -27,7 +27,10 @@ public class EnemyManager : ShipManager
 
     private void OnEnable()
     {
-        //StartEnemy();
+        if (((ShipAi)input).type == AiType.Boss)
+        {
+            Start();
+        }
     }
 
     protected override void Start()

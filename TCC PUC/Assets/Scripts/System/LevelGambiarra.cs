@@ -6,18 +6,19 @@ public class LevelGambiarra : MonoBehaviour
 {
     public LevelManager level;
     public GameObject spawners;
-    public GameObject Boss;
+    public EnemyManager Boss;
     public HeathShip BossHealth;
     public GameCanvas canvas;
 
     public float levelTimer = 100f;
     public float bossTimer = 3f;
 
-    private bool bossDied = false;
+    public bool bossDied = false;
 
     private void Awake()
     {
         level.OnStart.AddListener(Level);
+        level.OnMenu.AddListener(Menu);
     }
 
     private void Start()
@@ -27,7 +28,7 @@ public class LevelGambiarra : MonoBehaviour
 
     private void Update()
     {
-        if (Boss.activeInHierarchy)
+        if (Boss.gameObject.activeInHierarchy)
         {
             if (BossHealth.CurrentHp <= 0f && !bossDied)
             {
@@ -40,6 +41,7 @@ public class LevelGambiarra : MonoBehaviour
     private void OnDestroy()
     {
         level.OnStart.RemoveListener(Level);
+        level.OnMenu.RemoveListener(Menu);
     }
 
     private void Level()
@@ -55,10 +57,19 @@ public class LevelGambiarra : MonoBehaviour
     }
 
 
+    void Menu()
+    {
+        spawners.SetActive(true);
+        bossDied = false;
+        Boss.gameObject.SetActive(true);
+    }
+
+
     IEnumerator LevelFlow()
     {
+        spawners.SetActive(true);
         bossDied = false;
-        Boss.SetActive(false);
+        Boss.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(levelTimer);
 
@@ -66,11 +77,12 @@ public class LevelGambiarra : MonoBehaviour
 
         yield return new WaitForSeconds(bossTimer);
 
-        Boss.SetActive(true);
+        Boss.gameObject.SetActive(true);
     }
 
     IEnumerator Victory()
     {
+        Boss.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);
         canvas.VictoryGame();
         yield return new WaitForSeconds(3);

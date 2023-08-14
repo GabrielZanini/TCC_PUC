@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Asteroid
   m_EditorClassIdentifier: 
   playAfterStop: 1
-  scaleWithDificulty: 1
-  hp: 20
+  scaleHealth: 1
+  scaleMovement: 1
+  scaleCombat: 1
+  hp: 25
   speed: 20
   angularSpeed: 180
   smoothness: 0.5
